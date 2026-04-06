@@ -227,7 +227,7 @@
           "settings": {
             "image": "shopify://shop_images/desktopBanner1-Picsart-AiImageEnhancer.jpg",
             "image_mobile": "shopify://shop_images/MobileBanner1-Picsart-AiImageEnhancer.png",
-            "bg_color": "#c4906a",
+            "bg_color": "#be855d",
             "overlay_opacity": 0,
             "text_position": "left",
             "subheading": "Boldly brewed!",
