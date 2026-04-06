@@ -9,16 +9,17 @@
     
     if first_image != blank
       assign aspect_ratio_desktop = first_image.aspect_ratio
-      assign aspect_ratio_mobile = first_image.aspect_ratio
     endif
     
     if first_image_mobile != blank
       assign aspect_ratio_mobile = first_image_mobile.aspect_ratio
+    elsif first_image != blank
+      assign aspect_ratio_mobile = first_image.aspect_ratio
     endif
   endif
 -%}
 
-<div class="custom-slideshow-section height-{{ section.settings.section_height }}" id="Slideshow-{{ section.id }}" 
+<custom-slideshow class="custom-slideshow-section height-{{ section.settings.section_height }}" id="Slideshow-{{ section.id }}" 
      style="
        --nav-bg: {{ section.settings.nav_bg_color }}; 
        --nav-text: {{ section.settings.nav_text_color }};
@@ -38,6 +39,8 @@
          --section-height: 100vh;
          --section-height-mobile: 100vh;
        {% elsif section.settings.section_height == 'auto' %}
+         --section-height: auto;
+         --section-height-mobile: auto;
          --aspect-ratio-desktop: {{ aspect_ratio_desktop }};
          --aspect-ratio-mobile: {{ aspect_ratio_mobile }};
        {% endif %}
@@ -126,14 +129,18 @@
       </div>
     </div>
   {% endif %}
-</div>
+</custom-slideshow>
 
 <style>
+  /* Ensure the custom element displays correctly */
+  custom-slideshow {
+    display: flex;
+  }
+
   .custom-slideshow-section {
     position: relative;
     width: 100%;
-    height: var(--section-height);
-    display: flex;
+    height: var(--section-height, 750px);
     flex-direction: column;
     overflow: hidden;
   }
@@ -141,7 +148,7 @@
   /* Support for Auto (Aspect Ratio) Height */
   .custom-slideshow-section.height-auto {
     height: auto;
-    aspect-ratio: var(--aspect-ratio-desktop);
+    aspect-ratio: var(--aspect-ratio-desktop, 16/9);
   }
 
   .slideshow-track {
@@ -305,11 +312,12 @@
   /* --- MOBILE OVERRIDES --- */
   @media screen and (max-width: 768px) {
     .custom-slideshow-section {
-      height: var(--section-height-mobile);
+      height: var(--section-height-mobile, 650px);
     }
     
     .custom-slideshow-section.height-auto {
-      aspect-ratio: var(--aspect-ratio-mobile);
+      height: auto;
+      aspect-ratio: var(--aspect-ratio-mobile, 1/1);
     }
 
     .slide-inner {
@@ -332,81 +340,80 @@
 </style>
 
 <script>
-  class CustomSlideshow extends HTMLElement {
-    constructor() {
-      super();
-      this.section = this;
-      this.slides = this.querySelectorAll('.slide');
-      this.dots = this.querySelectorAll('.nav-dot');
-      this.prevBtn = this.querySelector('.prev');
-      this.nextBtn = this.querySelector('.next');
-      this.currentIndex = 0;
-      this.autoplay = this.dataset.autoplay === 'true';
-      this.speed = parseInt(this.dataset.speed);
-      this.interval = null;
+  if (!customElements.get('custom-slideshow')) {
+    class CustomSlideshow extends HTMLElement {
+      constructor() {
+        super();
+        this.section = this;
+        this.slides = this.querySelectorAll('.slide');
+        this.dots = this.querySelectorAll('.nav-dot');
+        this.prevBtn = this.querySelector('.prev');
+        this.nextBtn = this.querySelector('.next');
+        this.currentIndex = 0;
+        this.autoplay = this.dataset.autoplay === 'true';
+        this.speed = parseInt(this.dataset.speed);
+        this.interval = null;
 
-      if (this.slides.length <= 1) return;
+        if (this.slides.length <= 1) return;
 
-      this.bindEvents();
-      if (this.autoplay) this.startAutoplay();
-    }
-
-    bindEvents() {
-      if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.navigate(-1));
-      if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.navigate(1));
-      
-      this.dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => this.goToSlide(index));
-      });
-
-      this.section.addEventListener('mouseenter', () => this.stopAutoplay());
-      this.section.addEventListener('mouseleave', () => {
+        this.bindEvents();
         if (this.autoplay) this.startAutoplay();
-      });
-    }
+      }
 
-    navigate(direction) {
-      let index = this.currentIndex + direction;
-      if (index < 0) index = this.slides.length - 1;
-      if (index >= this.slides.length) index = 0;
-      this.goToSlide(index);
-    }
+      bindEvents() {
+        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.navigate(-1));
+        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.navigate(1));
+        
+        this.dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => this.goToSlide(index));
+        });
 
-    goToSlide(index) {
-      this.slides[this.currentIndex].classList.remove('active');
-      if (this.dots.length) this.dots[this.currentIndex].classList.remove('active');
-      
-      this.currentIndex = index;
-      
-      this.slides[this.currentIndex].classList.add('active');
-      if (this.dots.length) this.dots[this.currentIndex].classList.add('active');
-    }
+        this.section.addEventListener('mouseenter', () => this.stopAutoplay());
+        this.section.addEventListener('mouseleave', () => {
+          if (this.autoplay) this.startAutoplay();
+        });
+      }
 
-    startAutoplay() {
-      this.stopAutoplay();
-      this.interval = setInterval(() => this.navigate(1), this.speed);
-    }
+      navigate(direction) {
+        let index = this.currentIndex + direction;
+        if (index < 0) index = this.slides.length - 1;
+        if (index >= this.slides.length) index = 0;
+        this.goToSlide(index);
+      }
 
-    stopAutoplay() {
-      if (this.interval) clearInterval(this.interval);
+      goToSlide(index) {
+        this.slides[this.currentIndex].classList.remove('active');
+        if (this.dots.length) this.dots[this.currentIndex].classList.remove('active');
+        
+        this.currentIndex = index;
+        
+        this.slides[this.currentIndex].classList.add('active');
+        if (this.dots.length) this.dots[this.currentIndex].classList.add('active');
+      }
+
+      startAutoplay() {
+        this.stopAutoplay();
+        this.interval = setInterval(() => this.navigate(1), this.speed);
+      }
+
+      stopAutoplay() {
+        if (this.interval) clearInterval(this.interval);
+      }
     }
+    customElements.define('custom-slideshow', CustomSlideshow);
   }
-
-  customElements.define('custom-slideshow', CustomSlideshow);
 
   document.addEventListener('shopify:block:select', function(event) {
     const slide = event.target;
     if (!slide.classList.contains('slide')) return;
     const index = parseInt(slide.dataset.index);
     const slideshow = slide.closest('custom-slideshow');
-    if (slideshow) {
+    if (slideshow && typeof slideshow.goToSlide === 'function') {
       slideshow.stopAutoplay();
       slideshow.goToSlide(index);
     }
   });
 </script>
-
-<custom-slideshow style="display: block; width: 100%; height: 100%;"></custom-slideshow>
 
 {% schema %}
 {
