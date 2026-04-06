@@ -122,11 +122,12 @@
 
   .slide-inner {
     display: flex;
-    width: 100%;
-    max-width: 100%; /* Removes the box constraint */
+    width: 90%;
+    max-width: {{ section.settings.container_width }}px;
     height: 100%;
-    margin: 0;
+    margin: 0 auto;
     align-items: center;
+    gap: 40px;
   }
 
   /* Layout Reversals */
@@ -138,36 +139,47 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    /* Magic formula: Keeps text aligned to your max-width grid while the image bleeds to the edge */
-    padding-left: max(5%, calc((100vw - {{ section.settings.container_width }}px) / 2));
-    padding-right: 5%;
+    padding: 2rem 0;
   }
 
-  /* When image is on the left, reverse the padding so text aligns correctly on the right */
-  .slide-inner.layout-image_left .slide-text-content {
-    padding-left: 5%;
-    padding-right: max(5%, calc((100vw - {{ section.settings.container_width }}px) / 2));
+  .slide-subheading {
+    margin-bottom: 15px;
+    font-weight: 500;
+  }
+
+  .slide-heading {
+    line-height: 1.1;
+    margin: 0 0 30px 0;
+    font-weight: 700;
+  }
+
+  .slide-button {
+    display: inline-block;
+    padding: 15px 35px;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .slide-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
   }
 
   .slide-image-content {
-    flex: 1.2; /* Increase this number (e.g., to 1.5) if you want the image to take up more of the screen */
+    flex: 1.2;
     height: 100%;
     display: flex;
-    align-items: flex-end; /* Anchors the image to the bottom */
-    justify-content: flex-end; /* Anchors the image to the extreme edge */
+    align-items: center;
+    justify-content: center;
   }
 
   .hero-img {
-    width: 100%;
-    height: 100%;
-    object-position: center bottom; /* Keeps the bottom of the product anchored */
-    
-    /* CRITICAL SETTING: 
-       If your image has the tan background baked into it, use "cover". 
-       If your image is a transparent PNG of just the coffee bag, change this to "contain". */
-    object-fit: cover; 
+    max-width: 100%;
+    max-height: 90%;
+    object-fit: contain;
   }
 
   .placeholder-svg {
