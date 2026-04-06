@@ -232,15 +232,22 @@
   /* 5. MOBILE ADJUSTMENTS */
   @media screen and (max-width: 768px) {
     .slide-inner {
-      justify-content: center !important; 
-      align-items: center !important;
+      justify-content: center !important; /* Keep horizontal center */
+      padding-top: 40px; /* Add buffer for top placement so it doesn't hit header */
     }
+    
+    /* New Mobile Vertical Positioning */
+    .slide-inner.mobile-text-position-top { align-items: flex-start !important; }
+    .slide-inner.mobile-text-position-center { align-items: center !important; }
+    .slide-inner.mobile-text-position-bottom { align-items: flex-end !important; }
+
     .slide-text-box {
       text-align: center !important;
       align-items: center !important;
       padding: 20px;
       width: 100%;
     }
+    
     .slide-heading {
       font-size: clamp(2.5rem, 8vw, 3.5rem) !important;
     }
@@ -286,7 +293,7 @@
             <div class="bg-overlay" style="background: rgba(0,0,0, {{ block.settings.overlay_opacity | divided_by: 100.0 }});"></div>
           </div>
 
-          <div class="slide-inner text-position-{{ block.settings.text_position }}" style="max-width: {{ section.settings.container_width }}px;">
+          <div class="slide-inner text-position-{{ block.settings.text_position }} mobile-text-position-{{ block.settings.text_position_mobile }}" style="max-width: {{ section.settings.container_width }}px; padding-bottom: {{ section.settings.nav_height }}px;">
             <div class="slide-text-box" style="
                 text-align: {% if block.settings.text_position == 'left' %}left{% elsif block.settings.text_position == 'right' %}right{% else %}center{% endif %};
                 align-items: {% if block.settings.text_position == 'left' %}flex-start{% elsif block.settings.text_position == 'right' %}flex-end{% else %}center{% endif %};
@@ -595,18 +602,33 @@
         },
         {
           "type": "header",
-          "content": "Text Layout"
+          "content": "Desktop Text Layout"
         },
         {
           "type": "select",
           "id": "text_position",
-          "label": "Text Position",
+          "label": "Desktop Text Position",
           "options": [
             { "value": "left", "label": "Left" },
             { "value": "center", "label": "Center" },
             { "value": "right", "label": "Right" }
           ],
           "default": "left"
+        },
+        {
+          "type": "header",
+          "content": "Mobile Text Layout"
+        },
+        {
+          "type": "select",
+          "id": "text_position_mobile",
+          "label": "Mobile Text Vertical Position",
+          "options": [
+            { "value": "top", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "bottom", "label": "Bottom" }
+          ],
+          "default": "center"
         },
         {
           "type": "header",
