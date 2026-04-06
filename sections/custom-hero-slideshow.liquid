@@ -19,142 +19,45 @@
   endif
 -%}
 
-<custom-slideshow class="custom-slideshow-section height-{{ section.settings.section_height }}" id="Slideshow-{{ section.id }}" 
-     style="
-       --nav-bg: {{ section.settings.nav_bg_color }}; 
-       --nav-text: {{ section.settings.nav_text_color }};
-       {% if section.settings.section_height == 'custom' %}
-         --section-height: {{ section.settings.custom_height_desktop }}px;
-         --section-height-mobile: {{ section.settings.custom_height_mobile }}px;
-       {% elsif section.settings.section_height == 'small' %}
-         --section-height: 500px;
-         --section-height-mobile: 400px;
-       {% elsif section.settings.section_height == 'medium' %}
-         --section-height: 700px;
-         --section-height-mobile: 500px;
-       {% elsif section.settings.section_height == 'large' %}
-         --section-height: 900px;
-         --section-height-mobile: 700px;
-       {% elsif section.settings.section_height == 'fullscreen' %}
-         --section-height: 100vh;
-         --section-height-mobile: 100vh;
-       {% elsif section.settings.section_height == 'auto' %}
-         --section-height: auto;
-         --section-height-mobile: auto;
-         --aspect-ratio-desktop: {{ aspect_ratio_desktop }};
-         --aspect-ratio-mobile: {{ aspect_ratio_mobile }};
-       {% endif %}
-     "
-     data-autoplay="{{ section.settings.autoplay }}"
-     data-speed="{{ section.settings.autoplay_speed | times: 1000 }}">
-
-  <div class="slideshow-track">
-    {% for block in section.blocks %}
-      <div class="slide {% if forloop.first %}active{% endif %}" 
-           data-index="{{ forloop.index0 }}" 
-           style="background-color: {{ block.settings.bg_color }};" 
-           {{ block.shopify_attributes }}>
-        
-        <div class="slide-background">
-          {% if block.settings.image != blank %}
-            <picture>
-              {% if block.settings.image_mobile != blank %}
-                <source media="(max-width: 768px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
-              {% endif %}
-              {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'hero-bg-img' }}
-            </picture>
-          {% else %}
-            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg hero-bg-img' }}
-          {% endif %}
-          <div class="bg-overlay" style="background: rgba(0,0,0, {{ block.settings.overlay_opacity | divided_by: 100.0 }});"></div>
-        </div>
-
-        <div class="slide-inner text-position-{{ block.settings.text_position }}">
-          <div class="slide-text-box" style="
-              text-align: {% if block.settings.text_position == 'left' %}left{% elsif block.settings.text_position == 'right' %}right{% else %}center{% endif %};
-              align-items: {% if block.settings.text_position == 'left' %}flex-start{% elsif block.settings.text_position == 'right' %}flex-end{% else %}center{% endif %};
-            ">
-            
-            {% if block.settings.subheading != blank %}
-              <span class="slide-subheading" style="color: {{ block.settings.subheading_color }}; font-size: {{ block.settings.subheading_size }}px;">
-                {{ block.settings.subheading }}
-              </span>
-            {% endif %}
-            
-            {% if block.settings.title != blank %}
-              <h2 class="slide-heading" style="color: {{ block.settings.heading_color }}; font-size: {{ block.settings.heading_size }}px;">
-                {{ block.settings.title | newline_to_br }}
-              </h2>
-            {% endif %}
-            
-            {% if block.settings.button_label != blank %}
-              <a href="{{ block.settings.button_link }}" class="slide-button" 
-                 style="
-                   background-color: {{ block.settings.btn_bg_color }}; 
-                   color: {{ block.settings.btn_text_color }};
-                   border-radius: {{ section.settings.button_radius }}px;
-                 ">
-                {{ block.settings.button_label }}
-              </a>
-            {% endif %}
-          </div>
-        </div>
-
-      </div>
-    {% endfor %}
-  </div>
-
-  {% if section.blocks.size > 1 %}
-    <div class="slideshow-nav-bar">
-      <div class="nav-container">
-        {% if section.settings.show_arrows %}
-          <button class="nav-arrow prev" aria-label="Previous Slide">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-        {% endif %}
-        
-        {% if section.settings.show_dots %}
-          <div class="nav-dots">
-            {% for block in section.blocks %}
-              <button class="nav-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
-            {% endfor %}
-          </div>
-        {% endif %}
-
-        {% if section.settings.show_arrows %}
-          <button class="nav-arrow next" aria-label="Next Slide">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        {% endif %}
-      </div>
-    </div>
-  {% endif %}
-</custom-slideshow>
-
-<style>
-  /* Ensure the custom element displays correctly */
-  custom-slideshow {
-    display: flex;
-  }
-
-  .custom-slideshow-section {
-    position: relative;
+{%- style -%}
+  #Slideshow-{{ section.id }} {
+    --nav-bg: {{ section.settings.nav_bg_color }}; 
+    --nav-text: {{ section.settings.nav_text_color }};
+    display: block;
     width: 100%;
-    height: var(--section-height, 750px);
-    flex-direction: column;
+    position: relative;
     overflow: hidden;
   }
 
-  /* Support for Auto (Aspect Ratio) Height */
-  .custom-slideshow-section.height-auto {
-    height: auto;
-    aspect-ratio: var(--aspect-ratio-desktop, 16/9);
-  }
+  {% if section.settings.section_height == 'custom' %}
+    #Slideshow-{{ section.id }} { height: {{ section.settings.custom_height_desktop }}px; }
+    @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { height: {{ section.settings.custom_height_mobile }}px; } }
+  {% elsif section.settings.section_height == 'fullscreen' %}
+    #Slideshow-{{ section.id }} { height: 100vh; }
+  {% elsif section.settings.section_height == 'auto' %}
+    #Slideshow-{{ section.id }} { height: auto; aspect-ratio: {{ aspect_ratio_desktop }}; }
+    @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { aspect-ratio: {{ aspect_ratio_mobile }}; } }
+  {% else %}
+    /* Standard Preset Heights */
+    {% case section.settings.section_height %}
+      {% when 'small' %}
+        #Slideshow-{{ section.id }} { height: 500px; }
+        @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { height: 400px; } }
+      {% when 'medium' %}
+        #Slideshow-{{ section.id }} { height: 750px; }
+        @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { height: 500px; } }
+      {% when 'large' %}
+        #Slideshow-{{ section.id }} { height: 900px; }
+        @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { height: 700px; } }
+    {% endcase %}
+  {% endif %}
+{%- endstyle -%}
 
+<style>
   .slideshow-track {
     position: relative;
     width: 100%;
-    flex-grow: 1; 
+    height: 100%;
   }
 
   .slide {
@@ -174,7 +77,7 @@
     z-index: 1;
   }
 
-  /* --- BACKGROUND --- */
+  /* --- LAYER 1: FULL SCREEN BACKGROUND --- */
   .slide-background {
     position: absolute;
     top: 0;
@@ -201,7 +104,7 @@
     pointer-events: none; 
   }
 
-  /* --- TEXT LAYERS --- */
+  /* --- LAYER 2: FOREGROUND TEXT --- */
   .slide-inner {
     position: relative;
     z-index: 2; 
@@ -209,9 +112,7 @@
     align-items: center; 
     height: 100%;
     width: 90%;
-    max-width: {{ section.settings.container_width }}px;
     margin: 0 auto;
-    padding-bottom: {{ section.settings.nav_height }}px; /* Keeps text from hitting the hover nav */
   }
 
   .slide-inner.text-position-left { justify-content: flex-start; }
@@ -257,7 +158,6 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: {{ section.settings.nav_height }}px;
     background-color: var(--nav-bg);
     display: flex;
     align-items: center;
@@ -311,15 +211,6 @@
 
   /* --- MOBILE OVERRIDES --- */
   @media screen and (max-width: 768px) {
-    .custom-slideshow-section {
-      height: var(--section-height-mobile, 650px);
-    }
-    
-    .custom-slideshow-section.height-auto {
-      height: auto;
-      aspect-ratio: var(--aspect-ratio-mobile, 1/1);
-    }
-
     .slide-inner {
       justify-content: center !important; 
       align-items: center !important;
@@ -338,6 +229,93 @@
     }
   }
 </style>
+
+<custom-slideshow id="Slideshow-{{ section.id }}" 
+     data-autoplay="{{ section.settings.autoplay }}"
+     data-speed="{{ section.settings.autoplay_speed | times: 1000 }}">
+
+  <div class="slideshow-track">
+    {% for block in section.blocks %}
+      <div class="slide {% if forloop.first %}active{% endif %}" 
+           data-index="{{ forloop.index0 }}" 
+           style="background-color: {{ block.settings.bg_color }};" 
+           {{ block.shopify_attributes }}>
+        
+        <div class="slide-background">
+          {% if block.settings.image != blank %}
+            <picture>
+              {% if block.settings.image_mobile != blank %}
+                <source media="(max-width: 768px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
+              {% endif %}
+              {{ block.settings.image | image_url: width: 2400 | image_tag: loading: 'eager', class: 'hero-bg-img', fetchpriority: 'high' }}
+            </picture>
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg hero-bg-img' }}
+          {% endif %}
+          <div class="bg-overlay" style="background: rgba(0,0,0, {{ block.settings.overlay_opacity | divided_by: 100.0 }});"></div>
+        </div>
+
+        <div class="slide-inner text-position-{{ block.settings.text_position }}" style="max-width: {{ section.settings.container_width }}px; padding-bottom: {{ section.settings.nav_height }}px;">
+          <div class="slide-text-box" style="
+              text-align: {% if block.settings.text_position == 'left' %}left{% elsif block.settings.text_position == 'right' %}right{% else %}center{% endif %};
+              align-items: {% if block.settings.text_position == 'left' %}flex-start{% elsif block.settings.text_position == 'right' %}flex-end{% else %}center{% endif %};
+            ">
+            
+            {% if block.settings.subheading != blank %}
+              <span class="slide-subheading" style="color: {{ block.settings.subheading_color }}; font-size: {{ block.settings.subheading_size }}px;">
+                {{ block.settings.subheading }}
+              </span>
+            {% endif %}
+            
+            {% if block.settings.title != blank %}
+              <h2 class="slide-heading" style="color: {{ block.settings.heading_color }}; font-size: {{ block.settings.heading_size }}px;">
+                {{ block.settings.title | newline_to_br }}
+              </h2>
+            {% endif %}
+            
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link }}" class="slide-button" 
+                 style="
+                   background-color: {{ block.settings.btn_bg_color }}; 
+                   color: {{ block.settings.btn_text_color }};
+                   border-radius: {{ section.settings.button_radius }}px;
+                 ">
+                {{ block.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if section.blocks.size > 1 %}
+    <div class="slideshow-nav-bar" style="height: {{ section.settings.nav_height }}px;">
+      <div class="nav-container">
+        {% if section.settings.show_arrows %}
+          <button class="nav-arrow prev" aria-label="Previous Slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+        {% endif %}
+        
+        {% if section.settings.show_dots %}
+          <div class="nav-dots">
+            {% for block in section.blocks %}
+              <button class="nav-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if section.settings.show_arrows %}
+          <button class="nav-arrow next" aria-label="Next Slide">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</custom-slideshow>
 
 <script>
   if (!customElements.get('custom-slideshow')) {
