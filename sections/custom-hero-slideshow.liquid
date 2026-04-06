@@ -1,5 +1,5 @@
 {%- liquid
-  # Calculate the aspect ratio for 'auto' height based on the first slide
+  # Set default aspect ratios
   assign aspect_ratio_desktop = '16/9'
   assign aspect_ratio_mobile = '1/1'
   
@@ -19,51 +19,61 @@
   endif
 -%}
 
-{%- style -%}
-  #Slideshow-{{ section.id }} {
-    --nav-bg: {{ section.settings.nav_bg_color }}; 
-    --nav-text: {{ section.settings.nav_text_color }};
-    display: block;
+<style>
+  /* 1. CONTAINER BREAKOUT & HEIGHTS */
+  /* This breaks the section out of the page-width constraints to touch the screen edges */
+  .hero-slideshow-wrapper {
     position: relative;
-    /* CSS BREAKOUT: Forces full viewport width regardless of theme limits */
     width: 100vw !important;
     max-width: 100vw !important;
     margin-left: calc(50% - 50vw) !important;
-    left: 0;
     overflow: hidden;
+    background-color: var(--nav-bg);
   }
 
-  {% if section.settings.section_height == 'custom' %}
-    #Slideshow-{{ section.id }} { height: {{ section.settings.custom_height_desktop }}px; }
-    @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { height: {{ section.settings.custom_height_mobile }}px; } }
-  {% elsif section.settings.section_height == 'fullscreen' %}
-    #Slideshow-{{ section.id }} { height: 100vh; }
-  {% elsif section.settings.section_height == 'auto' %}
-    #Slideshow-{{ section.id }} { height: auto; aspect-ratio: {{ aspect_ratio_desktop }}; }
-    @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { aspect-ratio: {{ aspect_ratio_mobile }}; } }
-  {% else %}
-    /* Standard Preset Heights */
-    {% case section.settings.section_height %}
-      {% when 'small' %}
-        #Slideshow-{{ section.id }} { height: 500px; }
-        @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { height: 400px; } }
-      {% when 'medium' %}
-        #Slideshow-{{ section.id }} { height: 750px; }
-        @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { height: 500px; } }
-      {% when 'large' %}
-        #Slideshow-{{ section.id }} { height: 900px; }
-        @media screen and (max-width: 768px) { #Slideshow-{{ section.id }} { height: 700px; } }
-    {% endcase %}
-  {% endif %}
-{%- endstyle -%}
+  custom-slideshow {
+    display: block;
+    width: 100%;
+    position: relative;
+  }
 
-<style>
+  /* Height Logic Based on Settings */
   .slideshow-track {
     position: relative;
     width: 100%;
-    height: 100%;
+    /* Default fallback */
+    min-height: 500px; 
   }
 
+  {% if section.settings.section_height == 'custom' %}
+    .slideshow-track { height: {{ section.settings.custom_height_desktop }}px; }
+    @media screen and (max-width: 768px) { .slideshow-track { height: {{ section.settings.custom_height_mobile }}px; } }
+  {% elsif section.settings.section_height == 'fullscreen' %}
+    .slideshow-track { height: 100vh; }
+  {% elsif section.settings.section_height == 'auto' %}
+    .slideshow-track { 
+      height: auto; 
+      aspect-ratio: {{ aspect_ratio_desktop }}; 
+    }
+    @media screen and (max-width: 768px) { 
+      .slideshow-track { aspect-ratio: {{ aspect_ratio_mobile }}; } 
+    }
+  {% else %}
+    /* Preset Heights */
+    {% case section.settings.section_height %}
+      {% when 'small' %}
+        .slideshow-track { height: 500px; }
+        @media screen and (max-width: 768px) { .slideshow-track { height: 400px; } }
+      {% when 'medium' %}
+        .slideshow-track { height: 750px; }
+        @media screen and (max-width: 768px) { .slideshow-track { height: 500px; } }
+      {% when 'large' %}
+        .slideshow-track { height: 900px; }
+        @media screen and (max-width: 768px) { .slideshow-track { height: 700px; } }
+    {% endcase %}
+  {% endif %}
+
+  /* 2. SLIDES & BACKGROUNDS */
   .slide {
     position: absolute;
     top: 0;
@@ -72,7 +82,7 @@
     height: 100%;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
   }
 
   .slide.active {
@@ -81,7 +91,6 @@
     z-index: 1;
   }
 
-  /* --- LAYER 1: FULL SCREEN BACKGROUND --- */
   .slide-background {
     position: absolute;
     top: 0;
@@ -91,12 +100,18 @@
     z-index: 0;
   }
 
-  .hero-bg-img, .placeholder-svg {
-    width: 100vw !important; /* Force image width */
-    max-width: none !important; /* Override theme image constraints */
+  .hero-bg-img {
+    width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
+  }
+
+  .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
   }
 
   .bg-overlay {
@@ -109,7 +124,7 @@
     pointer-events: none; 
   }
 
-  /* --- LAYER 2: FOREGROUND TEXT --- */
+  /* 3. FOREGROUND CONTENT */
   .slide-inner {
     position: relative;
     z-index: 2; 
@@ -145,6 +160,7 @@
   .slide-button {
     display: inline-block;
     padding: 15px 35px;
+    margin-top: 10px;
     text-decoration: none;
     font-weight: 600;
     text-transform: uppercase;
@@ -157,11 +173,9 @@
     opacity: 0.9;
   }
 
-  /* --- NAVIGATION BAR --- */
+  /* 4. BOTTOM NAVIGATION BAR */
   .slideshow-nav-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    position: relative;
     width: 100%;
     background-color: var(--nav-bg);
     display: flex;
@@ -184,8 +198,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.5;
+    opacity: 0.6;
     transition: opacity 0.2s;
+    padding: 10px;
   }
 
   .nav-arrow:hover { opacity: 1; }
@@ -214,113 +229,126 @@
     border-radius: 10px;
   }
 
-  /* --- MOBILE OVERRIDES --- */
+  /* 5. MOBILE ADJUSTMENTS */
   @media screen and (max-width: 768px) {
     .slide-inner {
       justify-content: center !important; 
       align-items: center !important;
     }
-
     .slide-text-box {
       text-align: center !important;
       align-items: center !important;
       padding: 20px;
-      background: rgba(255,255,255,0.8); 
-      border-radius: 10px;
+      width: 100%;
     }
-
     .slide-heading {
       font-size: clamp(2.5rem, 8vw, 3.5rem) !important;
     }
   }
 </style>
 
-<custom-slideshow id="Slideshow-{{ section.id }}" 
-     data-autoplay="{{ section.settings.autoplay }}"
-     data-speed="{{ section.settings.autoplay_speed | times: 1000 }}">
+<div class="hero-slideshow-wrapper" 
+     style="--nav-bg: {{ section.settings.nav_bg_color }}; --nav-text: {{ section.settings.nav_text_color }};">
+     
+  <custom-slideshow id="Slideshow-{{ section.id }}" 
+       data-autoplay="{{ section.settings.autoplay }}"
+       data-speed="{{ section.settings.autoplay_speed | times: 1000 }}">
 
-  <div class="slideshow-track">
-    {% for block in section.blocks %}
-      <div class="slide {% if forloop.first %}active{% endif %}" 
-           data-index="{{ forloop.index0 }}" 
-           style="background-color: {{ block.settings.bg_color }};" 
-           {{ block.shopify_attributes }}>
-        
-        <div class="slide-background">
-          {% if block.settings.image != blank %}
-            <picture>
-              {% if block.settings.image_mobile != blank %}
-                <source media="(max-width: 768px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
+    <div class="slideshow-track">
+      {% for block in section.blocks %}
+        {%- liquid 
+           # Preload the first image so the section doesn't flash white on page load
+           assign fetch_priority = 'auto'
+           assign loading_strat = 'lazy'
+           if forloop.first
+             assign fetch_priority = 'high'
+             assign loading_strat = 'eager'
+           endif 
+        -%}
+
+        <div class="slide {% if forloop.first %}active{% endif %}" 
+             data-index="{{ forloop.index0 }}" 
+             style="background-color: {{ block.settings.bg_color }};" 
+             {{ block.shopify_attributes }}>
+          
+          <div class="slide-background">
+            {% if block.settings.image != blank %}
+              <picture>
+                {% if block.settings.image_mobile != blank %}
+                  <source media="(max-width: 768px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
+                {% endif %}
+                {{ block.settings.image | image_url: width: 2400 | image_tag: loading: loading_strat, class: 'hero-bg-img', fetchpriority: fetch_priority }}
+              </picture>
+            {% else %}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg hero-bg-img' }}
+            {% endif %}
+            
+            <div class="bg-overlay" style="background: rgba(0,0,0, {{ block.settings.overlay_opacity | divided_by: 100.0 }});"></div>
+          </div>
+
+          <div class="slide-inner text-position-{{ block.settings.text_position }}" style="max-width: {{ section.settings.container_width }}px;">
+            <div class="slide-text-box" style="
+                text-align: {% if block.settings.text_position == 'left' %}left{% elsif block.settings.text_position == 'right' %}right{% else %}center{% endif %};
+                align-items: {% if block.settings.text_position == 'left' %}flex-start{% elsif block.settings.text_position == 'right' %}flex-end{% else %}center{% endif %};
+              ">
+              
+              {% if block.settings.subheading != blank %}
+                <span class="slide-subheading" style="color: {{ block.settings.subheading_color }}; font-size: {{ block.settings.subheading_size }}px;">
+                  {{ block.settings.subheading }}
+                </span>
               {% endif %}
-              {{ block.settings.image | image_url: width: 2400 | image_tag: loading: 'eager', class: 'hero-bg-img', fetchpriority: 'high' }}
-            </picture>
-          {% else %}
-            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg hero-bg-img' }}
-          {% endif %}
-          <div class="bg-overlay" style="background: rgba(0,0,0, {{ block.settings.overlay_opacity | divided_by: 100.0 }});"></div>
-        </div>
-
-        <div class="slide-inner text-position-{{ block.settings.text_position }}" style="max-width: {{ section.settings.container_width }}px; padding-bottom: {{ section.settings.nav_height }}px;">
-          <div class="slide-text-box" style="
-              text-align: {% if block.settings.text_position == 'left' %}left{% elsif block.settings.text_position == 'right' %}right{% else %}center{% endif %};
-              align-items: {% if block.settings.text_position == 'left' %}flex-start{% elsif block.settings.text_position == 'right' %}flex-end{% else %}center{% endif %};
-            ">
-            
-            {% if block.settings.subheading != blank %}
-              <span class="slide-subheading" style="color: {{ block.settings.subheading_color }}; font-size: {{ block.settings.subheading_size }}px;">
-                {{ block.settings.subheading }}
-              </span>
-            {% endif %}
-            
-            {% if block.settings.title != blank %}
-              <h2 class="slide-heading" style="color: {{ block.settings.heading_color }}; font-size: {{ block.settings.heading_size }}px;">
-                {{ block.settings.title | newline_to_br }}
-              </h2>
-            {% endif %}
-            
-            {% if block.settings.button_label != blank %}
-              <a href="{{ block.settings.button_link }}" class="slide-button" 
-                 style="
-                   background-color: {{ block.settings.btn_bg_color }}; 
-                   color: {{ block.settings.btn_text_color }};
-                   border-radius: {{ section.settings.button_radius }}px;
-                 ">
-                {{ block.settings.button_label }}
-              </a>
-            {% endif %}
+              
+              {% if block.settings.title != blank %}
+                <h2 class="slide-heading" style="color: {{ block.settings.heading_color }}; font-size: {{ block.settings.heading_size }}px;">
+                  {{ block.settings.title | newline_to_br }}
+                </h2>
+              {% endif %}
+              
+              {% if block.settings.button_label != blank %}
+                <a href="{{ block.settings.button_link }}" class="slide-button" 
+                   style="
+                     background-color: {{ block.settings.btn_bg_color }}; 
+                     color: {{ block.settings.btn_text_color }};
+                     border-radius: {{ section.settings.button_radius }}px;
+                   ">
+                  {{ block.settings.button_label }}
+                </a>
+              {% endif %}
+            </div>
           </div>
+
         </div>
-
-      </div>
-    {% endfor %}
-  </div>
-
-  {% if section.blocks.size > 1 %}
-    <div class="slideshow-nav-bar" style="height: {{ section.settings.nav_height }}px;">
-      <div class="nav-container">
-        {% if section.settings.show_arrows %}
-          <button class="nav-arrow prev" aria-label="Previous Slide">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-        {% endif %}
-        
-        {% if section.settings.show_dots %}
-          <div class="nav-dots">
-            {% for block in section.blocks %}
-              <button class="nav-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
-            {% endfor %}
-          </div>
-        {% endif %}
-
-        {% if section.settings.show_arrows %}
-          <button class="nav-arrow next" aria-label="Next Slide">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        {% endif %}
-      </div>
+      {% endfor %}
     </div>
-  {% endif %}
-</custom-slideshow>
+
+    {% if section.blocks.size > 1 %}
+      <div class="slideshow-nav-bar" style="height: {{ section.settings.nav_height }}px;">
+        <div class="nav-container">
+          {% if section.settings.show_arrows %}
+            <button class="nav-arrow prev" aria-label="Previous Slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+          {% endif %}
+          
+          {% if section.settings.show_dots %}
+            <div class="nav-dots">
+              {% for block in section.blocks %}
+                <button class="nav-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if section.settings.show_arrows %}
+            <button class="nav-arrow next" aria-label="Next Slide">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    
+  </custom-slideshow>
+</div>
 
 <script>
   if (!customElements.get('custom-slideshow')) {
