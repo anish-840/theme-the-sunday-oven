@@ -21,7 +21,6 @@
 
 <style>
   /* 1. CONTAINER BREAKOUT & HEIGHTS */
-  /* This breaks the section out of the page-width constraints to touch the screen edges */
   .hero-slideshow-wrapper {
     position: relative;
     width: 100vw !important;
@@ -37,41 +36,17 @@
     position: relative;
   }
 
-  /* Height Logic Based on Settings */
   .slideshow-track {
     position: relative;
     width: 100%;
-    /* Default fallback */
-    min-height: 500px; 
+    height: var(--section-height, 500px);
   }
 
-  {% if section.settings.section_height == 'custom' %}
-    .slideshow-track { height: {{ section.settings.custom_height_desktop }}px; }
-    @media screen and (max-width: 768px) { .slideshow-track { height: {{ section.settings.custom_height_mobile }}px; } }
-  {% elsif section.settings.section_height == 'fullscreen' %}
-    .slideshow-track { height: 100vh; }
-  {% elsif section.settings.section_height == 'auto' %}
-    .slideshow-track { 
-      height: auto; 
-      aspect-ratio: {{ aspect_ratio_desktop }}; 
-    }
-    @media screen and (max-width: 768px) { 
-      .slideshow-track { aspect-ratio: {{ aspect_ratio_mobile }}; } 
-    }
-  {% else %}
-    /* Preset Heights */
-    {% case section.settings.section_height %}
-      {% when 'small' %}
-        .slideshow-track { height: 500px; }
-        @media screen and (max-width: 768px) { .slideshow-track { height: 400px; } }
-      {% when 'medium' %}
-        .slideshow-track { height: 750px; }
-        @media screen and (max-width: 768px) { .slideshow-track { height: 500px; } }
-      {% when 'large' %}
-        .slideshow-track { height: 900px; }
-        @media screen and (max-width: 768px) { .slideshow-track { height: 700px; } }
-    {% endcase %}
-  {% endif %}
+  /* Support for Auto (Aspect Ratio) Height */
+  .slideshow-track.height-auto {
+    height: auto;
+    aspect-ratio: var(--aspect-ratio-desktop, 16/9);
+  }
 
   /* 2. SLIDES & BACKGROUNDS */
   .slide {
@@ -231,12 +206,18 @@
 
   /* 5. MOBILE ADJUSTMENTS */
   @media screen and (max-width: 768px) {
-    .slide-inner {
-      justify-content: center !important; /* Keep horizontal center */
-      padding-top: 40px; /* Add buffer for top placement so it doesn't hit header */
+    .slideshow-track {
+      height: var(--section-height-mobile, 400px);
+    }
+    .slideshow-track.height-auto {
+      aspect-ratio: var(--aspect-ratio-mobile, 1/1);
     }
     
-    /* New Mobile Vertical Positioning */
+    .slide-inner {
+      justify-content: center !important; 
+      padding-top: 40px; 
+    }
+    
     .slide-inner.mobile-text-position-top { align-items: flex-start !important; }
     .slide-inner.mobile-text-position-center { align-items: center !important; }
     .slide-inner.mobile-text-position-bottom { align-items: flex-end !important; }
@@ -255,16 +236,39 @@
 </style>
 
 <div class="hero-slideshow-wrapper" 
-     style="--nav-bg: {{ section.settings.nav_bg_color }}; --nav-text: {{ section.settings.nav_text_color }};">
+     style="
+       --nav-bg: {{ section.settings.nav_bg_color }}; 
+       --nav-text: {{ section.settings.nav_text_color }};
+       --aspect-ratio-desktop: {{ aspect_ratio_desktop }};
+       --aspect-ratio-mobile: {{ aspect_ratio_mobile }};
+       {% if section.settings.section_height == 'custom' %}
+         --section-height: {{ section.settings.custom_height_desktop }}px;
+         --section-height-mobile: {{ section.settings.custom_height_mobile }}px;
+       {% elsif section.settings.section_height == 'fullscreen' %}
+         --section-height: 100vh;
+         --section-height-mobile: 100vh;
+       {% elsif section.settings.section_height == 'auto' %}
+         --section-height: auto;
+         --section-height-mobile: auto;
+       {% elsif section.settings.section_height == 'small' %}
+         --section-height: 500px;
+         --section-height-mobile: 400px;
+       {% elsif section.settings.section_height == 'medium' %}
+         --section-height: 750px;
+         --section-height-mobile: 500px;
+       {% elsif section.settings.section_height == 'large' %}
+         --section-height: 900px;
+         --section-height-mobile: 700px;
+       {% endif %}
+     ">
      
   <custom-slideshow id="Slideshow-{{ section.id }}" 
        data-autoplay="{{ section.settings.autoplay }}"
        data-speed="{{ section.settings.autoplay_speed | times: 1000 }}">
 
-    <div class="slideshow-track">
+    <div class="slideshow-track {% if section.settings.section_height == 'auto' %}height-auto{% endif %}">
       {% for block in section.blocks %}
         {%- liquid 
-           # Preload the first image so the section doesn't flash white on page load
            assign fetch_priority = 'auto'
            assign loading_strat = 'lazy'
            if forloop.first
