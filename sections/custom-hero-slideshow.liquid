@@ -15,9 +15,27 @@
            style="background-color: {{ block.settings.bg_color }};" 
            {{ block.shopify_attributes }}>
         
-        <div class="slide-inner layout-{{ block.settings.layout }}">
+        <div class="slide-background">
+          {% if block.settings.image != blank %}
+            <picture>
+              {% if block.settings.image_mobile != blank %}
+                <source media="(max-width: 768px)" srcset="{{ block.settings.image_mobile | image_url: width: 800 }}">
+              {% endif %}
+              {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'hero-bg-img' }}
+            </picture>
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg hero-bg-img' }}
+          {% endif %}
           
-          <div class="slide-text-content" style="align-items: {{ block.settings.text_alignment }}; text-align: {% if block.settings.text_alignment == 'flex-start' %}left{% elsif block.settings.text_alignment == 'flex-end' %}right{% else %}center{% endif %};">
+          <div class="bg-overlay" style="background: rgba(0,0,0, {{ block.settings.overlay_opacity | divided_by: 100.0 }});"></div>
+        </div>
+
+        <div class="slide-inner text-position-{{ block.settings.text_position }}">
+          <div class="slide-text-box" style="
+              text-align: {% if block.settings.text_position == 'left' %}left{% elsif block.settings.text_position == 'right' %}right{% else %}center{% endif %};
+              align-items: {% if block.settings.text_position == 'left' %}flex-start{% elsif block.settings.text_position == 'right' %}flex-end{% else %}center{% endif %};
+            ">
+            
             {% if block.settings.subheading != blank %}
               <span class="slide-subheading" style="color: {{ block.settings.subheading_color }}; font-size: {{ block.settings.subheading_size }}px;">
                 {{ block.settings.subheading }}
@@ -41,21 +59,8 @@
               </a>
             {% endif %}
           </div>
-
-          <div class="slide-image-content">
-            {% if block.settings.image != blank %}
-              <picture>
-                {% if block.settings.image_mobile != blank %}
-                  <source media="(max-width: 768px)" srcset="{{ block.settings.image_mobile | image_url: width: 600 }}">
-                {% endif %}
-                {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'hero-img' }}
-              </picture>
-            {% else %}
-              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg hero-img' }}
-            {% endif %}
-          </div>
-
         </div>
+
       </div>
     {% endfor %}
   </div>
@@ -120,25 +125,54 @@
     z-index: 1;
   }
 
-  .slide-inner {
-    display: flex;
-    width: 90%;
-    max-width: {{ section.settings.container_width }}px;
+  /* --- LAYER 1: BACKGROUND --- */
+  .slide-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    margin: 0 auto;
-    align-items: center;
-    gap: 40px;
+    z-index: 0;
   }
 
-  /* Layout Reversals */
-  .slide-inner.layout-image_right { flex-direction: row; }
-  .slide-inner.layout-image_left { flex-direction: row-reverse; }
+  .hero-bg-img, .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 
-  .slide-text-content {
-    flex: 1;
+  .bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; /* Allows clicking through the overlay */
+  }
+
+  /* --- LAYER 2: FOREGROUND TEXT --- */
+  .slide-inner {
+    position: relative;
+    z-index: 2; /* Sits above the background */
+    display: flex;
+    align-items: center; /* Vertically centers the text box */
+    height: 100%;
+    width: 90%;
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+  }
+
+  /* Horizontal Alignment Settings */
+  .slide-inner.text-position-left { justify-content: flex-start; }
+  .slide-inner.text-position-center { justify-content: center; }
+  .slide-inner.text-position-right { justify-content: flex-end; }
+
+  .slide-text-box {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    max-width: 600px; /* Prevents text from stretching across the whole screen */
     padding: 2rem 0;
   }
 
@@ -168,27 +202,7 @@
     opacity: 0.9;
   }
 
-  .slide-image-content {
-    flex: 1.2;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero-img {
-    max-width: 100%;
-    max-height: 90%;
-    object-fit: contain;
-  }
-
-  .placeholder-svg {
-    width: 100%;
-    height: 60%;
-    background-color: rgba(0,0,0,0.1);
-  }
-
-  /* Bottom Navigation Bar */
+  /* --- BOTTOM NAVIGATION BAR --- */
   .slideshow-nav-bar {
     width: 100%;
     height: {{ section.settings.nav_height }}px;
@@ -243,29 +257,27 @@
     border-radius: 10px;
   }
 
-  /* Mobile Overrides */
+  /* --- MOBILE OVERRIDES --- */
   @media screen and (max-width: 768px) {
     .custom-slideshow-section {
       height: var(--section-height-mobile);
     }
-    .slide-inner.layout-image_right,
-    .slide-inner.layout-image_left {
-      flex-direction: column-reverse;
-      text-align: center;
-      gap: 20px;
-    }
-    .slide-text-content {
+    
+    .slide-inner {
+      justify-content: center !important; /* Force center on mobile */
       align-items: center !important;
+    }
+
+    .slide-text-box {
       text-align: center !important;
-      padding-top: 0;
+      align-items: center !important;
+      padding: 20px;
+      background: rgba(255,255,255,0.8); /* Optional: adds a slight background to make text readable on mobile if the image is busy */
+      border-radius: 10px;
     }
+
     .slide-heading {
-      font-size: clamp(2rem, 8vw, 3rem) !important;
-    }
-    .slide-image-content {
-      flex: 1;
-      width: 100%;
-      padding-top: 20px;
+      font-size: clamp(2.5rem, 8vw, 3.5rem) !important;
     }
   }
 </style>
@@ -298,7 +310,6 @@
         dot.addEventListener('click', () => this.goToSlide(index));
       });
 
-      // Pause on hover
       this.section.addEventListener('mouseenter', () => this.stopAutoplay());
       this.section.addEventListener('mouseleave', () => {
         if (this.autoplay) this.startAutoplay();
@@ -334,7 +345,6 @@
 
   customElements.define('custom-slideshow', CustomSlideshow);
 
-  // Shopify Theme Editor Support (switches to slide when block is clicked)
   document.addEventListener('shopify:block:select', function(event) {
     const slide = event.target;
     if (!slide.classList.contains('slide')) return;
@@ -348,10 +358,11 @@
 </script>
 
 <custom-slideshow style="display: block; width: 100%; height: 100%;">
-  </custom-slideshow>
+</custom-slideshow>
+
 {% schema %}
 {
-  "name": "Hero Slideshow",
+  "name": "Full Background Slideshow",
   "settings": [
     {
       "type": "header",
@@ -388,7 +399,7 @@
       "max": 1600,
       "step": 50,
       "unit": "px",
-      "label": "Max Content Width",
+      "label": "Max Text Width",
       "default": 1200
     },
     {
@@ -467,52 +478,57 @@
   "blocks": [
     {
       "type": "slide",
-      "name": "Image Slide",
+      "name": "Slide",
       "settings": [
         {
           "type": "header",
-          "content": "Images"
+          "content": "Background"
         },
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Product Image (Desktop)"
+          "label": "Background Image (Desktop)"
         },
         {
           "type": "image_picker",
           "id": "image_mobile",
-          "label": "Product Image (Mobile Optional)"
-        },
-        {
-          "type": "select",
-          "id": "layout",
-          "label": "Desktop Image Placement",
-          "options": [
-            { "value": "image_right", "label": "Image on Right" },
-            { "value": "image_left", "label": "Image on Left" }
-          ],
-          "default": "image_right"
+          "label": "Background Image (Mobile Optional)"
         },
         {
           "type": "color",
           "id": "bg_color",
-          "label": "Slide Background Color",
+          "label": "Fallback Background Color",
           "default": "#c4906a"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Dark Overlay Opacity",
+          "info": "Helps make text readable if the image is too bright.",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Text Layout"
+        },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Text Position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
         },
         {
           "type": "header",
           "content": "Text Content"
-        },
-        {
-          "type": "select",
-          "id": "text_alignment",
-          "label": "Text Alignment",
-          "options": [
-            { "value": "flex-start", "label": "Left" },
-            { "value": "center", "label": "Center" },
-            { "value": "flex-end", "label": "Right" }
-          ],
-          "default": "flex-start"
         },
         {
           "type": "text",
@@ -590,7 +606,7 @@
   ],
   "presets": [
     {
-      "name": "Hero Slideshow",
+      "name": "Full Background Slideshow",
       "blocks": [
         {
           "type": "slide"
@@ -598,8 +614,12 @@
         {
           "type": "slide",
           "settings": {
-            "bg_color": "#e8e5e1",
+            "bg_color": "#161616",
             "title": "Morning\nFuel",
+            "heading_color": "#ffffff",
+            "subheading_color": "#ffffff",
+            "btn_bg_color": "#ffffff",
+            "btn_text_color": "#161616",
             "button_label": "EXPLORE BLENDS"
           }
         }
