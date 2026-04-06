@@ -225,7 +225,8 @@
         "slide_pCjVL8": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/hero_11.webp",
+            "image": "shopify://shop_images/desktopBanner1-Picsart-AiImageEnhancer.jpg",
+            "image_mobile": "shopify://shop_images/MobileBanner1-Picsart-AiImageEnhancer.png",
             "bg_color": "#c4906a",
             "overlay_opacity": 0,
             "text_position": "left",
