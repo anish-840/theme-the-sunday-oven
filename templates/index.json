@@ -230,7 +230,7 @@
             "bg_color": "#be855d",
             "overlay_opacity": 0,
             "text_position": "left",
-            "text_position_mobile": "center",
+            "text_position_mobile": "top",
             "subheading": "Boldly brewed!",
             "subheading_color": "#1a1a1a",
             "subheading_size": 16,
@@ -269,7 +269,7 @@
       ],
       "name": "Hero Slideshow",
       "settings": {
-        "section_height": "fullscreen",
+        "section_height": "custom",
         "custom_height_desktop": 750,
         "custom_height_mobile": 650,
         "container_width": 1200,
