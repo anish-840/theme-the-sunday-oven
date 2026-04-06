@@ -267,7 +267,7 @@
       ],
       "name": "Hero Slideshow",
       "settings": {
-        "section_height": "medium",
+        "section_height": "fullscreen",
         "custom_height_desktop": 750,
         "custom_height_mobile": 650,
         "container_width": 1200,
