@@ -185,10 +185,10 @@
       "block_order": [
         "group_mATTUY"
       ],
-      "disabled": true,
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/hero_11.webp",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
@@ -205,7 +205,7 @@
         "vertical_alignment_flex_direction_column": "flex-end",
         "gap": 16,
         "section_width": "page-width",
-        "section_height": "large",
+        "section_height": "full-screen",
         "section_height_custom": 50,
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
@@ -225,9 +225,9 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/hero_11.webp",
-            "layout": "image_right",
             "bg_color": "#c4906a",
-            "text_alignment": "flex-start",
+            "overlay_opacity": 0,
+            "text_position": "left",
             "subheading": "Boldly brewed!",
             "subheading_color": "#161616",
             "subheading_size": 16,
@@ -243,9 +243,9 @@
         "slide_z9mrha": {
           "type": "slide",
           "settings": {
-            "layout": "image_right",
             "bg_color": "#e8e5e1",
-            "text_alignment": "flex-start",
+            "overlay_opacity": 0,
+            "text_position": "left",
             "subheading": "Boldly brewed!",
             "subheading_color": "#161616",
             "subheading_size": 16,
