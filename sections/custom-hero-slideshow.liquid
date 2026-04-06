@@ -1,9 +1,46 @@
-<div class="custom-slideshow-section" id="Slideshow-{{ section.id }}" 
+{%- liquid
+  # Calculate the aspect ratio for 'auto' height based on the first slide
+  assign aspect_ratio_desktop = '16/9'
+  assign aspect_ratio_mobile = '1/1'
+  
+  if section.blocks.size > 0
+    assign first_image = section.blocks.first.settings.image
+    assign first_image_mobile = section.blocks.first.settings.image_mobile
+    
+    if first_image != blank
+      assign aspect_ratio_desktop = first_image.aspect_ratio
+      assign aspect_ratio_mobile = first_image.aspect_ratio
+    endif
+    
+    if first_image_mobile != blank
+      assign aspect_ratio_mobile = first_image_mobile.aspect_ratio
+    endif
+  endif
+-%}
+
+<div class="custom-slideshow-section height-{{ section.settings.section_height }}" id="Slideshow-{{ section.id }}" 
      style="
        --nav-bg: {{ section.settings.nav_bg_color }}; 
        --nav-text: {{ section.settings.nav_text_color }};
-       --section-height: {{ section.settings.desktop_height }};
-       --section-height-mobile: {{ section.settings.mobile_height }};
+       {% if section.settings.section_height == 'custom' %}
+         --section-height: {{ section.settings.custom_height_desktop }}px;
+         --section-height-mobile: {{ section.settings.custom_height_mobile }}px;
+       {% elsif section.settings.section_height == 'small' %}
+         --section-height: 500px;
+         --section-height-mobile: 400px;
+       {% elsif section.settings.section_height == 'medium' %}
+         --section-height: 700px;
+         --section-height-mobile: 500px;
+       {% elsif section.settings.section_height == 'large' %}
+         --section-height: 900px;
+         --section-height-mobile: 700px;
+       {% elsif section.settings.section_height == 'fullscreen' %}
+         --section-height: 100vh;
+         --section-height-mobile: 100vh;
+       {% elsif section.settings.section_height == 'auto' %}
+         --aspect-ratio-desktop: {{ aspect_ratio_desktop }};
+         --aspect-ratio-mobile: {{ aspect_ratio_mobile }};
+       {% endif %}
      "
      data-autoplay="{{ section.settings.autoplay }}"
      data-speed="{{ section.settings.autoplay_speed | times: 1000 }}">
@@ -26,7 +63,6 @@
           {% else %}
             {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg hero-bg-img' }}
           {% endif %}
-          
           <div class="bg-overlay" style="background: rgba(0,0,0, {{ block.settings.overlay_opacity | divided_by: 100.0 }});"></div>
         </div>
 
@@ -102,10 +138,16 @@
     overflow: hidden;
   }
 
+  /* Support for Auto (Aspect Ratio) Height */
+  .custom-slideshow-section.height-auto {
+    height: auto;
+    aspect-ratio: var(--aspect-ratio-desktop);
+  }
+
   .slideshow-track {
     position: relative;
     width: 100%;
-    flex-grow: 1; /* Takes up all space minus the nav bar */
+    flex-grow: 1; 
   }
 
   .slide {
@@ -125,7 +167,7 @@
     z-index: 1;
   }
 
-  /* --- LAYER 1: BACKGROUND --- */
+  /* --- BACKGROUND --- */
   .slide-background {
     position: absolute;
     top: 0;
@@ -149,22 +191,22 @@
     width: 100%;
     height: 100%;
     z-index: 1;
-    pointer-events: none; /* Allows clicking through the overlay */
+    pointer-events: none; 
   }
 
-  /* --- LAYER 2: FOREGROUND TEXT --- */
+  /* --- TEXT LAYERS --- */
   .slide-inner {
     position: relative;
-    z-index: 2; /* Sits above the background */
+    z-index: 2; 
     display: flex;
-    align-items: center; /* Vertically centers the text box */
+    align-items: center; 
     height: 100%;
     width: 90%;
     max-width: {{ section.settings.container_width }}px;
     margin: 0 auto;
+    padding-bottom: {{ section.settings.nav_height }}px; /* Keeps text from hitting the hover nav */
   }
 
-  /* Horizontal Alignment Settings */
   .slide-inner.text-position-left { justify-content: flex-start; }
   .slide-inner.text-position-center { justify-content: center; }
   .slide-inner.text-position-right { justify-content: flex-end; }
@@ -172,7 +214,7 @@
   .slide-text-box {
     display: flex;
     flex-direction: column;
-    max-width: 600px; /* Prevents text from stretching across the whole screen */
+    max-width: 600px; 
     padding: 2rem 0;
   }
 
@@ -202,8 +244,11 @@
     opacity: 0.9;
   }
 
-  /* --- BOTTOM NAVIGATION BAR --- */
+  /* --- NAVIGATION BAR --- */
   .slideshow-nav-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
     height: {{ section.settings.nav_height }}px;
     background-color: var(--nav-bg);
@@ -263,8 +308,12 @@
       height: var(--section-height-mobile);
     }
     
+    .custom-slideshow-section.height-auto {
+      aspect-ratio: var(--aspect-ratio-mobile);
+    }
+
     .slide-inner {
-      justify-content: center !important; /* Force center on mobile */
+      justify-content: center !important; 
       align-items: center !important;
     }
 
@@ -272,7 +321,7 @@
       text-align: center !important;
       align-items: center !important;
       padding: 20px;
-      background: rgba(255,255,255,0.8); /* Optional: adds a slight background to make text readable on mobile if the image is busy */
+      background: rgba(255,255,255,0.8); 
       border-radius: 10px;
     }
 
@@ -357,8 +406,7 @@
   });
 </script>
 
-<custom-slideshow style="display: block; width: 100%; height: 100%;">
-</custom-slideshow>
+<custom-slideshow style="display: block; width: 100%; height: 100%;"></custom-slideshow>
 
 {% schema %}
 {
@@ -366,31 +414,47 @@
   "settings": [
     {
       "type": "header",
-      "content": "Layout"
+      "content": "Height Controls"
     },
     {
       "type": "select",
-      "id": "desktop_height",
-      "label": "Desktop Height",
+      "id": "section_height",
+      "label": "Slideshow Height",
       "options": [
-        { "value": "600px", "label": "Small" },
-        { "value": "750px", "label": "Medium" },
-        { "value": "900px", "label": "Large" },
-        { "value": "100vh", "label": "Full Screen" }
+        { "value": "auto", "label": "Adapt to first image" },
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" },
+        { "value": "fullscreen", "label": "Fullscreen" },
+        { "value": "custom", "label": "Custom (Use sliders below)" }
       ],
-      "default": "750px"
+      "default": "medium"
     },
     {
-      "type": "select",
-      "id": "mobile_height",
-      "label": "Mobile Height",
-      "options": [
-        { "value": "500px", "label": "Small" },
-        { "value": "650px", "label": "Medium" },
-        { "value": "800px", "label": "Large" },
-        { "value": "100vh", "label": "Full Screen" }
-      ],
-      "default": "650px"
+      "type": "range",
+      "id": "custom_height_desktop",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Custom Height (Desktop)",
+      "info": "Only works if 'Custom' is selected above.",
+      "default": 750
+    },
+    {
+      "type": "range",
+      "id": "custom_height_mobile",
+      "min": 300,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "label": "Custom Height (Mobile)",
+      "info": "Only works if 'Custom' is selected above.",
+      "default": 650
+    },
+    {
+      "type": "header",
+      "content": "Content Width"
     },
     {
       "type": "range",
