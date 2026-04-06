@@ -1,38 +1,59 @@
-{{ 'custom-hero-slideshow.css' | asset_url | stylesheet_tag }}
+<div class="custom-slideshow-section" id="Slideshow-{{ section.id }}" 
+     style="
+       --nav-bg: {{ section.settings.nav_bg_color }}; 
+       --nav-text: {{ section.settings.nav_text_color }};
+       --section-height: {{ section.settings.desktop_height }};
+       --section-height-mobile: {{ section.settings.mobile_height }};
+     "
+     data-autoplay="{{ section.settings.autoplay }}"
+     data-speed="{{ section.settings.autoplay_speed | times: 1000 }}">
 
-<div class="hero-slideshow-wrapper" id="HeroSlideshow-{{ section.id }}" style="--bar-bg: {{ section.settings.control_bar_bg }}; --bar-text: {{ section.settings.control_bar_text }};">
-  
-  <div class="slides-track">
+  <div class="slideshow-track">
     {% for block in section.blocks %}
       <div class="slide {% if forloop.first %}active{% endif %}" 
            data-index="{{ forloop.index0 }}" 
-           style="background-color: {{ block.settings.bg_color }}; color: {{ block.settings.text_color }};" 
+           style="background-color: {{ block.settings.bg_color }};" 
            {{ block.shopify_attributes }}>
         
-        <div class="slide-inner {% if block.settings.image == blank %}center-text{% endif %}">
+        <div class="slide-inner layout-{{ block.settings.layout }}">
           
-          <div class="slide-content">
+          <div class="slide-text-content" style="align-items: {{ block.settings.text_alignment }}; text-align: {% if block.settings.text_alignment == 'flex-start' %}left{% elsif block.settings.text_alignment == 'flex-end' %}right{% else %}center{% endif %};">
             {% if block.settings.subheading != blank %}
-              <span class="subtitle" style="color: {{ block.settings.text_color }};">{{ block.settings.subheading }}</span>
+              <span class="slide-subheading" style="color: {{ block.settings.subheading_color }}; font-size: {{ block.settings.subheading_size }}px;">
+                {{ block.settings.subheading }}
+              </span>
             {% endif %}
             
             {% if block.settings.title != blank %}
-              <h2 class="title" style="color: {{ block.settings.text_color }};">{{ block.settings.title }}</h2>
+              <h2 class="slide-heading" style="color: {{ block.settings.heading_color }}; font-size: {{ block.settings.heading_size }}px;">
+                {{ block.settings.title | newline_to_br }}
+              </h2>
             {% endif %}
             
             {% if block.settings.button_label != blank %}
-              <a href="{{ block.settings.button_link }}" class="btn-custom" 
-                 style="background-color: {{ block.settings.text_color }}; color: {{ block.settings.bg_color }};">
+              <a href="{{ block.settings.button_link }}" class="slide-button" 
+                 style="
+                   background-color: {{ block.settings.btn_bg_color }}; 
+                   color: {{ block.settings.btn_text_color }};
+                   border-radius: {{ section.settings.button_radius }}px;
+                 ">
                 {{ block.settings.button_label }}
               </a>
             {% endif %}
           </div>
 
-          {% if block.settings.image != blank %}
-            <div class="slide-visual">
-              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'slide-image' }}
-            </div>
-          {% endif %}
+          <div class="slide-image-content">
+            {% if block.settings.image != blank %}
+              <picture>
+                {% if block.settings.image_mobile != blank %}
+                  <source media="(max-width: 768px)" srcset="{{ block.settings.image_mobile | image_url: width: 600 }}">
+                {% endif %}
+                {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'hero-img' }}
+              </picture>
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg hero-img' }}
+            {% endif %}
+          </div>
 
         </div>
       </div>
@@ -40,37 +61,49 @@
   </div>
 
   {% if section.blocks.size > 1 %}
-    <div class="slideshow-controls-bar">
-      <button class="nav-btn prev" aria-label="Previous Slide">❮</button>
-      <div class="dots-container">
-        {% for block in section.blocks %}
-          <button class="dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
-        {% endfor %}
+    <div class="slideshow-nav-bar">
+      <div class="nav-container">
+        {% if section.settings.show_arrows %}
+          <button class="nav-arrow prev" aria-label="Previous Slide">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+        {% endif %}
+        
+        {% if section.settings.show_dots %}
+          <div class="nav-dots">
+            {% for block in section.blocks %}
+              <button class="nav-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if section.settings.show_arrows %}
+          <button class="nav-arrow next" aria-label="Next Slide">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        {% endif %}
       </div>
-      <button class="nav-btn next" aria-label="Next Slide">❯</button>
     </div>
   {% endif %}
 </div>
 
 <style>
-  /* Scoped CSS to ensure it doesn't break other theme elements */
-  #HeroSlideshow-{{ section.id }} {
+  .custom-slideshow-section {
     position: relative;
     width: 100%;
-    height: 100vh;
-    min-height: 600px;
-    overflow: hidden;
+    height: var(--section-height);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
-  #HeroSlideshow-{{ section.id }} .slides-track {
-    width: 100%;
-    height: calc(100% - 70px); /* Leaves exact room for the bottom bar */
+  .slideshow-track {
     position: relative;
+    width: 100%;
+    flex-grow: 1; /* Takes up all space minus the nav bar */
   }
 
-  #HeroSlideshow-{{ section.id }} .slide {
+  .slide {
     position: absolute;
     top: 0;
     left: 0;
@@ -78,244 +111,456 @@
     height: 100%;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
   }
 
-  #HeroSlideshow-{{ section.id }} .slide.active {
+  .slide.active {
     opacity: 1;
     visibility: visible;
     z-index: 1;
   }
 
-  #HeroSlideshow-{{ section.id }} .slide-inner {
+  .slide-inner {
     display: flex;
     width: 90%;
-    max-width: 1200px;
+    max-width: {{ section.settings.container_width }}px;
+    height: 100%;
     margin: 0 auto;
     align-items: center;
-    justify-content: space-between;
     gap: 40px;
   }
 
-  #HeroSlideshow-{{ section.id }} .slide-inner.center-text {
-    justify-content: center;
-    text-align: center;
-  }
+  /* Layout Reversals */
+  .slide-inner.layout-image_right { flex-direction: row; }
+  .slide-inner.layout-image_left { flex-direction: row-reverse; }
 
-  #HeroSlideshow-{{ section.id }} .slide-inner.center-text .title {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  #HeroSlideshow-{{ section.id }} .slide-content {
+  .slide-text-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 0;
   }
 
-  #HeroSlideshow-{{ section.id }} .subtitle {
-    display: block;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
+  .slide-subheading {
+    margin-bottom: 15px;
+    font-weight: 500;
   }
 
-  #HeroSlideshow-{{ section.id }} .title {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+  .slide-heading {
     line-height: 1.1;
-    margin-bottom: 2.5rem;
+    margin: 0 0 30px 0;
+    font-weight: 700;
   }
 
-  #HeroSlideshow-{{ section.id }} .btn-custom {
+  .slide-button {
     display: inline-block;
-    padding: 16px 40px;
+    padding: 15px 35px;
     text-decoration: none;
-    border-radius: 40px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.2s, opacity 0.2s;
   }
 
-  #HeroSlideshow-{{ section.id }} .btn-custom:hover {
+  .slide-button:hover {
     transform: translateY(-2px);
     opacity: 0.9;
   }
 
-  #HeroSlideshow-{{ section.id }} .slide-visual {
-    flex: 1;
+  .slide-image-content {
+    flex: 1.2;
+    height: 100%;
     display: flex;
+    align-items: center;
     justify-content: center;
   }
 
-  #HeroSlideshow-{{ section.id }} .slide-image {
+  .hero-img {
     max-width: 100%;
-    height: auto;
+    max-height: 90%;
     object-fit: contain;
-    max-height: 70vh;
   }
 
-  /* The Hovering Control Bar */
-  #HeroSlideshow-{{ section.id }} .slideshow-controls-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+  .placeholder-svg {
     width: 100%;
-    height: 70px;
-    background-color: var(--bar-bg);
+    height: 60%;
+    background-color: rgba(0,0,0,0.1);
+  }
+
+  /* Bottom Navigation Bar */
+  .slideshow-nav-bar {
+    width: 100%;
+    height: {{ section.settings.nav_height }}px;
+    background-color: var(--nav-bg);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10;
-    gap: 20px;
   }
 
-  #HeroSlideshow-{{ section.id }} .nav-btn {
+  .nav-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .nav-arrow {
     background: none;
     border: none;
-    color: var(--bar-text);
-    font-size: 1.2rem;
+    color: var(--nav-text);
     cursor: pointer;
-    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
     transition: opacity 0.2s;
   }
 
-  #HeroSlideshow-{{ section.id }} .nav-btn:hover {
-    opacity: 1;
-  }
+  .nav-arrow:hover { opacity: 1; }
 
-  #HeroSlideshow-{{ section.id }} .dots-container {
+  .nav-dots {
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    align-items: center;
   }
 
-  #HeroSlideshow-{{ section.id }} .dot {
+  .nav-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: var(--bar-text);
+    background-color: var(--nav-text);
     opacity: 0.3;
-    cursor: pointer;
     border: none;
+    cursor: pointer;
     padding: 0;
-    transition: opacity 0.2s, transform 0.2s;
+    transition: all 0.3s ease;
   }
 
-  #HeroSlideshow-{{ section.id }} .dot.active {
+  .nav-dot.active {
     opacity: 1;
-    transform: scale(1.2);
-    width: 20px;
+    width: 24px;
     border-radius: 10px;
   }
 
+  /* Mobile Overrides */
   @media screen and (max-width: 768px) {
-    #HeroSlideshow-{{ section.id }} .slide-inner {
+    .custom-slideshow-section {
+      height: var(--section-height-mobile);
+    }
+    .slide-inner.layout-image_right,
+    .slide-inner.layout-image_left {
       flex-direction: column-reverse;
       text-align: center;
-      padding-top: 2rem;
+      gap: 20px;
+    }
+    .slide-text-content {
+      align-items: center !important;
+      text-align: center !important;
+      padding-top: 0;
+    }
+    .slide-heading {
+      font-size: clamp(2rem, 8vw, 3rem) !important;
+    }
+    .slide-image-content {
+      flex: 1;
+      width: 100%;
+      padding-top: 20px;
     }
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const section = document.getElementById('HeroSlideshow-{{ section.id }}');
-    if (!section) return;
+  class CustomSlideshow extends HTMLElement {
+    constructor() {
+      super();
+      this.section = this;
+      this.slides = this.querySelectorAll('.slide');
+      this.dots = this.querySelectorAll('.nav-dot');
+      this.prevBtn = this.querySelector('.prev');
+      this.nextBtn = this.querySelector('.next');
+      this.currentIndex = 0;
+      this.autoplay = this.dataset.autoplay === 'true';
+      this.speed = parseInt(this.dataset.speed);
+      this.interval = null;
 
-    const slides = section.querySelectorAll('.slide');
-    const dots = section.querySelectorAll('.dot');
-    const prevBtn = section.querySelector('.prev');
-    const nextBtn = section.querySelector('.next');
-    let currentIndex = 0;
+      if (this.slides.length <= 1) return;
 
-    if (slides.length <= 1) return; // No need for logic if only 1 slide
+      this.bindEvents();
+      if (this.autoplay) this.startAutoplay();
+    }
 
-    function goToSlide(index) {
-      slides[currentIndex].classList.remove('active');
-      dots[currentIndex].classList.remove('active');
+    bindEvents() {
+      if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.navigate(-1));
+      if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.navigate(1));
       
-      currentIndex = index;
+      this.dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => this.goToSlide(index));
+      });
+
+      // Pause on hover
+      this.section.addEventListener('mouseenter', () => this.stopAutoplay());
+      this.section.addEventListener('mouseleave', () => {
+        if (this.autoplay) this.startAutoplay();
+      });
+    }
+
+    navigate(direction) {
+      let index = this.currentIndex + direction;
+      if (index < 0) index = this.slides.length - 1;
+      if (index >= this.slides.length) index = 0;
+      this.goToSlide(index);
+    }
+
+    goToSlide(index) {
+      this.slides[this.currentIndex].classList.remove('active');
+      if (this.dots.length) this.dots[this.currentIndex].classList.remove('active');
       
-      slides[currentIndex].classList.add('active');
-      dots[currentIndex].classList.add('active');
+      this.currentIndex = index;
+      
+      this.slides[this.currentIndex].classList.add('active');
+      if (this.dots.length) this.dots[this.currentIndex].classList.add('active');
     }
 
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        let index = currentIndex - 1;
-        if (index < 0) index = slides.length - 1;
-        goToSlide(index);
-      });
+    startAutoplay() {
+      this.stopAutoplay();
+      this.interval = setInterval(() => this.navigate(1), this.speed);
     }
 
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        let index = currentIndex + 1;
-        if (index >= slides.length) index = 0;
-        goToSlide(index);
-      });
+    stopAutoplay() {
+      if (this.interval) clearInterval(this.interval);
     }
+  }
 
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        goToSlide(index);
-      });
-    });
+  customElements.define('custom-slideshow', CustomSlideshow);
+
+  // Shopify Theme Editor Support (switches to slide when block is clicked)
+  document.addEventListener('shopify:block:select', function(event) {
+    const slide = event.target;
+    if (!slide.classList.contains('slide')) return;
+    const index = parseInt(slide.dataset.index);
+    const slideshow = slide.closest('custom-slideshow');
+    if (slideshow) {
+      slideshow.stopAutoplay();
+      slideshow.goToSlide(index);
+    }
   });
 </script>
 
+<custom-slideshow style="display: block; width: 100%; height: 100%;">
+  </custom-slideshow>
 {% schema %}
 {
   "name": "Hero Slideshow",
   "settings": [
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "desktop_height",
+      "label": "Desktop Height",
+      "options": [
+        { "value": "600px", "label": "Small" },
+        { "value": "750px", "label": "Medium" },
+        { "value": "900px", "label": "Large" },
+        { "value": "100vh", "label": "Full Screen" }
+      ],
+      "default": "750px"
+    },
+    {
+      "type": "select",
+      "id": "mobile_height",
+      "label": "Mobile Height",
+      "options": [
+        { "value": "500px", "label": "Small" },
+        { "value": "650px", "label": "Medium" },
+        { "value": "800px", "label": "Large" },
+        { "value": "100vh", "label": "Full Screen" }
+      ],
+      "default": "650px"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Max Content Width",
+      "default": 1200
+    },
+    {
+      "type": "header",
+      "content": "Functionality"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate slides",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Change slides every",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Navigation Bar"
+    },
+    {
+      "type": "range",
+      "id": "nav_height",
+      "min": 40,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Bar Height",
+      "default": 70
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Dots",
+      "default": true
+    },
+    {
       "type": "color",
-      "id": "control_bar_bg",
-      "label": "Control Bar Background",
+      "id": "nav_bg_color",
+      "label": "Bar Background Color",
       "default": "#161616"
     },
     {
       "type": "color",
-      "id": "control_bar_text",
-      "label": "Control Bar Elements Color",
+      "id": "nav_text_color",
+      "label": "Arrow/Dot Color",
       "default": "#c4906a"
+    },
+    {
+      "type": "header",
+      "content": "Global Buttons"
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Button Corner Radius",
+      "default": 40
     }
   ],
   "blocks": [
     {
       "type": "slide",
-      "name": "Slide",
+      "name": "Image Slide",
       "settings": [
         {
-          "type": "color",
-          "id": "bg_color",
-          "label": "Background Color",
-          "default": "#c4906a"
-        },
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Text Color",
-          "default": "#161616"
+          "type": "header",
+          "content": "Images"
         },
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Slide Image",
-          "info": "Leave empty to center the text (like your second slide image)."
+          "label": "Product Image (Desktop)"
         },
         {
-          "type": "richtext",
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Product Image (Mobile Optional)"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Desktop Image Placement",
+          "options": [
+            { "value": "image_right", "label": "Image on Right" },
+            { "value": "image_left", "label": "Image on Left" }
+          ],
+          "default": "image_right"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Slide Background Color",
+          "default": "#c4906a"
+        },
+        {
+          "type": "header",
+          "content": "Text Content"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "options": [
+            { "value": "flex-start", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "flex-end", "label": "Right" }
+          ],
+          "default": "flex-start"
+        },
+        {
+          "type": "text",
           "id": "subheading",
           "label": "Subheading",
-          "default": "<p>Boldly brewed!</p>"
+          "default": "Boldly brewed!"
+        },
+        {
+          "type": "color",
+          "id": "subheading_color",
+          "label": "Subheading Color",
+          "default": "#161616"
+        },
+        {
+          "type": "range",
+          "id": "subheading_size",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Subheading Size",
+          "default": 16
         },
         {
           "type": "textarea",
           "id": "title",
           "label": "Heading",
           "default": "Roast\nPerfection"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading Color",
+          "default": "#161616"
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "min": 30,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Desktop Heading Size",
+          "default": 70
+        },
+        {
+          "type": "header",
+          "content": "Button"
         },
         {
           "type": "text",
@@ -327,6 +572,18 @@
           "type": "url",
           "id": "button_link",
           "label": "Button Link"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg_color",
+          "label": "Button Background",
+          "default": "#161616"
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Button Text",
+          "default": "#c4906a"
         }
       ]
     }
@@ -341,11 +598,9 @@
         {
           "type": "slide",
           "settings": {
-            "bg_color": "#161616",
-            "text_color": "#c4906a",
-            "subheading": "<p>We are <strong>Caffeine</strong></p>",
-            "title": "At our core, we're coffee artisans...",
-            "button_label": "Show more"
+            "bg_color": "#e8e5e1",
+            "title": "Morning\nFuel",
+            "button_label": "EXPLORE BLENDS"
           }
         }
       ]
