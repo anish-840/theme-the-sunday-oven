@@ -185,6 +185,7 @@
       "block_order": [
         "group_mATTUY"
       ],
+      "disabled": true,
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
@@ -215,6 +216,66 @@
         "reflection_opacity": 75,
         "padding-block-start": 0,
         "padding-block-end": 31
+      }
+    },
+    "custom_hero_slideshow_EqKnCr": {
+      "type": "custom-hero-slideshow",
+      "blocks": {
+        "slide_pCjVL8": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/hero_11.webp",
+            "layout": "image_right",
+            "bg_color": "#c4906a",
+            "text_alignment": "flex-start",
+            "subheading": "Boldly brewed!",
+            "subheading_color": "#161616",
+            "subheading_size": 16,
+            "title": "Roast\nPerfection",
+            "heading_color": "#161616",
+            "heading_size": 70,
+            "button_label": "SHOP NOW",
+            "button_link": "",
+            "btn_bg_color": "#161616",
+            "btn_text_color": "#c4906a"
+          }
+        },
+        "slide_z9mrha": {
+          "type": "slide",
+          "settings": {
+            "layout": "image_right",
+            "bg_color": "#e8e5e1",
+            "text_alignment": "flex-start",
+            "subheading": "Boldly brewed!",
+            "subheading_color": "#161616",
+            "subheading_size": 16,
+            "title": "Morning\nFuel",
+            "heading_color": "#161616",
+            "heading_size": 70,
+            "button_label": "EXPLORE BLENDS",
+            "button_link": "",
+            "btn_bg_color": "#161616",
+            "btn_text_color": "#c4906a"
+          }
+        }
+      },
+      "block_order": [
+        "slide_pCjVL8",
+        "slide_z9mrha"
+      ],
+      "name": "Hero Slideshow",
+      "settings": {
+        "desktop_height": "750px",
+        "mobile_height": "650px",
+        "container_width": 1200,
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "nav_height": 70,
+        "show_arrows": true,
+        "show_dots": true,
+        "nav_bg_color": "#161616",
+        "nav_text_color": "#c4906a",
+        "button_radius": 40
       }
     },
     "product_list_EDUBdR": {
@@ -752,6 +813,7 @@
   },
   "order": [
     "hero_iLBwPd",
+    "custom_hero_slideshow_EqKnCr",
     "product_list_EDUBdR",
     "media_with_content_LfPdEJ",
     "collection_list_xpBxCm"
