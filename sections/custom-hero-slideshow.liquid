@@ -1,0 +1,355 @@
+{{ 'custom-hero-slideshow.css' | asset_url | stylesheet_tag }}
+
+<div class="hero-slideshow-wrapper" id="HeroSlideshow-{{ section.id }}" style="--bar-bg: {{ section.settings.control_bar_bg }}; --bar-text: {{ section.settings.control_bar_text }};">
+  
+  <div class="slides-track">
+    {% for block in section.blocks %}
+      <div class="slide {% if forloop.first %}active{% endif %}" 
+           data-index="{{ forloop.index0 }}" 
+           style="background-color: {{ block.settings.bg_color }}; color: {{ block.settings.text_color }};" 
+           {{ block.shopify_attributes }}>
+        
+        <div class="slide-inner {% if block.settings.image == blank %}center-text{% endif %}">
+          
+          <div class="slide-content">
+            {% if block.settings.subheading != blank %}
+              <span class="subtitle" style="color: {{ block.settings.text_color }};">{{ block.settings.subheading }}</span>
+            {% endif %}
+            
+            {% if block.settings.title != blank %}
+              <h2 class="title" style="color: {{ block.settings.text_color }};">{{ block.settings.title }}</h2>
+            {% endif %}
+            
+            {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link }}" class="btn-custom" 
+                 style="background-color: {{ block.settings.text_color }}; color: {{ block.settings.bg_color }};">
+                {{ block.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+
+          {% if block.settings.image != blank %}
+            <div class="slide-visual">
+              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'slide-image' }}
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if section.blocks.size > 1 %}
+    <div class="slideshow-controls-bar">
+      <button class="nav-btn prev" aria-label="Previous Slide">❮</button>
+      <div class="dots-container">
+        {% for block in section.blocks %}
+          <button class="dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+        {% endfor %}
+      </div>
+      <button class="nav-btn next" aria-label="Next Slide">❯</button>
+    </div>
+  {% endif %}
+</div>
+
+<style>
+  /* Scoped CSS to ensure it doesn't break other theme elements */
+  #HeroSlideshow-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #HeroSlideshow-{{ section.id }} .slides-track {
+    width: 100%;
+    height: calc(100% - 70px); /* Leaves exact room for the bottom bar */
+    position: relative;
+  }
+
+  #HeroSlideshow-{{ section.id }} .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #HeroSlideshow-{{ section.id }} .slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+  }
+
+  #HeroSlideshow-{{ section.id }} .slide-inner {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  #HeroSlideshow-{{ section.id }} .slide-inner.center-text {
+    justify-content: center;
+    text-align: center;
+  }
+
+  #HeroSlideshow-{{ section.id }} .slide-inner.center-text .title {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #HeroSlideshow-{{ section.id }} .slide-content {
+    flex: 1;
+  }
+
+  #HeroSlideshow-{{ section.id }} .subtitle {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  #HeroSlideshow-{{ section.id }} .title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+  }
+
+  #HeroSlideshow-{{ section.id }} .btn-custom {
+    display: inline-block;
+    padding: 16px 40px;
+    text-decoration: none;
+    border-radius: 40px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  #HeroSlideshow-{{ section.id }} .btn-custom:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+
+  #HeroSlideshow-{{ section.id }} .slide-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  #HeroSlideshow-{{ section.id }} .slide-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 70vh;
+  }
+
+  /* The Hovering Control Bar */
+  #HeroSlideshow-{{ section.id }} .slideshow-controls-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: var(--bar-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    gap: 20px;
+  }
+
+  #HeroSlideshow-{{ section.id }} .nav-btn {
+    background: none;
+    border: none;
+    color: var(--bar-text);
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  #HeroSlideshow-{{ section.id }} .nav-btn:hover {
+    opacity: 1;
+  }
+
+  #HeroSlideshow-{{ section.id }} .dots-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  #HeroSlideshow-{{ section.id }} .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--bar-text);
+    opacity: 0.3;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  #HeroSlideshow-{{ section.id }} .dot.active {
+    opacity: 1;
+    transform: scale(1.2);
+    width: 20px;
+    border-radius: 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    #HeroSlideshow-{{ section.id }} .slide-inner {
+      flex-direction: column-reverse;
+      text-align: center;
+      padding-top: 2rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const section = document.getElementById('HeroSlideshow-{{ section.id }}');
+    if (!section) return;
+
+    const slides = section.querySelectorAll('.slide');
+    const dots = section.querySelectorAll('.dot');
+    const prevBtn = section.querySelector('.prev');
+    const nextBtn = section.querySelector('.next');
+    let currentIndex = 0;
+
+    if (slides.length <= 1) return; // No need for logic if only 1 slide
+
+    function goToSlide(index) {
+      slides[currentIndex].classList.remove('active');
+      dots[currentIndex].classList.remove('active');
+      
+      currentIndex = index;
+      
+      slides[currentIndex].classList.add('active');
+      dots[currentIndex].classList.add('active');
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        let index = currentIndex - 1;
+        if (index < 0) index = slides.length - 1;
+        goToSlide(index);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        let index = currentIndex + 1;
+        if (index >= slides.length) index = 0;
+        goToSlide(index);
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Hero Slideshow",
+  "settings": [
+    {
+      "type": "color",
+      "id": "control_bar_bg",
+      "label": "Control Bar Background",
+      "default": "#161616"
+    },
+    {
+      "type": "color",
+      "id": "control_bar_text",
+      "label": "Control Bar Elements Color",
+      "default": "#c4906a"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#c4906a"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#161616"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Image",
+          "info": "Leave empty to center the text (like your second slide image)."
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "<p>Boldly brewed!</p>"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Heading",
+          "default": "Roast\nPerfection"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slideshow",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "bg_color": "#161616",
+            "text_color": "#c4906a",
+            "subheading": "<p>We are <strong>Caffeine</strong></p>",
+            "title": "At our core, we're coffee artisans...",
+            "button_label": "Show more"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
