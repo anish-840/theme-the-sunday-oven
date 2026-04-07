@@ -497,7 +497,7 @@
         "padding_top_mobile": 60,
         "padding_bottom_mobile": 60,
         "show_sale_badge": true,
-        "badge_metafield": "custom.badge_label",
+        "badge_metafield": "custom.badge",
         "title": "Our Pastries",
         "collection_1": "frontpage",
         "tab_1_label": "",
