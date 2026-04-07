@@ -651,6 +651,47 @@
         "padding_bottom_mobile": 60
       }
     },
+    "marquee_UthXcP": {
+      "type": "marquee",
+      "blocks": {
+        "text_UL7pMi": {
+          "type": "text",
+          "settings": {
+            "text": "<p>New Shop in Bengaluru!</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "3rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_UL7pMi"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
     "product_list_EDUBdR": {
       "type": "product-list",
       "blocks": {
@@ -1198,6 +1239,7 @@
     "custom_dual_cards_d9xYxd",
     "custom_feature_icons_RN9qJg",
     "custom_testimonials_ztEQBy",
+    "marquee_UthXcP",
     "product_list_EDUBdR",
     "media_with_content_LfPdEJ",
     "collection_list_xpBxCm"
