@@ -1,0 +1,363 @@
+<div id="CustomMarquee-{{ section.id }}" class="custom-image-marquee" style="
+  --bg-color: {{ section.settings.bg_color }};
+  --text-color: {{ section.settings.text_color }};
+  --image-width-desktop: {{ section.settings.image_width_desktop }}px;
+  --image-width-mobile: {{ section.settings.image_width_mobile }}px;
+  --corner-radius: {{ section.settings.corner_radius }}px;
+  --gap-desktop: {{ section.settings.gap_desktop }}px;
+  --gap-mobile: {{ section.settings.gap_mobile }}px;
+  --speed: {{ section.settings.marquee_speed }}s;
+  --padding-top-desktop: {{ section.settings.padding_top }}px;
+  --padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  --padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+  --padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+">
+  
+  <div class="cim-wrapper {% if section.settings.pause_on_hover %}pause-on-hover{% endif %}">
+    
+    {% for i in (1..4) %}
+      <div class="cim-track" {% if i > 1 %}aria-hidden="true"{% endif %}>
+        {% for block in section.blocks %}
+          
+          {%- liquid 
+            # Link Logic: Block link overrides Global link
+            assign item_link = section.settings.global_link
+            if block.settings.link != blank
+              assign item_link = block.settings.link
+            endif
+          -%}
+
+          <div class="cim-item" {{ block.shopify_attributes }}>
+            {% if item_link != blank %}
+              <a href="{{ item_link }}" class="cim-link">
+            {% else %}
+              <div class="cim-link">
+            {% endif %}
+
+              <div class="cim-image-container ratio-{{ section.settings.image_ratio }}">
+                {% if block.settings.image != blank %}
+                  {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'cim-img' }}
+                {% else %}
+                  {{ 'collection-1' | placeholder_svg_tag: 'cim-placeholder' }}
+                {% endif %}
+              </div>
+              
+              {% if block.settings.caption != blank %}
+                <div class="cim-caption">
+                  {{ block.settings.caption }}
+                </div>
+              {% endif %}
+
+            {% if item_link != blank %}
+              </a>
+            {% else %}
+              </div>
+            {% endif %}
+          </div>
+
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+<style>
+  #CustomMarquee-{{ section.id }} {
+    background-color: var(--bg-color);
+    padding-top: var(--padding-top-desktop);
+    padding-bottom: var(--padding-bottom-desktop);
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+  }
+
+  .cim-wrapper {
+    display: flex;
+    width: fit-content;
+    /* The animation translates the track to the left continuously */
+    animation: marqueeScroll var(--speed) linear infinite;
+  }
+
+  .cim-wrapper.pause-on-hover:hover {
+    animation-play-state: paused;
+  }
+
+  .cim-track {
+    display: flex;
+    gap: var(--gap-desktop);
+    padding-right: var(--gap-desktop); /* Ensures gap matches perfectly on loop reset */
+    flex-shrink: 0;
+  }
+
+  .cim-item {
+    width: var(--image-width-desktop);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cim-link {
+    text-decoration: none;
+    color: var(--text-color);
+    display: block;
+    width: 100%;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  /* Slight lift effect if the item has a link */
+  a.cim-link:hover {
+    opacity: 0.9;
+    transform: translateY(-4px);
+  }
+
+  .cim-image-container {
+    width: 100%;
+    border-radius: var(--corner-radius);
+    overflow: hidden;
+    margin-bottom: 12px;
+    background-color: rgba(0,0,0,0.05); /* Slight tint for placeholders */
+  }
+
+  /* Aspect Ratios */
+  .cim-image-container.ratio-portrait { aspect-ratio: 3 / 4; }
+  .cim-image-container.ratio-square { aspect-ratio: 1 / 1; }
+  .cim-image-container.ratio-landscape { aspect-ratio: 4 / 3; }
+  .cim-image-container.ratio-auto { height: auto; } /* Depends on image native height */
+
+  .cim-img, .cim-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cim-caption {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.85;
+    line-height: 1.4;
+  }
+
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-25%); } /* -25% because we duplicated the track 4 times */
+  }
+
+  /* Mobile Overrides */
+  @media screen and (max-width: 768px) {
+    #CustomMarquee-{{ section.id }} {
+      padding-top: var(--padding-top-mobile);
+      padding-bottom: var(--padding-bottom-mobile);
+    }
+    .cim-track {
+      gap: var(--gap-mobile);
+      padding-right: var(--gap-mobile);
+    }
+    .cim-item {
+      width: var(--image-width-mobile);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Scrolling Image Marquee",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#5e3e2b"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Caption Text Color",
+      "default": "#f4e9dd"
+    },
+    {
+      "type": "header",
+      "content": "Marquee Settings"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "unit": "s",
+      "label": "Scroll Speed",
+      "info": "Lower number = Faster scroll.",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause animation on hover",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "global_link",
+      "label": "Global Section Link",
+      "info": "Applies to all images unless a specific link is set on the individual image block."
+    },
+    {
+      "type": "header",
+      "content": "Image Styling"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image Aspect Ratio",
+      "options": [
+        { "value": "portrait", "label": "Portrait (3:4)" },
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "landscape", "label": "Landscape (4:3)" },
+        { "value": "auto", "label": "Adapt to Image" }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image Corner Radius",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "image_width_desktop",
+      "min": 200,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Image Width (Desktop)",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between images (Desktop)",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "min": 150,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Image Width (Mobile)",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between images (Mobile)",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Desktop Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "marquee_image",
+      "name": "Image with Caption",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption Text",
+          "default": "Hand-shaped Pastries"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Individual Image Link",
+          "info": "Overrides the global section link if set."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling Image Marquee",
+      "blocks": [
+        { "type": "marquee_image", "settings": { "caption": "Artisanal Sourdough" } },
+        { "type": "marquee_image", "settings": { "caption": "Small-Batch Baking" } },
+        { "type": "marquee_image", "settings": { "caption": "Locally Sourced Ingredients" } },
+        { "type": "marquee_image", "settings": { "caption": "Fresh Every Morning" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
