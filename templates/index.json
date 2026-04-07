@@ -226,7 +226,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/HeroBanner2.jpg",
-            "image_mobile": "shopify://shop_images/MobileBanner1-Picsart-AiImageEnhancer.png",
+            "image_mobile": "shopify://shop_images/HeroBannermobile1.jpg",
             "bg_color": "#be855d",
             "overlay_opacity": 0,
             "text_position": "left",
@@ -270,7 +270,7 @@
         "bg_color": "#161616",
         "text_color": "#c4906a",
         "text_alignment": "center",
-        "subheading": "<p>We are <strong>The Sunday Oven</strong></p>",
+        "subheading": "<p>the sunday oven</p>",
         "heading": "\"At our core, we're master bakers, hand-shaping every loaf and pastry using time-honored techniques and the finest ingredients to bring artisanal excellence to your table ;)\"",
         "button_label": "Show more",
         "button_link": "",
