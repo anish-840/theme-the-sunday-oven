@@ -48,6 +48,7 @@
         "heading",
         "page-content"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -55,9 +56,229 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "about_us_8dzqXF": {
+      "type": "about-us",
+      "blocks": {
+        "marquee_item_WCFBmc": {
+          "type": "marquee_item",
+          "settings": {
+            "text": "Baked with love"
+          }
+        },
+        "marquee_item_TkeUj7": {
+          "type": "marquee_item",
+          "settings": {
+            "text": "Small batches"
+          }
+        },
+        "marquee_item_EpC6LH": {
+          "type": "marquee_item",
+          "settings": {
+            "text": "Real ingredients"
+          }
+        },
+        "marquee_item_fBcbKk": {
+          "type": "marquee_item",
+          "settings": {
+            "text": "No shortcuts"
+          }
+        },
+        "marquee_item_zD9Bpp": {
+          "type": "marquee_item",
+          "settings": {
+            "text": "Every Sunday"
+          }
+        },
+        "timeline_item_AFjW7R": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2021",
+            "emoji": "🏠",
+            "title": "The First Batch",
+            "text": "It starts in a home kitchen in Bangalore. A rainy Sunday, a bar of dark chocolate, and a recipe scribbled on the back of an envelope. Twenty cookies. All gone by evening."
+          }
+        },
+        "timeline_item_wcX74T": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2022",
+            "emoji": "📱",
+            "title": "Word Spreads",
+            "text": "Friends share photos. Messages pour in. We start taking orders through Instagram, packing boxes by hand at midnight, and delivering across the city by morning."
+          }
+        },
+        "timeline_item_UxPqtm": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2023",
+            "emoji": "🧈",
+            "title": "The Butter Cookie",
+            "text": "After months of testing, we finally perfect the Butter Choco Chip. It becomes our most talked-about cookie within two weeks of launch."
+          }
+        },
+        "timeline_item_K8PFp3": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2024",
+            "emoji": "📦",
+            "title": "Shipped Across India",
+            "text": "We begin shipping beyond Bangalore — first to Mumbai, Delhi, Chennai, and Hyderabad, then across India."
+          }
+        },
+        "timeline_item_zpaD3q": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2025 →",
+            "emoji": "🌟",
+            "title": "Still Baking. Still Sunday.",
+            "text": "More flavours in the works. More cities soon. But our promise never changes — every cookie is made in small batches, by hand."
+          }
+        },
+        "value_card_GecQBb": {
+          "type": "value_card",
+          "settings": {
+            "icon": "🧈",
+            "title": "Real Butter. Always.",
+            "text": "We use real, unsalted butter in every batch. Not margarine. Not oil. Not shortcuts."
+          }
+        },
+        "value_card_BXUYYd": {
+          "type": "value_card",
+          "settings": {
+            "icon": "🍫",
+            "title": "Premium Chocolate.",
+            "text": "Our chocolate is sourced from quality suppliers who take cocoa seriously."
+          }
+        },
+        "value_card_iinG8G": {
+          "type": "value_card",
+          "settings": {
+            "icon": "🤲",
+            "title": "Hand-mixed, Every Time.",
+            "text": "No industrial mixers. Every batch of dough is mixed by hand."
+          }
+        },
+        "value_card_ULh6c4": {
+          "type": "value_card",
+          "settings": {
+            "icon": "📦",
+            "title": "Small Batches Only.",
+            "text": "We bake in small batches so every cookie gets the attention it deserves."
+          }
+        },
+        "value_card_rAaV73": {
+          "type": "value_card",
+          "settings": {
+            "icon": "🚫",
+            "title": "Zero Preservatives.",
+            "text": "No artificial preservatives, no stabilizers. Just real ingredients."
+          }
+        },
+        "value_card_DDCy3W": {
+          "type": "value_card",
+          "settings": {
+            "icon": "☀️",
+            "title": "Baked Fresh, Daily.",
+            "text": "We bake every morning. Every order is baked the same day it ships."
+          }
+        },
+        "stat_XkRrgd": {
+          "type": "stat",
+          "settings": {
+            "emoji": "🍪",
+            "number": "3",
+            "label": "Signature flavours"
+          }
+        },
+        "stat_txDNVp": {
+          "type": "stat",
+          "settings": {
+            "emoji": "📦",
+            "number": "5K+",
+            "label": "Cookies delivered"
+          }
+        },
+        "stat_zRjdaf": {
+          "type": "stat",
+          "settings": {
+            "emoji": "☀️",
+            "number": "4",
+            "label": "Years baking"
+          }
+        },
+        "stat_w4tCAy": {
+          "type": "stat",
+          "settings": {
+            "emoji": "❤️",
+            "number": "100%",
+            "label": "Made with love"
+          }
+        }
+      },
+      "block_order": [
+        "marquee_item_WCFBmc",
+        "marquee_item_TkeUj7",
+        "marquee_item_EpC6LH",
+        "marquee_item_fBcbKk",
+        "marquee_item_zD9Bpp",
+        "timeline_item_AFjW7R",
+        "timeline_item_wcX74T",
+        "timeline_item_UxPqtm",
+        "timeline_item_K8PFp3",
+        "timeline_item_zpaD3q",
+        "value_card_GecQBb",
+        "value_card_BXUYYd",
+        "value_card_iinG8G",
+        "value_card_ULh6c4",
+        "value_card_rAaV73",
+        "value_card_DDCy3W",
+        "stat_XkRrgd",
+        "stat_txDNVp",
+        "stat_zRjdaf",
+        "stat_w4tCAy"
+      ],
+      "name": "Our Story",
+      "settings": {
+        "hero_eyebrow": "Our Story",
+        "hero_title_line1": "Made on",
+        "hero_title_line2": "Sundays.",
+        "hero_title_line3": "Made with love.",
+        "hero_subtitle": "Every cookie has a story. Ours started in a small kitchen, with a bowl of butter, a block of the finest chocolate, and an overwhelming need to bake something beautiful.",
+        "hero_badge": "",
+        "origin_section_num": "01",
+        "origin_eyebrow": "Where it began",
+        "origin_heading": "A kitchen.A craving.",
+        "origin_heading_em": "A calling.",
+        "origin_para1": "It started on a rainy Sunday afternoon in Bangalore, with nothing but time, a craving, and a bag of good chocolate. We weren't bakers by trade — we were just people who believed that a freshly baked cookie, warm from the oven, could make any day feel a little more special.",
+        "origin_para2": "That first batch of Plain Choco cookies disappeared in minutes. The second batch was shared with neighbours. By the third batch, people were asking if they could order more. That's when we knew — this wasn't just baking. This was something worth building.",
+        "origin_quote": "\"We didn't set out to start a bakery. We just wanted to make the perfect cookie. Turns out, one leads to the other.\"",
+        "origin_quote_cite": "— The Sunday Oven, 2021",
+        "origin_para3": "We named it The Sunday Oven because that's when the magic started — slow mornings, warm kitchens, the smell of butter and chocolate filling the house. That feeling is baked into every single cookie we make.",
+        "timeline_eyebrow": "How we grew",
+        "timeline_title": "The",
+        "timeline_title_em": "Sunday timeline",
+        "values_eyebrow": "What we believe",
+        "values_heading": "The things wewill never",
+        "values_heading_em": "compromise on.",
+        "values_subtext": "These aren't marketing words. They're the rules we've baked by since day one — the reasons why a Sunday Oven cookie tastes different from everything else.",
+        "founder_eyebrow": "A note from the founder",
+        "founder_emoji": "👩‍🍳",
+        "founder_quote": "\"I never wanted to build a big brand. I wanted to build something real — something that made people feel the way a good cookie makes you feel. Warm. Happy. Like you're exactly where you're supposed to be.\"",
+        "founder_name": "Joe Doe",
+        "founder_role": "Founder & Head Baker, The Sunday Oven",
+        "promise_eyebrow": "Our commitment",
+        "promise_title": "The Sunday",
+        "promise_title_em": "Promise.",
+        "promise_para1": "Every time you order from The Sunday Oven, you have our word: the cookie you receive was baked that morning, packed with care, and made the same way we've always made them — with real ingredients, real attention, and a real love for what a good cookie can do.",
+        "promise_para2": "We're a small bakery. We intend to stay that way. Because small means careful. Small means intentional. Small means every single cookie still matters.",
+        "promise_btn_label": "Order Now",
+        "promise_btn_url": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "about_us_8dzqXF"
   ]
 }
