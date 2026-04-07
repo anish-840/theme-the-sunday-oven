@@ -225,19 +225,19 @@
         "slide_pCjVL8": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Hero_Banner_1.jpg",
+            "image": "shopify://shop_images/HeroBanner2.jpg",
             "image_mobile": "shopify://shop_images/MobileBanner1-Picsart-AiImageEnhancer.png",
             "bg_color": "#be855d",
             "overlay_opacity": 0,
             "text_position": "left",
             "text_position_mobile": "top",
-            "subheading": "Crisp & Flavorful",
+            "subheading": "",
             "subheading_color": "#1a1a1a",
             "subheading_size": 16,
-            "title": "Freshly\nBaked",
+            "title": "",
             "heading_color": "#161616",
             "heading_size": 86,
-            "button_label": "SHOP NOW",
+            "button_label": "",
             "button_link": "",
             "btn_bg_color": "#161616",
             "btn_text_color": "#c4906a"
