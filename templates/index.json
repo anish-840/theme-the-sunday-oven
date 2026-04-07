@@ -499,7 +499,7 @@
         "show_sale_badge": true,
         "badge_metafield": "custom.badge_label",
         "title": "Our Pastries",
-        "collection_1": "",
+        "collection_1": "frontpage",
         "tab_1_label": "",
         "collection_2": "",
         "tab_2_label": "",
