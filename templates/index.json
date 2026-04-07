@@ -368,8 +368,38 @@
         "movement_direction": "normal",
         "color_scheme": "",
         "padding-block-start": 0,
-        "padding-block-end": 0,
+        "padding-block-end": 20,
         "gap_between_elements": 24
+      }
+    },
+    "custom_image_with_text_jbFBzn": {
+      "type": "custom-image-with-text",
+      "name": "50/50 Image with Text",
+      "settings": {
+        "desktop_layout": "image_right",
+        "mobile_layout": "image_top",
+        "bg_color": "#6b4226",
+        "text_color": "#f4e9dd",
+        "subheading": "1 / 2",
+        "heading": "Crafting Warm Breads,\nOne Loaf at a Time.",
+        "text": "<p>Every morning starts before dawn. We combine simple ingredients with decades of traditional techniques to bring you baked goods that taste like home.</p>",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "custom_image_with_text_WixRwG": {
+      "type": "custom-image-with-text",
+      "name": "50/50 Image with Text",
+      "settings": {
+        "desktop_layout": "image_left",
+        "mobile_layout": "image_top",
+        "bg_color": "#6b4226",
+        "text_color": "#f4e9dd",
+        "subheading": "1 / 2",
+        "heading": "Crafting Warm Breads,\nOne Loaf at a Time.",
+        "text": "<p>Every morning starts before dawn. We combine simple ingredients with decades of traditional techniques to bring you baked goods that taste like home.</p>",
+        "button_label": "",
+        "button_link": ""
       }
     },
     "product_list_EDUBdR": {
@@ -911,6 +941,8 @@
     "custom_rich_text_ya64tw",
     "custom_collection_tabs_A6R8Yj",
     "marquee_hgeq3G",
+    "custom_image_with_text_jbFBzn",
+    "custom_image_with_text_WixRwG",
     "product_list_EDUBdR",
     "media_with_content_LfPdEJ",
     "collection_list_xpBxCm"
