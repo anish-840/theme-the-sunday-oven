@@ -37,16 +37,20 @@
                 <a href="{{ product.url }}" class="cct-card-link-wrapper">
                   
                   <div class="cct-badges">
-                    {% if product.compare_at_price > product.price %}
-                      {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
-                      <span class="cct-badge">-{{ discount }}%</span>
-                    {% endif %}
-                    {% for tag in product.tags %}
-                      {% if tag contains 'badge_' %}
-                        <span class="cct-badge">{{ tag | remove: 'badge_' | replace: '-', ' ' | upcase }}</span>
-                      {% endif %}
-                    {% endfor %}
-                  </div>
+                        {%- liquid
+                            assign metafield_parts = section.settings.badge_metafield | split: '.'
+                            assign namespace = metafield_parts | first
+                            assign key = metafield_parts | last
+                            assign custom_badge = product.metafields[namespace][key]
+                        -%}
+
+                        {% if custom_badge != blank %}
+                            <span class="cct-badge">{{ custom_badge | upcase }}</span>
+                        {% elsif section.settings.show_sale_badge and product.compare_at_price > product.price %}
+                            {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+                            <span class="cct-badge">-{{ discount }}%</span>
+                        {% endif %}
+                    </div>
 
                   <div class="cct-card-image">
                     {% if product.featured_image %}
@@ -588,6 +592,24 @@
     },
     {
       "type": "header",
+      "content": "Badge Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show Auto Sale Percentage",
+      "default": true,
+      "info": "Calculates -% if no custom metafield is found."
+    },
+    {
+      "type": "text",
+      "id": "badge_metafield",
+      "label": "Custom Badge Metafield",
+      "default": "custom.badge_label",
+      "info": "Format: namespace.key (e.g. custom.badge_label). If this metafield is filled on a product, it overrides the sale badge."
+    },
+    {
+      "type": "header",
       "content": "Section Content"
     },
     {
@@ -610,8 +632,7 @@
     {
       "type": "collection",
       "id": "collection_2",
-      "label": "Secondary Collection (Optional)",
-      "info": "Leave blank to hide the tabs and only show one collection."
+      "label": "Secondary Collection (Optional)"
     },
     {
       "type": "text",
@@ -636,7 +657,6 @@
       "type": "checkbox",
       "id": "show_vendor",
       "label": "Show Vendor/Subtitle",
-      "info": "Displays the product vendor under the title. Useful for flavor notes.",
       "default": true
     },
     {
@@ -649,8 +669,7 @@
       "type": "text",
       "id": "pickup_text",
       "label": "Pickup Text",
-      "default": "Available for pickup in-store",
-      "info": "Leave blank to hide the green dot and text."
+      "default": "Available for pickup in-store"
     }
   ],
   "presets": [
