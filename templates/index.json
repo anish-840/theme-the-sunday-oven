@@ -550,6 +550,61 @@
         "padding_bottom_mobile": 60
       }
     },
+    "custom_feature_icons_RN9qJg": {
+      "type": "custom-feature-icons",
+      "blocks": {
+        "feature_dxMeRr": {
+          "type": "feature",
+          "settings": {
+            "custom_svg": "",
+            "heading": "Baked Fresh Daily",
+            "text": "<p>Every loaf and pastry is crafted from scratch early every morning.</p>"
+          }
+        },
+        "feature_GcQm3k": {
+          "type": "feature",
+          "settings": {
+            "custom_svg": "",
+            "heading": "Artisanal Ingredients",
+            "text": "<p>We source only the finest local flours, organic butter, and seasonal fruits.</p>"
+          }
+        },
+        "feature_XLFitJ": {
+          "type": "feature",
+          "settings": {
+            "custom_svg": "",
+            "heading": "Local Delivery",
+            "text": "<p>Enjoy our warm baked goods delivered right to your doorstep.</p>"
+          }
+        },
+        "feature_mCiiJa": {
+          "type": "feature",
+          "settings": {
+            "custom_svg": "",
+            "heading": "Order for Pickup",
+            "text": "<p>Skip the line! Order your daily bread online and grab it to go.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "feature_dxMeRr",
+        "feature_GcQm3k",
+        "feature_XLFitJ",
+        "feature_mCiiJa"
+      ],
+      "name": "Feature Icons",
+      "settings": {
+        "bg_color": "#c48b64",
+        "text_color": "#1a1a1a",
+        "icon_size": 60,
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 50
+      }
+    },
     "product_list_EDUBdR": {
       "type": "product-list",
       "blocks": {
@@ -1095,6 +1150,7 @@
     "custom_image_marquee_PLCYtb",
     "custom_collection_tabs_nNHGPC",
     "custom_dual_cards_d9xYxd",
+    "custom_feature_icons_RN9qJg",
     "product_list_EDUBdR",
     "media_with_content_LfPdEJ",
     "collection_list_xpBxCm"
