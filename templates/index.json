@@ -509,6 +509,47 @@
         "pickup_text": "Available for pickup in-store"
       }
     },
+    "custom_dual_cards_d9xYxd": {
+      "type": "custom-dual-cards",
+      "blocks": {
+        "card_3TJqEE": {
+          "type": "card",
+          "settings": {
+            "subheading": "About The Bakery",
+            "heading": "Our Story",
+            "button_label": "Read",
+            "link": ""
+          }
+        },
+        "card_CQpQhG": {
+          "type": "card",
+          "settings": {
+            "subheading": "Place to start",
+            "heading": "Our Menu",
+            "button_label": "Explore",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_3TJqEE",
+        "card_CQpQhG"
+      ],
+      "name": "Dual Promotional Cards",
+      "settings": {
+        "section_bg": "linear-gradient(180deg, rgba(28, 24, 21, 1), rgba(48, 32, 22, 1) 100%)",
+        "text_color": "#f4e9dd",
+        "accent_color": "#c4906a",
+        "overlay_opacity": 40,
+        "card_height_desktop": 500,
+        "card_height_mobile": 400,
+        "corner_radius": 16,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60
+      }
+    },
     "product_list_EDUBdR": {
       "type": "product-list",
       "blocks": {
@@ -1053,6 +1094,7 @@
     "custom_rich_text_y6nFbN",
     "custom_image_marquee_PLCYtb",
     "custom_collection_tabs_nNHGPC",
+    "custom_dual_cards_d9xYxd",
     "product_list_EDUBdR",
     "media_with_content_LfPdEJ",
     "collection_list_xpBxCm"
