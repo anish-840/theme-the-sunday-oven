@@ -1,0 +1,470 @@
+<div id="CustomTestimonials-{{ section.id }}" class="custom-testimonials-section" style="
+  --bg-color: {{ section.settings.bg_color }};
+  --text-color: {{ section.settings.text_color }};
+  --nav-color: {{ section.settings.nav_color }};
+  --quote-size-desktop: {{ section.settings.quote_size_desktop }}px;
+  --quote-size-mobile: {{ section.settings.quote_size_mobile }}px;
+  --padding-top-desktop: {{ section.settings.padding_top }}px;
+  --padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  --padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+  --padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+">
+  
+  <div class="cts-container">
+    
+    <div class="cts-slides-wrapper">
+      {% for block in section.blocks %}
+        <div class="cts-slide {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          
+          <div class="cts-author-group">
+            <div class="cts-avatar">
+              {% if block.settings.avatar != blank %}
+                {{ block.settings.avatar | image_url: width: 100 | image_tag: loading: 'lazy' }}
+              {% else %}
+                <div class="cts-avatar-placeholder">
+                  {{ block.settings.author_name | slice: 0, 1 | upcase }}
+                </div>
+              {% endif %}
+            </div>
+            
+            <div class="cts-author-meta">
+              <div class="cts-author-name">{{ block.settings.author_name }}</div>
+              {% if block.settings.author_title != blank %}
+                <div class="cts-author-title">{{ block.settings.author_title }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="cts-quote">
+            "{{ block.settings.quote }}"
+          </div>
+          
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.blocks.size > 1 %}
+      <div class="cts-nav">
+        <button class="cts-arrow prev" aria-label="Previous Testimonial">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        
+        <div class="cts-dots">
+          {% for block in section.blocks %}
+            <button class="cts-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to testimonial {{ forloop.index }}"></button>
+          {% endfor %}
+        </div>
+        
+        <button class="cts-arrow next" aria-label="Next Testimonial">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<style>
+  /* --- GLOBAL SECTION STYLES --- */
+  .custom-testimonials-section {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding-top: var(--padding-top-desktop);
+    padding-bottom: var(--padding-bottom-desktop);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .cts-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* --- SLIDER AREA --- */
+  .cts-slides-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    min-height: 250px; /* Prevents layout jumping */
+  }
+
+  .cts-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+
+  .cts-slide.active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* --- AUTHOR INFO --- */
+  .cts-author-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .cts-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cts-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cts-avatar-placeholder {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .cts-author-meta {
+    text-align: left;
+  }
+
+  .cts-author-name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .cts-author-title {
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+
+  /* --- QUOTE TEXT --- */
+  .cts-quote {
+    font-size: var(--quote-size-desktop);
+    line-height: 1.4;
+    font-weight: 400;
+    max-width: 800px;
+  }
+
+  /* --- NAVIGATION --- */
+  .cts-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .cts-arrow {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--nav-color);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .cts-arrow:hover {
+    border-color: var(--nav-color);
+  }
+
+  .cts-dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cts-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--nav-color);
+    opacity: 0.3;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+
+  .cts-dot.active {
+    opacity: 1;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* --- MOBILE STYLES --- */
+  @media screen and (max-width: 768px) {
+    .custom-testimonials-section {
+      padding-top: var(--padding-top-mobile);
+      padding-bottom: var(--padding-bottom-mobile);
+    }
+    
+    .cts-quote {
+      font-size: var(--quote-size-mobile);
+    }
+    
+    .cts-slides-wrapper {
+      min-height: 300px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.getElementById('CustomTestimonials-{{ section.id }}');
+    if (!section) return;
+
+    const slides = section.querySelectorAll('.cts-slide');
+    const dots = section.querySelectorAll('.cts-dot');
+    const prevBtn = section.querySelector('.cts-arrow.prev');
+    const nextBtn = section.querySelector('.cts-arrow.next');
+    let currentIndex = 0;
+
+    if (slides.length <= 1) return;
+
+    function goToSlide(index) {
+      slides[currentIndex].classList.remove('active');
+      dots[currentIndex].classList.remove('active');
+      
+      currentIndex = index;
+      
+      slides[currentIndex].classList.add('active');
+      dots[currentIndex].classList.add('active');
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        let index = currentIndex - 1;
+        if (index < 0) index = slides.length - 1;
+        goToSlide(index);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        let index = currentIndex + 1;
+        if (index >= slides.length) index = 0;
+        goToSlide(index);
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+      });
+    });
+  });
+
+  // Support for Shopify Theme Editor
+  document.addEventListener('shopify:block:select', function(event) {
+    const slide = event.target;
+    if (!slide.classList.contains('cts-slide')) return;
+    
+    const section = slide.closest('.custom-testimonials-section');
+    const index = parseInt(slide.dataset.index);
+    
+    const slides = section.querySelectorAll('.cts-slide');
+    const dots = section.querySelectorAll('.cts-dot');
+    
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    
+    slides[index].classList.add('active');
+    if(dots[index]) dots[index].classList.add('active');
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Testimonial Slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#5e3e2b"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#f4e9dd"
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Arrows & Dots Color",
+      "default": "#c4906a"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "quote_size_desktop",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Quote Size (Desktop)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "quote_size_mobile",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Quote Size (Mobile)",
+      "default": 22
+    },
+    {
+      "type": "header",
+      "content": "Desktop Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Author Avatar",
+          "info": "Leave blank to auto-generate an initial."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "Emily R."
+        },
+        {
+          "type": "text",
+          "id": "author_title",
+          "label": "Author Subtitle",
+          "default": "Customer"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review Text",
+          "default": "The absolute best bakery I’ve come across! I tried their artisanal sourdough, and the flavor blew me away. The staff is super knowledgeable and helped me pick the perfect loaf. Highly recommend!"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial Slider",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "author_name": "Emily R.",
+            "author_title": "Local Customer",
+            "quote": "The absolute best bakery I’ve come across! I tried their artisanal sourdough, and the flavor blew me away. The staff is super knowledgeable and helped me pick the perfect loaf. Highly recommend!"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "author_name": "James T.",
+            "author_title": "Food Blogger",
+            "quote": "If you haven't tried their morning croissants, you are truly missing out. Flaky, buttery perfection every single time. It's my new weekend ritual."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "author_name": "Sarah M.",
+            "author_title": "Event Planner",
+            "quote": "We catered our morning event with their seasonal pastries and everyone was asking where they came from. Fresh, beautiful, and absolutely delicious!"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
