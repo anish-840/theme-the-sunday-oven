@@ -1,0 +1,271 @@
+<div class="custom-image-text" id="CustomImageText-{{ section.id }}" style="
+  --bg-color: {{ section.settings.bg_color }};
+  --text-color: {{ section.settings.text_color }};
+">
+  <div class="cit-container cit-desktop-{{ section.settings.desktop_layout }} cit-mobile-{{ section.settings.mobile_layout }}">
+    
+    <div class="cit-text-column">
+      <div class="cit-text-content">
+        {% if section.settings.subheading != blank %}
+          <div class="cit-subheading">{{ section.settings.subheading }}</div>
+        {% endif %}
+        
+        {% if section.settings.heading != blank %}
+          <h2 class="cit-heading">{{ section.settings.heading | newline_to_br }}</h2>
+        {% endif %}
+        
+        {% if section.settings.text != blank %}
+          <div class="cit-text">{{ section.settings.text }}</div>
+        {% endif %}
+        
+        {% if section.settings.button_label != blank %}
+          <a href="{{ section.settings.button_link }}" class="cit-button">{{ section.settings.button_label }}</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="cit-image-column">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1500 | image_tag: class: 'cit-image', loading: 'lazy' }}
+      {% else %}
+        {{ 'detailed-apparel-1' | placeholder_svg_tag: 'cit-placeholder' }}
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+<style>
+  /* --- GLOBAL STYLES --- */
+  .custom-image-text {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+  }
+
+  .cit-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 600px; /* Ensures the section doesn't get too thin if text is short */
+  }
+
+  /* --- LAYOUT CONTROLS --- */
+  /* Desktop Layout */
+  .cit-container.cit-desktop-image_left {
+    flex-direction: row-reverse;
+  }
+  .cit-container.cit-desktop-image_right {
+    flex-direction: row;
+  }
+
+  /* --- COLUMNS --- */
+  .cit-text-column, 
+  .cit-image-column {
+    flex: 0 0 50%;
+    width: 50%;
+    display: flex;
+  }
+
+  /* Image Area */
+  .cit-image-column {
+    position: relative;
+    min-height: 400px;
+  }
+
+  .cit-image, 
+  .cit-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cit-placeholder {
+    background-color: #f4f4f4;
+  }
+
+  /* Text Area */
+  .cit-text-column {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    align-items: center;
+    justify-content: center;
+    padding: 8% 10%; /* Creates nice breathing room around the text */
+  }
+
+  .cit-text-content {
+    max-width: 500px;
+    width: 100%;
+  }
+
+  /* --- TYPOGRAPHY --- */
+  .cit-subheading {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+
+  .cit-heading {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    margin: 0 0 25px 0;
+    font-weight: 500;
+    color: inherit;
+  }
+
+  .cit-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 35px;
+    opacity: 0.9;
+  }
+
+  /* --- BUTTON --- */
+  .cit-button {
+    display: inline-block;
+    padding: 14px 40px;
+    text-decoration: none;
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    border-radius: 40px; 
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .cit-button:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color); /* Inverts on hover automatically */
+  }
+
+  /* --- MOBILE STYLES --- */
+  @media (max-width: 768px) {
+    .cit-text-column, 
+    .cit-image-column {
+      flex: 0 0 100%;
+      width: 100%;
+    }
+
+    .cit-image-column {
+      min-height: 50vh; /* Keeps the image tall on mobile */
+    }
+
+    .cit-text-column {
+      padding: 60px 20px;
+    }
+
+    /* Mobile Layout Overrides */
+    .cit-container.cit-mobile-image_top {
+      flex-direction: column-reverse;
+    }
+    .cit-container.cit-mobile-image_bottom {
+      flex-direction: column;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "50/50 Image with Text",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Options"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop Image Placement",
+      "options": [
+        { "value": "image_left", "label": "Image on Left" },
+        { "value": "image_right", "label": "Image on Right" }
+      ],
+      "default": "image_right"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile Image Placement",
+      "options": [
+        { "value": "image_top", "label": "Image on Top" },
+        { "value": "image_bottom", "label": "Image on Bottom" }
+      ],
+      "default": "image_top"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Text Block Background",
+      "default": "#6b4226"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#f4e9dd"
+    },
+    {
+      "type": "header",
+      "content": "Image Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "For a perfect 50/50 split, square or portrait images work best."
+    },
+    {
+      "type": "header",
+      "content": "Text Content"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "1 / 2"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Crafting Warm Breads,\nOne Loaf at a Time."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Body Text",
+      "default": "<p>Every morning starts before dawn. We combine simple ingredients with decades of traditional techniques to bring you baked goods that taste like home.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "info": "Leave blank to hide the button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "50/50 Image with Text"
+    }
+  ]
+}
+{% endschema %}
