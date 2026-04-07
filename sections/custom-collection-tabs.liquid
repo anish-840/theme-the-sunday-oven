@@ -6,6 +6,10 @@
   --tab-active-text: {{ section.settings.tab_active_text }};
   --badge-bg: {{ section.settings.badge_bg }};
   --badge-text: {{ section.settings.badge_text }};
+  --padding-top-desktop: {{ section.settings.padding_top }}px;
+  --padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  --padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+  --padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
 ">
   
   <div class="cct-header">
@@ -190,7 +194,23 @@
 </div>
 
 <style>
-  .custom-collection-tabs-section { background-color: var(--bg-color); color: var(--text-color); padding: 80px 20px; overflow: hidden; }
+  .custom-collection-tabs-section { 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    padding-top: var(--padding-top-desktop);
+    padding-bottom: var(--padding-bottom-desktop);
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: hidden; 
+  }
+  
+  @media screen and (max-width: 768px) {
+    .custom-collection-tabs-section {
+      padding-top: var(--padding-top-mobile);
+      padding-bottom: var(--padding-bottom-mobile);
+    }
+  }
+
   .cct-header { text-align: center; margin-bottom: 40px; }
   .cct-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 600; margin: 0 0 20px 0; }
   
@@ -360,6 +380,54 @@
       "id": "badge_text",
       "label": "Badge Text",
       "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 60
     },
     {
       "type": "header",
