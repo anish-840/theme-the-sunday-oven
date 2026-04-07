@@ -424,6 +424,63 @@
         "padding_bottom_mobile": 60
       }
     },
+    "custom_image_marquee_PLCYtb": {
+      "type": "custom-image-marquee",
+      "blocks": {
+        "marquee_image_gdwH6j": {
+          "type": "marquee_image",
+          "settings": {
+            "caption": "Artisanal Sourdough",
+            "link": ""
+          }
+        },
+        "marquee_image_TeLKti": {
+          "type": "marquee_image",
+          "settings": {
+            "caption": "Small-Batch Baking",
+            "link": ""
+          }
+        },
+        "marquee_image_3UkfWm": {
+          "type": "marquee_image",
+          "settings": {
+            "caption": "Locally Sourced Ingredients",
+            "link": ""
+          }
+        },
+        "marquee_image_mPPb7X": {
+          "type": "marquee_image",
+          "settings": {
+            "caption": "Fresh Every Morning",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "marquee_image_gdwH6j",
+        "marquee_image_TeLKti",
+        "marquee_image_3UkfWm",
+        "marquee_image_mPPb7X"
+      ],
+      "name": "Scrolling Image Marquee",
+      "settings": {
+        "bg_color": "#5e3e2b",
+        "text_color": "#f4e9dd",
+        "marquee_speed": 30,
+        "pause_on_hover": true,
+        "global_link": "",
+        "image_ratio": "auto",
+        "corner_radius": 12,
+        "image_width_desktop": 300,
+        "gap_desktop": 30,
+        "image_width_mobile": 220,
+        "gap_mobile": 15,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
     "product_list_EDUBdR": {
       "type": "product-list",
       "blocks": {
@@ -966,6 +1023,7 @@
     "custom_image_with_text_jbFBzn",
     "custom_image_with_text_WixRwG",
     "custom_rich_text_y6nFbN",
+    "custom_image_marquee_PLCYtb",
     "product_list_EDUBdR",
     "media_with_content_LfPdEJ",
     "collection_list_xpBxCm"
