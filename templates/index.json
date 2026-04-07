@@ -605,6 +605,52 @@
         "padding_bottom_mobile": 50
       }
     },
+    "custom_testimonials_ztEQBy": {
+      "type": "custom-testimonials",
+      "blocks": {
+        "testimonial_qFq78r": {
+          "type": "testimonial",
+          "settings": {
+            "author_name": "Emily R.",
+            "author_title": "Local Customer",
+            "quote": "The absolute best bakery I’ve come across! I tried their artisanal sourdough, and the flavor blew me away. The staff is super knowledgeable and helped me pick the perfect loaf. Highly recommend!"
+          }
+        },
+        "testimonial_Kwhnyp": {
+          "type": "testimonial",
+          "settings": {
+            "author_name": "James T.",
+            "author_title": "Food Blogger",
+            "quote": "If you haven't tried their morning croissants, you are truly missing out. Flaky, buttery perfection every single time. It's my new weekend ritual."
+          }
+        },
+        "testimonial_rfBNig": {
+          "type": "testimonial",
+          "settings": {
+            "author_name": "Sarah M.",
+            "author_title": "Event Planner",
+            "quote": "We catered our morning event with their seasonal pastries and everyone was asking where they came from. Fresh, beautiful, and absolutely delicious!"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_qFq78r",
+        "testimonial_Kwhnyp",
+        "testimonial_rfBNig"
+      ],
+      "name": "Testimonial Slider",
+      "settings": {
+        "bg_color": "#5e3e2b",
+        "text_color": "#f4e9dd",
+        "nav_color": "#c4906a",
+        "quote_size_desktop": 32,
+        "quote_size_mobile": 22,
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60
+      }
+    },
     "product_list_EDUBdR": {
       "type": "product-list",
       "blocks": {
@@ -1151,6 +1197,7 @@
     "custom_collection_tabs_nNHGPC",
     "custom_dual_cards_d9xYxd",
     "custom_feature_icons_RN9qJg",
+    "custom_testimonials_ztEQBy",
     "product_list_EDUBdR",
     "media_with_content_LfPdEJ",
     "collection_list_xpBxCm"
