@@ -225,18 +225,18 @@
         "slide_pCjVL8": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/desktopBanner1-Picsart-AiImageEnhancer.jpg",
+            "image": "shopify://shop_images/Hero_Banner_1.jpg",
             "image_mobile": "shopify://shop_images/MobileBanner1-Picsart-AiImageEnhancer.png",
             "bg_color": "#be855d",
             "overlay_opacity": 0,
             "text_position": "left",
             "text_position_mobile": "top",
-            "subheading": "Boldly brewed!",
+            "subheading": "Crisp & Flavorful",
             "subheading_color": "#1a1a1a",
             "subheading_size": 16,
-            "title": "Roast\nPerfection",
+            "title": "Freshly\nBaked",
             "heading_color": "#161616",
-            "heading_size": 70,
+            "heading_size": 86,
             "button_label": "SHOP NOW",
             "button_link": "",
             "btn_bg_color": "#161616",
@@ -691,94 +691,6 @@
         "padding-block-end": 24,
         "gap_between_elements": 24
       }
-    },
-    "collection_list_xpBxCm": {
-      "type": "collection-list",
-      "blocks": {
-        "static-collection-card": {
-          "type": "_collection-card",
-          "name": "t:names.collection_card",
-          "static": true,
-          "settings": {
-            "placement": "on_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-start",
-            "collection_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "scheme-6",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 10
-          },
-          "blocks": {
-            "collection_title_zyBdAJ": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h5",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "static": true,
-              "settings": {
-                "image_ratio": "portrait",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "collection_title_zyBdAJ"
-          ]
-        }
-      },
-      "name": "Collection list",
-      "settings": {
-        "collection_list": [],
-        "layout_type": "bento",
-        "carousel_on_mobile": true,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 16,
-        "bento_gap": 12,
-        "rows_gap": 16,
-        "max_collections": 4,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 12,
-        "color_scheme": "",
-        "padding-block-start": 48,
-        "padding-block-end": 64
-      }
     }
   },
   "order": [
@@ -795,7 +707,6 @@
     "custom_dual_cards_d9xYxd",
     "custom_feature_icons_RN9qJg",
     "custom_testimonials_ztEQBy",
-    "marquee_UthXcP",
-    "collection_list_xpBxCm"
+    "marquee_UthXcP"
   ]
 }
