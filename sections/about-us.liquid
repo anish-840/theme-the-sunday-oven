@@ -156,6 +156,15 @@
   @keyframes soFadeUp { to { opacity: 1; transform: translateY(0); } }
   @keyframes soPopIn  { to { opacity: 1; transform: scale(1) rotate(0deg); } }
 
+  /* ── ICON IMAGE SUPPORT ── */
+  .so-icon-img-wrap { display: inline-flex; align-items: center; justify-content: center; }
+  .so-icon-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+  }
+
   /* ── MARQUEE ── */
   .so-marquee {
     background: var(--so-caramel);
@@ -172,8 +181,9 @@
   }
   /* Each text item and each divider are separate equal-width flex children */
   .so-marquee-text {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
+    font-family: var(--so-marquee-font-family, 'Playfair Display', serif);
+    font-style: var(--so-marquee-font-style, italic);
+    font-weight: var(--so-marquee-font-weight, 400);
     font-size: 1rem;
     color: var(--so-dark);
     letter-spacing: 0.04em;
@@ -202,38 +212,42 @@
     grid-template-columns: 1fr 1.2fr;
     gap: 8rem;
     align-items: start;
+    background: var(--so-origin-bg, transparent);
   }
   .so-sticky-label { position: sticky; top: 8rem; }
   .so-section-num {
     font-family: 'Playfair Display', serif;
     font-size: 8rem;
     font-weight: 900;
-    color: rgba(192,125,74,0.12);
+    color: var(--so-origin-num-color, rgba(192,125,74,0.12));
     line-height: 1;
     margin-bottom: -1rem;
     transition: color 0.4s;
   }
-  .so-origin:hover .so-section-num { color: rgba(192,125,74,0.22); }
+  .so-origin:hover .so-section-num { opacity: 0.85; }
   .so-section-eyebrow {
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--so-caramel);
+    color: var(--so-origin-eyebrow-color, var(--so-caramel));
     font-weight: 500;
     margin-bottom: 1.2rem;
   }
   .so-section-heading {
     font-family: 'Playfair Display', serif;
     font-size: clamp(2rem, 4vw, 3.2rem);
-    color: var(--so-dark);
+    color: var(--so-origin-heading-color, var(--so-dark));
     line-height: 1.1;
   }
-  .so-section-heading em { font-style: italic; color: var(--so-caramel); }
+  .so-section-heading em {
+    font-style: italic;
+    color: var(--so-origin-heading-em-color, var(--so-caramel));
+  }
   .so-origin-body { padding-top: 2rem; }
   .so-dropcap {
     font-size: 1.05rem;
     line-height: 1.85;
-    color: var(--so-muted);
+    color: var(--so-origin-body-color, var(--so-muted));
     margin-bottom: 1.8rem;
   }
   .so-dropcap::first-letter {
@@ -244,19 +258,19 @@
     line-height: 0.8;
     margin-right: 0.12em;
     margin-top: 0.1em;
-    color: var(--so-caramel);
+    color: var(--so-origin-dropcap-color, var(--so-caramel));
   }
   .so-origin-para {
     font-size: 1.02rem;
     line-height: 1.85;
-    color: var(--so-muted);
+    color: var(--so-origin-body-color, var(--so-muted));
     margin-bottom: 1.8rem;
   }
   .so-pull-quote {
-    border-left: 3px solid var(--so-caramel);
+    border-left: 3px solid var(--so-origin-quote-accent, var(--so-caramel));
     padding: 1.5rem 2rem;
     margin: 2.5rem 0;
-    background: rgba(192,125,74,0.06);
+    background: var(--so-origin-quote-bg, rgba(192,125,74,0.06));
     border-radius: 0 12px 12px 0;
     transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s;
   }
@@ -658,7 +672,27 @@
   }
 </style>
 
-<div class="so-wrap">
+<style>
+  /* Dynamic settings injected by Shopify section schema */
+  #so-section-{{ section.id }} {
+    /* Marquee typography */
+    --so-marquee-font-style:  {{ section.settings.marquee_font_style  | default: 'italic' }};
+    --so-marquee-font-weight: {{ section.settings.marquee_font_weight | default: '400' }};
+
+    /* Origin / "A Kitchen Craving" section colors */
+    --so-origin-bg:             {{ section.settings.origin_bg_color            | default: 'transparent' }};
+    --so-origin-eyebrow-color:  {{ section.settings.origin_eyebrow_color       | default: '#C07D4A' }};
+    --so-origin-heading-color:  {{ section.settings.origin_heading_color        | default: '#1A1008' }};
+    --so-origin-heading-em-color: {{ section.settings.origin_heading_em_color  | default: '#C07D4A' }};
+    --so-origin-body-color:     {{ section.settings.origin_body_color           | default: '#7A5235' }};
+    --so-origin-dropcap-color:  {{ section.settings.origin_dropcap_color        | default: '#C07D4A' }};
+    --so-origin-num-color:      {{ section.settings.origin_num_color            | default: 'rgba(192,125,74,0.12)' }};
+    --so-origin-quote-accent:   {{ section.settings.origin_quote_accent_color   | default: '#C07D4A' }};
+    --so-origin-quote-bg:       {{ section.settings.origin_quote_bg_color       | default: 'rgba(192,125,74,0.06)' }};
+  }
+</style>
+
+<div class="so-wrap" id="so-section-{{ section.id }}">
 
   {%- comment -%} ══ HERO ══ {%- endcomment -%}
   <section class="so-hero">
@@ -745,7 +779,19 @@
               <div class="so-tl-dot"></div>
               <div class="so-tl-year">{{ block.settings.year }}</div>
               <div>
-                <span class="so-tl-emoji">{{ block.settings.emoji }}</span>
+                {%- if block.settings.icon_image != blank -%}
+                  <span class="so-tl-emoji so-icon-img-wrap">
+                    {{- block.settings.icon_image | image_url: width: 80 | image_tag:
+                        class: 'so-icon-img',
+                        alt: block.settings.icon_image.alt | default: block.settings.title,
+                        loading: 'lazy',
+                        width: 40,
+                        height: 40
+                    -}}
+                  </span>
+                {%- else -%}
+                  <span class="so-tl-emoji">{{ block.settings.emoji }}</span>
+                {%- endif -%}
                 <h3 class="so-tl-content-title">{{ block.settings.title }}</h3>
                 <p class="so-tl-content-text">{{ block.settings.text }}</p>
               </div>
@@ -770,7 +816,19 @@
         {%- for block in section.blocks -%}
           {%- if block.type == 'value_card' -%}
             <div class="so-value-card" {{ block.shopify_attributes }}>
-              <span class="so-value-icon">{{ block.settings.icon }}</span>
+              {%- if block.settings.icon_image != blank -%}
+                <span class="so-value-icon so-icon-img-wrap">
+                  {{- block.settings.icon_image | image_url: width: 80 | image_tag:
+                      class: 'so-icon-img',
+                      alt: block.settings.icon_image.alt | default: block.settings.title,
+                      loading: 'lazy',
+                      width: 40,
+                      height: 40
+                  -}}
+                </span>
+              {%- else -%}
+                <span class="so-value-icon">{{ block.settings.icon }}</span>
+              {%- endif -%}
               <h3 class="so-value-title">{{ block.settings.title }}</h3>
               <p class="so-value-text">{{ block.settings.text }}</p>
             </div>
@@ -808,7 +866,19 @@
         {%- for block in section.blocks -%}
           {%- if block.type == 'stat' -%}
             <div class="so-stat-box" {{ block.shopify_attributes }}>
-              <span class="so-stat-emoji">{{ block.settings.emoji }}</span>
+              {%- if block.settings.icon_image != blank -%}
+                <span class="so-stat-emoji so-icon-img-wrap">
+                  {{- block.settings.icon_image | image_url: width: 80 | image_tag:
+                      class: 'so-icon-img',
+                      alt: block.settings.icon_image.alt | default: block.settings.label,
+                      loading: 'lazy',
+                      width: 40,
+                      height: 40
+                  -}}
+                </span>
+              {%- else -%}
+                <span class="so-stat-emoji">{{ block.settings.emoji }}</span>
+              {%- endif -%}
               <span class="so-stat-num">{{ block.settings.number }}</span>
               <p class="so-stat-label">{{ block.settings.label }}</p>
             </div>
@@ -818,7 +888,7 @@
     </div>
   </section>
 
-</div>{%- comment -%} .so-wrap {%- endcomment -%}
+</div>{%- comment -%} #so-section-{{ section.id }} .so-wrap {%- endcomment -%}
 
 <script>
 (function() {
@@ -937,6 +1007,92 @@
     },
     {
       "type": "header",
+      "content": "Marquee Typography"
+    },
+    {
+      "type": "select",
+      "id": "marquee_font_style",
+      "label": "Font Style",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "italic", "label": "Italic" }
+      ],
+      "default": "italic"
+    },
+    {
+      "type": "select",
+      "id": "marquee_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "900", "label": "Black (900)" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "header",
+      "content": "Origin Section — Colors"
+    },
+    {
+      "type": "color",
+      "id": "origin_bg_color",
+      "label": "Section Background",
+      "default": "#F5EDD9"
+    },
+    {
+      "type": "color",
+      "id": "origin_eyebrow_color",
+      "label": "Eyebrow Label Color",
+      "default": "#C07D4A"
+    },
+    {
+      "type": "color",
+      "id": "origin_heading_color",
+      "label": "Heading Color",
+      "default": "#1A1008"
+    },
+    {
+      "type": "color",
+      "id": "origin_heading_em_color",
+      "label": "Heading Italic Accent Color",
+      "default": "#C07D4A"
+    },
+    {
+      "type": "color",
+      "id": "origin_body_color",
+      "label": "Body Text Color",
+      "default": "#7A5235"
+    },
+    {
+      "type": "color",
+      "id": "origin_dropcap_color",
+      "label": "Drop Cap Letter Color",
+      "default": "#C07D4A"
+    },
+    {
+      "type": "color",
+      "id": "origin_num_color",
+      "label": "Section Number Color",
+      "default": "#C07D4A",
+      "info": "The large faint '01' behind the heading"
+    },
+    {
+      "type": "color",
+      "id": "origin_quote_accent_color",
+      "label": "Pull Quote Border & Cite Color",
+      "default": "#C07D4A"
+    },
+    {
+      "type": "color",
+      "id": "origin_quote_bg_color",
+      "label": "Pull Quote Background",
+      "default": "#EDD9B8"
+    },
+    {
+      "type": "header",
       "content": "Origin Section"
     },
     {
@@ -954,8 +1110,8 @@
     {
       "type": "text",
       "id": "origin_heading",
-      "label": "Heading (use | for line breaks)",
-      "default": "A kitchen.\nA craving."
+      "label": "Heading",
+      "default": "A kitchen. A craving."
     },
     {
       "type": "text",
@@ -1029,7 +1185,7 @@
       "type": "text",
       "id": "values_heading",
       "label": "Heading",
-      "default": "The things we\nwill never"
+      "default": "The things we will never"
     },
     {
       "type": "text",
@@ -1147,9 +1303,15 @@
           "default": "2021"
         },
         {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image",
+          "info": "Upload a custom icon (PNG/SVG, ~80×80px). If blank, the emoji below is used."
+        },
+        {
           "type": "text",
           "id": "emoji",
-          "label": "Emoji",
+          "label": "Icon Emoji (fallback)",
           "default": "🏠"
         },
         {
@@ -1171,9 +1333,15 @@
       "name": "Value Card",
       "settings": [
         {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image",
+          "info": "Upload a custom icon (PNG/SVG, ~80×80px). If blank, the emoji below is used."
+        },
+        {
           "type": "text",
           "id": "icon",
-          "label": "Icon (emoji)",
+          "label": "Icon Emoji (fallback)",
           "default": "🧈"
         },
         {
@@ -1195,9 +1363,15 @@
       "name": "Stat Box",
       "settings": [
         {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image",
+          "info": "Upload a custom icon (PNG/SVG, ~80×80px). If blank, the emoji below is used."
+        },
+        {
           "type": "text",
           "id": "emoji",
-          "label": "Emoji",
+          "label": "Icon Emoji (fallback)",
           "default": "🍪"
         },
         {
