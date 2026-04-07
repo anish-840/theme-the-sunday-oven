@@ -322,7 +322,7 @@
         "product_limit": 6,
         "show_vendor": true,
         "button_label": "Order Now",
-        "pickup_text": ""
+        "pickup_text": "Available for pickup in-store"
       }
     },
     "product_list_EDUBdR": {
