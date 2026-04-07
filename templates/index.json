@@ -308,7 +308,7 @@
       "name": "Collection Tabs Carousel",
       "settings": {
         "bg_color": "#be855d",
-        "card_bg_color": "#be855d",
+        "card_bg_color": "#6b4f3b",
         "text_color": "#161616",
         "tab_active_bg": "#161616",
         "tab_active_text": "#c4906a",
