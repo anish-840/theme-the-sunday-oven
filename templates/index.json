@@ -315,7 +315,7 @@
         "badge_bg": "#161616",
         "badge_text": "#ffffff",
         "padding_top": 80,
-        "padding_bottom": 0,
+        "padding_bottom": 40,
         "padding_top_mobile": 60,
         "padding_bottom_mobile": 60,
         "show_sale_badge": true,
