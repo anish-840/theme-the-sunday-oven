@@ -314,6 +314,8 @@
         "tab_active_text": "#c4906a",
         "badge_bg": "#161616",
         "badge_text": "#ffffff",
+        "show_sale_badge": true,
+        "badge_metafield": "custom.badge",
         "title": "Our Pastries",
         "collection_1": "frontpage",
         "tab_1_label": "Best Sellers",
