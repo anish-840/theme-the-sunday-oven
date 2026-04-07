@@ -303,6 +303,28 @@
         "padding_bottom_mobile": 60
       }
     },
+    "custom_collection_tabs_A6R8Yj": {
+      "type": "custom-collection-tabs",
+      "name": "Collection Tabs Carousel",
+      "settings": {
+        "bg_color": "#c4906a",
+        "card_bg_color": "#b5815b",
+        "text_color": "#161616",
+        "tab_active_bg": "#161616",
+        "tab_active_text": "#c4906a",
+        "badge_bg": "#161616",
+        "badge_text": "#ffffff",
+        "title": "Our Pastries",
+        "collection_1": "",
+        "tab_1_label": "Best Sellers",
+        "collection_2": "",
+        "tab_2_label": "Seasonal Bakes",
+        "product_limit": 6,
+        "show_vendor": true,
+        "button_label": "Order Now",
+        "pickup_text": ""
+      }
+    },
     "product_list_EDUBdR": {
       "type": "product-list",
       "blocks": {
@@ -840,6 +862,7 @@
     "hero_iLBwPd",
     "custom_hero_slideshow_EqKnCr",
     "custom_rich_text_ya64tw",
+    "custom_collection_tabs_A6R8Yj",
     "product_list_EDUBdR",
     "media_with_content_LfPdEJ",
     "collection_list_xpBxCm"
