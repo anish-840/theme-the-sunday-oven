@@ -678,7 +678,7 @@
               "name": "Accordion",
               "settings": {
                 "icon": "plus",
-                "dividers": true,
+                "dividers": false,
                 "type_preset": "h4",
                 "inherit_color_scheme": true,
                 "color_scheme": "",
