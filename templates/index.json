@@ -785,6 +785,7 @@
         "card_3TJqEE": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/pinar-kucuk-3-PfUgbyWEs-unsplash.jpg",
             "subheading": "About The Bakery",
             "heading": "Our Story",
             "button_label": "Read",
