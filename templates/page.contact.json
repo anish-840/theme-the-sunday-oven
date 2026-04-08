@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "section": {
       "type": "section",
@@ -98,6 +99,7 @@
         "text_dWXrnm",
         "contact_form_jWxXkm"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -125,9 +127,56 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "contact_us_mt7Pfd": {
+      "type": "contact-us",
+      "name": "Contact Us",
+      "settings": {
+        "banner_height_desktop": 300,
+        "banner_height_mobile": 200,
+        "banner_eyebrow": "Get in Touch",
+        "banner_title": "We'd love to <em>hear from you.</em>",
+        "intro_label": "Contact Us",
+        "intro_heading": "Drop us a <em>message.</em>",
+        "intro_text": "Have a question about an order, a flavour, or just want to say hello? Fill in the form and we'll get back to you as soon as the oven's free.",
+        "webhook_url": "",
+        "show_name": true,
+        "name_required": true,
+        "name_label": "Full Name",
+        "name_placeholder": "Your name",
+        "name_error": "Please enter your name",
+        "show_phone": true,
+        "phone_required": false,
+        "phone_label": "Phone Number",
+        "phone_placeholder": "+91 98765 43210",
+        "phone_error": "Please enter a valid phone number",
+        "show_email": true,
+        "email_required": true,
+        "email_label": "Email Address",
+        "email_placeholder": "you@example.com",
+        "email_error": "Please enter a valid email address",
+        "show_reason": true,
+        "reason_required": true,
+        "reason_label": "Reason for Contact",
+        "reason_placeholder": "Select a reason…",
+        "reason_options": "Order Enquiry, Bulk / Catering Order, Feedback, Collaboration, Something Else",
+        "reason_error": "Please select a reason",
+        "show_message": true,
+        "message_required": true,
+        "message_label": "Message",
+        "message_placeholder": "Tell us how we can help…",
+        "message_error": "Please write a message",
+        "message_min_length": 10,
+        "message_minlength_error": "Message must be at least 10 characters",
+        "submit_label": "Send Message",
+        "privacy_note": "Your information is kept private and never shared with third parties.",
+        "success_message": "Message sent! We will get back to you soon.",
+        "error_message": "Something went wrong. Please try again."
+      }
     }
   },
   "order": [
-    "section"
+    "section",
+    "contact_us_mt7Pfd"
   ]
 }
