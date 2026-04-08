@@ -66,6 +66,13 @@
       align-self: var(--details-position, 'flex-start');
     }
   }
+
+  /* Pull the entire details container to the left on Desktop to close the gap */
+  @media screen and (min-width: 990px) {
+    .product-details {
+      margin-left: -80px !important; 
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
