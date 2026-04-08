@@ -795,6 +795,7 @@
         "card_CQpQhG": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/raymond-yeung-s5eZd_Ceszg-unsplash.jpg",
             "subheading": "Place to start",
             "heading": "Our Menu",
             "button_label": "Explore",
