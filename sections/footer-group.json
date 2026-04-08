@@ -15,7 +15,7 @@
       "type": "custom-newsletter",
       "name": "Newsletter Banner",
       "settings": {
-        "bg_color": "#161616",
+        "bg_color": "#1a1a1a",
         "accent_color": "#c4906a",
         "text_color": "#ffffff",
         "custom_svg": "",
@@ -291,7 +291,7 @@
       "settings": {
         "section_width": "page-width",
         "gap": 12,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "padding-block-start": 36,
         "padding-block-end": 18
       }
@@ -326,7 +326,7 @@
         "section_width": "page-width",
         "gap": 24,
         "divider_thickness": 1,
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "padding-block-start": 20,
         "padding-block-end": 18
       }
