@@ -1,0 +1,457 @@
+{% comment %}
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  THE SUNDAY OVEN — Features Bar Section                      ║
+  ║  File: sections/features-bar.liquid                          ║
+  ║  Usage: Add to any page or template via the theme editor     ║
+  ╚══════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+{{ 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Lora:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap' | stylesheet_tag }}
+
+{%- liquid
+  assign font_family_value = 'DM Sans, sans-serif'
+  case section.settings.text_font_family
+    when 'playfair'
+      assign font_family_value = "'Playfair Display', serif"
+    when 'lora'
+      assign font_family_value = "'Lora', serif"
+    when 'cormorant'
+      assign font_family_value = "'Cormorant Garamond', serif"
+    when 'dm_sans'
+      assign font_family_value = "'DM Sans', sans-serif"
+    when 'georgia'
+      assign font_family_value = "Georgia, serif"
+    when 'system'
+      assign font_family_value = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+  endcase
+-%}
+
+<style>
+  #fb-section-{{ section.id }} {
+    --fb-bg:          {{ section.settings.bg_color }};
+    --fb-text-color:  {{ section.settings.text_color }};
+    --fb-icon-color:  {{ section.settings.icon_color }};
+    --fb-divider:     {{ section.settings.divider_color }};
+    --fb-font-family: {{ font_family_value }};
+    --fb-font-size:   {{ section.settings.text_font_size }}px;
+    --fb-icon-size:   {{ section.settings.icon_size }}px;
+    --fb-padding-v:   {{ section.settings.padding_vertical }}px;
+  }
+
+  #fb-section-{{ section.id }} .fb-wrap {
+    background: var(--fb-bg);
+    width: 100%;
+  }
+
+  #fb-section-{{ section.id }} .fb-inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: var(--fb-padding-v) 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+  }
+
+  /* ── Each feature item ── */
+  #fb-section-{{ section.id }} .fb-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    justify-content: center;
+    padding: 0 1.5rem;
+    min-width: 0;
+  }
+
+  /* ── Divider between items ── */
+  #fb-section-{{ section.id }} .fb-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: var(--fb-divider);
+    flex-shrink: 0;
+    opacity: 0.35;
+  }
+
+  /* ── Icon wrapper ── */
+  #fb-section-{{ section.id }} .fb-icon {
+    width: var(--fb-icon-size);
+    height: var(--fb-icon-size);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fb-icon-color);
+  }
+
+  #fb-section-{{ section.id }} .fb-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #fb-section-{{ section.id }} .fb-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  #fb-section-{{ section.id }} .fb-icon-emoji {
+    font-size: calc(var(--fb-icon-size) * 0.85);
+    line-height: 1;
+    display: block;
+  }
+
+  /* ── Label ── */
+  #fb-section-{{ section.id }} .fb-label {
+    font-family: var(--fb-font-family);
+    font-size: var(--fb-font-size);
+    color: var(--fb-text-color);
+    font-weight: {{ section.settings.text_font_weight }};
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Hover lift ── */
+  #fb-section-{{ section.id }} .fb-item {
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    cursor: default;
+  }
+  #fb-section-{{ section.id }} .fb-item:hover {
+    transform: translateY(-2px);
+    opacity: 0.85;
+  }
+
+  /* ── Mobile: 2-col grid ── */
+  @media (max-width: 768px) {
+    #fb-section-{{ section.id }} .fb-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: calc(var(--fb-padding-v) * 0.8) 1rem;
+    }
+
+    #fb-section-{{ section.id }} .fb-divider { display: none; }
+
+    #fb-section-{{ section.id }} .fb-item {
+      padding: 1rem 1rem;
+      border-bottom: 1px solid var(--fb-divider);
+      border-right: 1px solid var(--fb-divider);
+      opacity: 0.35;
+      justify-content: flex-start;
+    }
+
+    /* Remove right border on even items, bottom border on last row */
+    #fb-section-{{ section.id }} .fb-item:nth-child(even) {
+      border-right: none;
+    }
+    #fb-section-{{ section.id }} .fb-item:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+
+    #fb-section-{{ section.id }} .fb-item:hover { opacity: 0.75; }
+
+    #fb-section-{{ section.id }} .fb-label {
+      white-space: normal;
+      font-size: calc(var(--fb-font-size) * 0.92);
+    }
+  }
+
+  @media (max-width: 400px) {
+    #fb-section-{{ section.id }} .fb-inner {
+      grid-template-columns: 1fr;
+    }
+    #fb-section-{{ section.id }} .fb-item {
+      border-right: none;
+    }
+    #fb-section-{{ section.id }} .fb-item:nth-last-child(-n+2) {
+      border-bottom: 1px solid var(--fb-divider);
+      opacity: 0.35;
+    }
+    #fb-section-{{ section.id }} .fb-item:last-child {
+      border-bottom: none;
+    }
+  }
+</style>
+
+<div id="fb-section-{{ section.id }}">
+  <div class="fb-wrap">
+    <div class="fb-inner">
+
+      {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
+      {%- assign last_index = feature_blocks.size | minus: 1 -%}
+
+      {%- for block in feature_blocks -%}
+        <div class="fb-item" {{ block.shopify_attributes }}>
+
+          {%- comment -%} Icon: image > emoji > default SVG {%- endcomment -%}
+          <span class="fb-icon">
+            {%- if block.settings.icon_image != blank -%}
+              {{- block.settings.icon_image
+                  | image_url: width: 120
+                  | image_tag:
+                      alt: block.settings.icon_image.alt | default: block.settings.label,
+                      loading: 'lazy',
+                      width: section.settings.icon_size,
+                      height: section.settings.icon_size
+              -}}
+
+            {%- elsif block.settings.icon_emoji != blank -%}
+              <span class="fb-icon-emoji" aria-hidden="true">{{ block.settings.icon_emoji }}</span>
+
+            {%- else -%}
+              {%- comment -%} Inline SVG defaults per feature type {%- endcomment -%}
+              {%- case block.settings.default_icon -%}
+                {%- when 'hand' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 11V7a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"/>
+                    <path d="M14 10V5a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v5"/>
+                    <path d="M10 9V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v10"/>
+                    <path d="M6 14v0a4 4 0 0 0 4 4h4a4 4 0 0 0 4-4v-3a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2"/>
+                  </svg>
+                {%- when 'leaf' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                  </svg>
+                {%- when 'box' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                  </svg>
+                {%- when 'shield' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <polyline points="9 12 11 14 15 10"/>
+                  </svg>
+                {%- when 'star' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                {%- when 'clock' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                {%- else -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 8 12 12 14 14"/>
+                  </svg>
+              {%- endcase -%}
+            {%- endif -%}
+          </span>
+
+          <span class="fb-label">{{ block.settings.label }}</span>
+
+        </div>
+
+        {%- unless forloop.last -%}
+          <div class="fb-divider" aria-hidden="true"></div>
+        {%- endunless -%}
+
+      {%- endfor -%}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Features Bar",
+  "tag": "section",
+  "class": "features-bar-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max Section Width (px)",
+      "min": 600,
+      "max": 1600,
+      "step": 20,
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Vertical Padding (px)",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#C8824C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#1A1008"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "info": "Applies to inline SVG icons only. Has no effect on uploaded images or emojis.",
+      "default": "#1A1008"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Color",
+      "default": "#1A1008"
+    },
+    {
+      "type": "header",
+      "content": "Text Style"
+    },
+    {
+      "type": "select",
+      "id": "text_font_family",
+      "label": "Font Family",
+      "options": [
+        { "value": "dm_sans",   "label": "DM Sans (sans-serif)" },
+        { "value": "playfair",  "label": "Playfair Display (serif)" },
+        { "value": "lora",      "label": "Lora (serif)" },
+        { "value": "cormorant", "label": "Cormorant Garamond (serif)" },
+        { "value": "georgia",   "label": "Georgia (serif)" },
+        { "value": "system",    "label": "System UI (sans-serif)" }
+      ],
+      "default": "dm_sans"
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Font Size (px)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "text_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon Size (px)",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Feature Text",
+          "default": "Hand Mixed"
+        },
+        {
+          "type": "header",
+          "content": "Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Custom Icon Image",
+          "info": "Upload a PNG or SVG icon (~64×64px). Takes priority over emoji and default icon."
+        },
+        {
+          "type": "text",
+          "id": "icon_emoji",
+          "label": "Emoji Icon",
+          "info": "Used if no image is uploaded. E.g. 🤲"
+        },
+        {
+          "type": "select",
+          "id": "default_icon",
+          "label": "Default SVG Icon",
+          "info": "Used only when no image or emoji is set.",
+          "options": [
+            { "value": "hand",   "label": "Hand (mixed)" },
+            { "value": "leaf",   "label": "Leaf (natural)" },
+            { "value": "box",    "label": "Box (batch)" },
+            { "value": "shield", "label": "Shield (guarantee)" },
+            { "value": "star",   "label": "Star" },
+            { "value": "clock",  "label": "Clock" }
+          ],
+          "default": "hand"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features Bar",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "label": "Hand Mixed",
+            "default_icon": "hand"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "label": "Natural Ingredients",
+            "default_icon": "leaf"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "label": "Small Batch Preparation",
+            "default_icon": "box"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "label": "Freshness Guaranteed",
+            "default_icon": "shield"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
