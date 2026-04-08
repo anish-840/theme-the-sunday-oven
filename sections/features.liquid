@@ -9,7 +9,7 @@
 {{ 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Lora:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap' | stylesheet_tag }}
 
 {%- liquid
-  assign font_family_value = 'DM Sans, sans-serif'
+  assign font_family_value = "'DM Sans', sans-serif"
   case section.settings.text_font_family
     when 'playfair'
       assign font_family_value = "'Playfair Display', serif"
@@ -24,23 +24,108 @@
     when 'system'
       assign font_family_value = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
   endcase
+
+  assign heading_font_value = "'DM Sans', sans-serif"
+  case section.settings.heading_font_family
+    when 'playfair'
+      assign heading_font_value = "'Playfair Display', serif"
+    when 'lora'
+      assign heading_font_value = "'Lora', serif"
+    when 'cormorant'
+      assign heading_font_value = "'Cormorant Garamond', serif"
+    when 'dm_sans'
+      assign heading_font_value = "'DM Sans', sans-serif"
+    when 'georgia'
+      assign heading_font_value = "Georgia, serif"
+    when 'system'
+      assign heading_font_value = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+  endcase
+
+  assign subheading_font_value = "'DM Sans', sans-serif"
+  case section.settings.subheading_font_family
+    when 'playfair'
+      assign subheading_font_value = "'Playfair Display', serif"
+    when 'lora'
+      assign subheading_font_value = "'Lora', serif"
+    when 'cormorant'
+      assign subheading_font_value = "'Cormorant Garamond', serif"
+    when 'dm_sans'
+      assign subheading_font_value = "'DM Sans', sans-serif"
+    when 'georgia'
+      assign subheading_font_value = "Georgia, serif"
+    when 'system'
+      assign subheading_font_value = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+  endcase
 -%}
 
 <style>
   #fb-section-{{ section.id }} {
-    --fb-bg:          {{ section.settings.bg_color }};
-    --fb-text-color:  {{ section.settings.text_color }};
-    --fb-icon-color:  {{ section.settings.icon_color }};
-    --fb-divider:     {{ section.settings.divider_color }};
-    --fb-font-family: {{ font_family_value }};
-    --fb-font-size:   {{ section.settings.text_font_size }}px;
-    --fb-icon-size:   {{ section.settings.icon_size }}px;
-    --fb-padding-v:   {{ section.settings.padding_vertical }}px;
+    --fb-bg:                   {{ section.settings.bg_color }};
+    --fb-text-color:           {{ section.settings.text_color }};
+    --fb-icon-color:           {{ section.settings.icon_color }};
+    --fb-divider:              {{ section.settings.divider_color }};
+    --fb-font-family:          {{ font_family_value }};
+    --fb-font-size:            {{ section.settings.text_font_size }}px;
+    --fb-icon-size:            {{ section.settings.icon_size }}px;
+    --fb-padding-v:            {{ section.settings.padding_vertical }}px;
+
+    /* Heading */
+    --fb-heading-font:         {{ heading_font_value }};
+    --fb-heading-size:         {{ section.settings.heading_font_size }}px;
+    --fb-heading-weight:       {{ section.settings.heading_font_weight }};
+    --fb-heading-color:        {{ section.settings.heading_color }};
+
+    /* Subheading */
+    --fb-subheading-font:      {{ subheading_font_value }};
+    --fb-subheading-size:      {{ section.settings.subheading_font_size }}px;
+    --fb-subheading-weight:    {{ section.settings.subheading_font_weight }};
+    --fb-subheading-color:     {{ section.settings.subheading_color }};
   }
 
   #fb-section-{{ section.id }} .fb-wrap {
     background: var(--fb-bg);
     width: 100%;
+  }
+
+  /* ── Header block ── */
+  #fb-section-{{ section.id }} .fb-header {
+    text-align: center;
+    padding: calc(var(--fb-padding-v) * 1.4) 2rem calc(var(--fb-padding-v) * 0.5);
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  #fb-section-{{ section.id }} .fb-heading {
+    font-family: var(--fb-heading-font);
+    font-size: var(--fb-heading-size);
+    font-weight: var(--fb-heading-weight);
+    color: var(--fb-heading-color);
+    line-height: 1.2;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.01em;
+  }
+
+  #fb-section-{{ section.id }} .fb-subheading {
+    font-family: var(--fb-subheading-font);
+    font-size: var(--fb-subheading-size);
+    font-weight: var(--fb-subheading-weight);
+    color: var(--fb-subheading-color);
+    line-height: 1.6;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+
+  @media (max-width: 768px) {
+    #fb-section-{{ section.id }} .fb-header {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    #fb-section-{{ section.id }} .fb-heading {
+      font-size: calc(var(--fb-heading-size) * 0.85);
+    }
+    #fb-section-{{ section.id }} .fb-subheading {
+      font-size: calc(var(--fb-subheading-size) * 0.9);
+    }
   }
 
   #fb-section-{{ section.id }} .fb-inner {
@@ -181,6 +266,18 @@
 
 <div id="fb-section-{{ section.id }}">
   <div class="fb-wrap">
+
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="fb-header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="fb-heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="fb-subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
     <div class="fb-inner">
 
       {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
@@ -268,6 +365,111 @@
   "tag": "section",
   "class": "features-bar-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Text",
+      "default": "Why The Sunday Oven"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family",
+      "label": "Heading Font Family",
+      "options": [
+        { "value": "dm_sans",   "label": "DM Sans (sans-serif)" },
+        { "value": "playfair",  "label": "Playfair Display (serif)" },
+        { "value": "lora",      "label": "Lora (serif)" },
+        { "value": "cormorant", "label": "Cormorant Garamond (serif)" },
+        { "value": "georgia",   "label": "Georgia (serif)" },
+        { "value": "system",    "label": "System UI (sans-serif)" }
+      ],
+      "default": "playfair"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "Heading Font Size (px)",
+      "min": 16,
+      "max": 72,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading Font Weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "900", "label": "Black (900)" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1A1008"
+    },
+    {
+      "type": "header",
+      "content": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading Text",
+      "default": "Every cookie made the way it should be."
+    },
+    {
+      "type": "select",
+      "id": "subheading_font_family",
+      "label": "Subheading Font Family",
+      "options": [
+        { "value": "dm_sans",   "label": "DM Sans (sans-serif)" },
+        { "value": "playfair",  "label": "Playfair Display (serif)" },
+        { "value": "lora",      "label": "Lora (serif)" },
+        { "value": "cormorant", "label": "Cormorant Garamond (serif)" },
+        { "value": "georgia",   "label": "Georgia (serif)" },
+        { "value": "system",    "label": "System UI (sans-serif)" }
+      ],
+      "default": "dm_sans"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size",
+      "label": "Subheading Font Size (px)",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "subheading_font_weight",
+      "label": "Subheading Font Weight",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semi-bold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#3A2510"
+    },
     {
       "type": "header",
       "content": "Layout"
