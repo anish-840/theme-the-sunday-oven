@@ -788,7 +788,7 @@
             "subheading": "About The Bakery",
             "heading": "Our Story",
             "button_label": "Read",
-            "link": ""
+            "link": "shopify://pages/about-us"
           }
         },
         "card_CQpQhG": {
