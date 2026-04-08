@@ -106,6 +106,32 @@
               },
               "blocks": {}
             },
+            "product_description_LfDYCg": {
+              "type": "product-description",
+              "name": "t:names.product_description",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "price_a7krng": {
               "type": "price",
               "settings": {
@@ -135,7 +161,7 @@
                 "show_swatches": true,
                 "alignment": "left",
                 "padding-block-start": 12,
-                "padding-block-end": 12,
+                "padding-block-end": 20,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -175,32 +201,6 @@
                 }
               },
               "block_order": []
-            },
-            "product_description_LfDYCg": {
-              "type": "product-description",
-              "name": "t:names.product_description",
-              "settings": {
-                "text": "{{ closest.product.description }}",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-primary--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
             },
             "group_X39hBc": {
               "type": "group",
@@ -678,7 +678,7 @@
               "name": "Accordion",
               "settings": {
                 "icon": "plus",
-                "dividers": false,
+                "dividers": true,
                 "type_preset": "h4",
                 "inherit_color_scheme": true,
                 "color_scheme": "",
@@ -780,10 +780,10 @@
           "block_order": [
             "text_GnyQiN",
             "reviews",
+            "product_description_LfDYCg",
             "price_a7krng",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "product_description_LfDYCg",
             "group_X39hBc",
             "accordion_g8EVVp"
           ]
