@@ -1,0 +1,1227 @@
+{% comment %}
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  THE SUNDAY OVEN — Contact Us Section                        ║
+  ║  File: sections/contact-us.liquid                            ║
+  ║  Usage: Add to a page template via the Shopify theme editor  ║
+  ╚══════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+{{ 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap' | stylesheet_tag }}
+
+{%- comment -%} ══ SCOPED CSS VARS FROM SCHEMA ══ {%- endcomment -%}
+<style>
+  #cu-section-{{ section.id }} {
+    --cu-banner-height-desktop: {{ section.settings.banner_height_desktop }}px;
+    --cu-banner-height-mobile:  {{ section.settings.banner_height_mobile }}px;
+  }
+</style>
+
+<style>
+  /* ── TOKENS (mirror our-story palette) ── */
+  :root {
+    --cu-caramel:       #C07D4A;
+    --cu-caramel-light: #D4935E;
+    --cu-caramel-bg:    #C8824C;
+    --cu-cream:         #F5EDD9;
+    --cu-cream-dark:    #EDD9B8;
+    --cu-dark:          #1A1008;
+    --cu-dark-mid:      #2D1E0F;
+    --cu-text:          #3A2510;
+    --cu-muted:         #7A5235;
+    --cu-white:         #FDFAF4;
+    --cu-error:         #B94040;
+    --cu-success:       #3D7A4A;
+  }
+
+  .cu-wrap *,
+  .cu-wrap *::before,
+  .cu-wrap *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .cu-wrap {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--cu-text);
+    background: var(--cu-cream);
+    overflow-x: hidden;
+  }
+
+  /* ════════════════════════════════════════
+     BANNER
+  ════════════════════════════════════════ */
+  .cu-banner {
+    position: relative;
+    width: 100%;
+    height: var(--cu-banner-height-desktop, 320px);
+    overflow: hidden;
+    background: var(--cu-dark);
+  }
+
+  .cu-banner-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Overlay so text is always legible */
+  .cu-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(26,16,8,0.25) 0%,
+      rgba(26,16,8,0.55) 100%
+    );
+    pointer-events: none;
+  }
+
+  .cu-banner-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .cu-banner-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cu-caramel-light);
+    font-weight: 500;
+    margin-bottom: 0.9rem;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: cuFadeUp 0.55s 0.15s forwards;
+  }
+
+  .cu-banner-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    color: var(--cu-white);
+    line-height: 1.08;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: cuFadeUp 0.65s 0.28s forwards;
+  }
+
+  .cu-banner-title em {
+    font-style: italic;
+    color: var(--cu-caramel-light);
+  }
+
+  /* Desktop / Mobile banner image switching */
+  .cu-banner-img--desktop { display: block; }
+  .cu-banner-img--mobile  { display: none; }
+
+  @media (max-width: 768px) {
+    .cu-banner { height: var(--cu-banner-height-mobile, 200px); }
+    .cu-banner-img--desktop { display: none; }
+    .cu-banner-img--mobile  { display: block; }
+  }
+
+  @keyframes cuFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ════════════════════════════════════════
+     CONTACT BODY
+  ════════════════════════════════════════ */
+  .cu-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5rem 2rem 7rem;
+  }
+
+  /* ── Section intro ── */
+  .cu-intro {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .cu-intro-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cu-caramel);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.9rem;
+  }
+
+  .cu-intro-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--cu-dark);
+    line-height: 1.12;
+    margin-bottom: 1rem;
+  }
+
+  .cu-intro-heading em {
+    font-style: italic;
+    color: var(--cu-caramel);
+  }
+
+  .cu-intro-text {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--cu-muted);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* Thin caramel rule */
+  .cu-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--cu-caramel);
+    border: none;
+    margin: 1.75rem auto 0;
+    border-radius: 2px;
+  }
+
+  /* ── Form card ── */
+  .cu-form-card {
+    background: var(--cu-white);
+    border: 1px solid rgba(192,125,74,0.15);
+    border-radius: 24px;
+    padding: 3rem 3rem 3.5rem;
+    box-shadow: 0 4px 40px rgba(58,37,16,0.06);
+  }
+
+  /* ── Field groups ── */
+  .cu-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .cu-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .cu-field--full {
+    grid-column: 1 / -1;
+  }
+
+  /* ── Labels ── */
+  .cu-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cu-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .cu-required-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--cu-caramel);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .cu-optional-tag {
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--cu-muted);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  /* ── Inputs & Textarea & Select ── */
+  .cu-input,
+  .cu-select,
+  .cu-textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.93rem;
+    color: var(--cu-dark);
+    background: var(--cu-cream);
+    border: 1.5px solid rgba(192,125,74,0.2);
+    border-radius: 10px;
+    padding: 0.82rem 1rem;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .cu-input::placeholder,
+  .cu-textarea::placeholder { color: rgba(122,82,53,0.45); }
+
+  .cu-input:focus,
+  .cu-select:focus,
+  .cu-textarea:focus {
+    border-color: var(--cu-caramel);
+    box-shadow: 0 0 0 3px rgba(192,125,74,0.12);
+    background: var(--cu-white);
+  }
+
+  /* Invalid state */
+  .cu-input.cu-invalid,
+  .cu-select.cu-invalid,
+  .cu-textarea.cu-invalid {
+    border-color: var(--cu-error);
+    box-shadow: 0 0 0 3px rgba(185,64,64,0.1);
+  }
+
+  /* Valid state */
+  .cu-input.cu-valid,
+  .cu-select.cu-valid,
+  .cu-textarea.cu-valid {
+    border-color: var(--cu-success);
+  }
+
+  /* Select wrapper for custom arrow */
+  .cu-select-wrap {
+    position: relative;
+  }
+
+  .cu-select-wrap::after {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--cu-caramel);
+    pointer-events: none;
+    transition: transform 0.2s;
+  }
+
+  .cu-select { padding-right: 2.5rem; cursor: pointer; }
+  .cu-select option[value=""] { color: rgba(122,82,53,0.45); }
+
+  .cu-textarea {
+    resize: vertical;
+    min-height: 130px;
+    line-height: 1.65;
+  }
+
+  /* ── Error messages ── */
+  .cu-error-msg {
+    font-size: 0.75rem;
+    color: var(--cu-error);
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 1.1rem;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+  }
+
+  .cu-error-msg.cu-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cu-error-msg::before {
+    content: '!';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--cu-error);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ── Submit row ── */
+  .cu-submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cu-privacy-note {
+    font-size: 0.78rem;
+    color: var(--cu-muted);
+    line-height: 1.5;
+    max-width: 320px;
+  }
+
+  .cu-privacy-note a {
+    color: var(--cu-caramel);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ── Submit button ── */
+  .cu-btn {
+    position: relative;
+    overflow: hidden;
+    background: var(--cu-dark);
+    color: var(--cu-cream);
+    border: none;
+    padding: 0.95rem 2.5rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .cu-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.12);
+    transform: translateX(-101%);
+    transition: transform 0.38s ease;
+    border-radius: inherit;
+  }
+
+  .cu-btn:hover {
+    background: var(--cu-dark-mid);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,16,8,0.25);
+  }
+
+  .cu-btn:hover::after { transform: translateX(0); }
+
+  .cu-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Spinner inside button */
+  .cu-btn-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(245,237,217,0.35);
+    border-top-color: var(--cu-cream);
+    border-radius: 50%;
+    animation: cuSpin 0.7s linear infinite;
+    display: none;
+    flex-shrink: 0;
+  }
+
+  .cu-btn.cu-loading .cu-btn-text { opacity: 0.6; }
+  .cu-btn.cu-loading .cu-btn-spinner { display: block; }
+
+  @keyframes cuSpin { to { transform: rotate(360deg); } }
+
+  /* Arrow icon in button */
+  .cu-btn-arrow {
+    transition: transform 0.25s;
+    display: inline-block;
+  }
+  .cu-btn:hover .cu-btn-arrow { transform: translateX(3px); }
+
+  /* ── Toast notifications ── */
+  .cu-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    z-index: 9999;
+    background: var(--cu-dark);
+    color: var(--cu-cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    padding: 0.9rem 1.75rem;
+    border-radius: 100px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+    max-width: 90vw;
+  }
+
+  .cu-toast.cu-toast--show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .cu-toast.cu-toast--success { background: var(--cu-success); }
+  .cu-toast.cu-toast--error   { background: var(--cu-error); }
+
+  .cu-toast-icon { font-size: 1rem; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .cu-form-card { padding: 2rem 1.5rem 2.5rem; }
+    .cu-row { grid-template-columns: 1fr; }
+    .cu-field--full { grid-column: auto; }
+    .cu-submit-row { flex-direction: column; align-items: stretch; }
+    .cu-btn { justify-content: center; }
+    .cu-privacy-note { max-width: 100%; text-align: center; }
+    .cu-body { padding: 3.5rem 1.25rem 5rem; }
+  }
+</style>
+
+{%- comment -%} ══ MARKUP ══ {%- endcomment -%}
+<div class="cu-wrap" id="cu-section-{{ section.id }}">
+
+  {%- comment -%} ── BANNER ── {%- endcomment -%}
+  <div class="cu-banner">
+
+    {%- if section.settings.banner_image_desktop != blank -%}
+      {{ section.settings.banner_image_desktop
+          | image_url: width: 1600
+          | image_tag:
+              class: 'cu-banner-img cu-banner-img--desktop',
+              alt: section.settings.banner_image_desktop.alt | default: 'Contact banner',
+              loading: 'eager',
+              fetchpriority: 'high'
+      }}
+    {%- endif -%}
+
+    {%- if section.settings.banner_image_mobile != blank -%}
+      {{ section.settings.banner_image_mobile
+          | image_url: width: 800
+          | image_tag:
+              class: 'cu-banner-img cu-banner-img--mobile',
+              alt: section.settings.banner_image_mobile.alt | default: 'Contact banner mobile',
+              loading: 'eager',
+              fetchpriority: 'high'
+      }}
+    {%- elsif section.settings.banner_image_desktop != blank -%}
+      {{ section.settings.banner_image_desktop
+          | image_url: width: 800
+          | image_tag:
+              class: 'cu-banner-img cu-banner-img--mobile',
+              alt: section.settings.banner_image_desktop.alt | default: 'Contact banner',
+              loading: 'eager'
+      }}
+    {%- endif -%}
+
+    <div class="cu-banner-content">
+      {%- if section.settings.banner_eyebrow != blank -%}
+        <p class="cu-banner-eyebrow">{{ section.settings.banner_eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.banner_title != blank -%}
+        <h1 class="cu-banner-title">{{ section.settings.banner_title }}</h1>
+      {%- endif -%}
+    </div>
+
+  </div>
+
+  {%- comment -%} ── BODY ── {%- endcomment -%}
+  <div class="cu-body">
+
+    {%- comment -%} Intro {%- endcomment -%}
+    <div class="cu-intro">
+      {%- if section.settings.intro_label != blank -%}
+        <span class="cu-intro-label">{{ section.settings.intro_label }}</span>
+      {%- endif -%}
+      {%- if section.settings.intro_heading != blank -%}
+        <h2 class="cu-intro-heading">{{ section.settings.intro_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro_text != blank -%}
+        <p class="cu-intro-text">{{ section.settings.intro_text }}</p>
+      {%- endif -%}
+      <hr class="cu-rule">
+    </div>
+
+    {%- comment -%} Form {%- endcomment -%}
+    <div class="cu-form-card">
+      <form
+        id="cu-form-{{ section.id }}"
+        class="cu-form"
+        novalidate
+        data-webhook="{{ section.settings.webhook_url }}"
+      >
+
+        {%- comment -%} Row 1: Name + Phone {%- endcomment -%}
+        <div class="cu-row">
+
+          {%- comment -%} Name {%- endcomment -%}
+          {%- if section.settings.show_name -%}
+          <div class="cu-field">
+            <label class="cu-label" for="cu-name-{{ section.id }}">
+              {%- if section.settings.name_required -%}
+                <span class="cu-required-dot" aria-hidden="true"></span>
+              {%- endif -%}
+              {{ section.settings.name_label | default: 'Full Name' }}
+              {%- unless section.settings.name_required -%}
+                <span class="cu-optional-tag">optional</span>
+              {%- endunless -%}
+            </label>
+            <input
+              class="cu-input"
+              type="text"
+              id="cu-name-{{ section.id }}"
+              name="name"
+              placeholder="{{ section.settings.name_placeholder | default: 'Your name' }}"
+              autocomplete="name"
+              {%- if section.settings.name_required %} data-required="true" data-error="{{ section.settings.name_error | default: 'Please enter your name' }}"{% endif %}
+            >
+            <span class="cu-error-msg" id="cu-name-err-{{ section.id }}" aria-live="polite"></span>
+          </div>
+          {%- endif -%}
+
+          {%- comment -%} Phone {%- endcomment -%}
+          {%- if section.settings.show_phone -%}
+          <div class="cu-field">
+            <label class="cu-label" for="cu-phone-{{ section.id }}">
+              {%- if section.settings.phone_required -%}
+                <span class="cu-required-dot" aria-hidden="true"></span>
+              {%- endif -%}
+              {{ section.settings.phone_label | default: 'Phone Number' }}
+              {%- unless section.settings.phone_required -%}
+                <span class="cu-optional-tag">optional</span>
+              {%- endunless -%}
+            </label>
+            <input
+              class="cu-input"
+              type="tel"
+              id="cu-phone-{{ section.id }}"
+              name="phone"
+              placeholder="{{ section.settings.phone_placeholder | default: '+91 98765 43210' }}"
+              autocomplete="tel"
+              {%- if section.settings.phone_required %} data-required="true"{% endif %}
+              data-type="phone"
+              data-error="{{ section.settings.phone_error | default: 'Please enter a valid phone number' }}"
+            >
+            <span class="cu-error-msg" id="cu-phone-err-{{ section.id }}" aria-live="polite"></span>
+          </div>
+          {%- endif -%}
+
+        </div>
+
+        {%- comment -%} Row 2: Email + Reason {%- endcomment -%}
+        <div class="cu-row">
+
+          {%- comment -%} Email {%- endcomment -%}
+          {%- if section.settings.show_email -%}
+          <div class="cu-field">
+            <label class="cu-label" for="cu-email-{{ section.id }}">
+              {%- if section.settings.email_required -%}
+                <span class="cu-required-dot" aria-hidden="true"></span>
+              {%- endif -%}
+              {{ section.settings.email_label | default: 'Email Address' }}
+              {%- unless section.settings.email_required -%}
+                <span class="cu-optional-tag">optional</span>
+              {%- endunless -%}
+            </label>
+            <input
+              class="cu-input"
+              type="email"
+              id="cu-email-{{ section.id }}"
+              name="email"
+              placeholder="{{ section.settings.email_placeholder | default: 'you@example.com' }}"
+              autocomplete="email"
+              {%- if section.settings.email_required %} data-required="true"{% endif %}
+              data-type="email"
+              data-error="{{ section.settings.email_error | default: 'Please enter a valid email address' }}"
+            >
+            <span class="cu-error-msg" id="cu-email-err-{{ section.id }}" aria-live="polite"></span>
+          </div>
+          {%- endif -%}
+
+          {%- comment -%} Reason dropdown {%- endcomment -%}
+          {%- if section.settings.show_reason -%}
+          <div class="cu-field">
+            <label class="cu-label" for="cu-reason-{{ section.id }}">
+              {%- if section.settings.reason_required -%}
+                <span class="cu-required-dot" aria-hidden="true"></span>
+              {%- endif -%}
+              {{ section.settings.reason_label | default: 'Reason for Contact' }}
+              {%- unless section.settings.reason_required -%}
+                <span class="cu-optional-tag">optional</span>
+              {%- endunless -%}
+            </label>
+            <div class="cu-select-wrap">
+              <select
+                class="cu-select"
+                id="cu-reason-{{ section.id }}"
+                name="reason"
+                {%- if section.settings.reason_required %} data-required="true" data-error="{{ section.settings.reason_error | default: 'Please select a reason' }}"{% endif %}
+              >
+                <option value="">{{ section.settings.reason_placeholder | default: 'Select a reason…' }}</option>
+                {%- assign reason_options = section.settings.reason_options | split: ',' -%}
+                {%- for opt in reason_options -%}
+                  {%- assign clean = opt | strip -%}
+                  {%- if clean != blank -%}
+                    <option value="{{ clean | handleize }}">{{ clean }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+            </div>
+            <span class="cu-error-msg" id="cu-reason-err-{{ section.id }}" aria-live="polite"></span>
+          </div>
+          {%- endif -%}
+
+        </div>
+
+        {%- comment -%} Row 3: Message (full width) {%- endcomment -%}
+        {%- if section.settings.show_message -%}
+        <div class="cu-row">
+          <div class="cu-field cu-field--full">
+            <label class="cu-label" for="cu-message-{{ section.id }}">
+              {%- if section.settings.message_required -%}
+                <span class="cu-required-dot" aria-hidden="true"></span>
+              {%- endif -%}
+              {{ section.settings.message_label | default: 'Message' }}
+              {%- unless section.settings.message_required -%}
+                <span class="cu-optional-tag">optional</span>
+              {%- endunless -%}
+            </label>
+            <textarea
+              class="cu-textarea"
+              id="cu-message-{{ section.id }}"
+              name="message"
+              rows="5"
+              placeholder="{{ section.settings.message_placeholder | default: 'Tell us how we can help…' }}"
+              {%- if section.settings.message_required %} data-required="true" data-error="{{ section.settings.message_error | default: 'Please write a message' }}"{% endif %}
+              data-minlength="{{ section.settings.message_min_length | default: 10 }}"
+              data-minlength-error="{{ section.settings.message_minlength_error | default: 'Message must be at least 10 characters' }}"
+            ></textarea>
+            <span class="cu-error-msg" id="cu-message-err-{{ section.id }}" aria-live="polite"></span>
+          </div>
+        </div>
+        {%- endif -%}
+
+        {%- comment -%} Submit row {%- endcomment -%}
+        <div class="cu-submit-row">
+          <p class="cu-privacy-note">{{ section.settings.privacy_note }}</p>
+          <button type="submit" class="cu-btn" id="cu-submit-{{ section.id }}">
+            <span class="cu-btn-spinner" aria-hidden="true"></span>
+            <span class="cu-btn-text">{{ section.settings.submit_label | default: 'Send Message' }}</span>
+            <span class="cu-btn-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+{%- comment -%} ══ TOAST ══ {%- endcomment -%}
+<div class="cu-toast" id="cu-toast-{{ section.id }}" role="alert" aria-live="assertive">
+  <span class="cu-toast-icon"></span>
+  <span class="cu-toast-text"></span>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var SECTION_ID  = {{ section.id | json }};
+  var formEl      = document.getElementById('cu-form-'   + SECTION_ID);
+  var submitBtn   = document.getElementById('cu-submit-' + SECTION_ID);
+  var toastEl     = document.getElementById('cu-toast-'  + SECTION_ID);
+  var toastTimer  = null;
+
+  if (!formEl) return;
+
+  var WEBHOOK_URL = formEl.dataset.webhook || '';
+
+  /* ── helpers ── */
+  function $(sel, ctx) { return (ctx || formEl).querySelector(sel); }
+
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+  }
+
+  function isValidPhone(v) {
+    /* accepts digits, spaces, +, -, (), min 7 digits */
+    var digits = v.replace(/\D/g, '');
+    return digits.length >= 7 && /^[\d\s\+\-\(\)]+$/.test(v.trim());
+  }
+
+  /* ── show / hide error ── */
+  function showError(inputEl, msg) {
+    var errEl = document.getElementById(inputEl.id.replace('cu-', 'cu-').replace(/-[^-]+$/, '-err-') + SECTION_ID);
+    /* derive error span id from input id pattern */
+    var parts = inputEl.id.split('-');           /* ['cu','name','SECTIONID'] */
+    var fieldName = parts[1];                     /* 'name' | 'phone' | … */
+    errEl = document.getElementById('cu-' + fieldName + '-err-' + SECTION_ID);
+    if (!errEl) return;
+    errEl.textContent = msg;
+    errEl.classList.add('cu-visible');
+    inputEl.classList.remove('cu-valid');
+    inputEl.classList.add('cu-invalid');
+  }
+
+  function clearError(inputEl) {
+    var parts = inputEl.id.split('-');
+    var fieldName = parts[1];
+    var errEl = document.getElementById('cu-' + fieldName + '-err-' + SECTION_ID);
+    if (errEl) {
+      errEl.textContent = '';
+      errEl.classList.remove('cu-visible');
+    }
+    inputEl.classList.remove('cu-invalid');
+    inputEl.classList.add('cu-valid');
+  }
+
+  /* ── validate single field ── */
+  function validateField(el) {
+    var val        = el.value;
+    var required   = el.dataset.required === 'true';
+    var type       = el.dataset.type || el.type;
+    var errMsg     = el.dataset.error || 'This field is required';
+    var minLength  = parseInt(el.dataset.minlength, 10) || 0;
+    var minLenErr  = el.dataset.minlengthError || ('Minimum ' + minLength + ' characters required');
+
+    /* Empty check */
+    if (required && val.trim() === '') {
+      showError(el, errMsg);
+      return false;
+    }
+
+    /* Skip further checks if empty and optional */
+    if (val.trim() === '') {
+      clearError(el);
+      return true;
+    }
+
+    /* Type-specific checks */
+    if (type === 'email' && !isValidEmail(val)) {
+      showError(el, errMsg);
+      return false;
+    }
+
+    if (type === 'phone' && !isValidPhone(val)) {
+      showError(el, errMsg);
+      return false;
+    }
+
+    /* Min length */
+    if (minLength > 0 && val.trim().length < minLength) {
+      showError(el, minLenErr);
+      return false;
+    }
+
+    clearError(el);
+    return true;
+  }
+
+  /* ── live validation on blur ── */
+  formEl.querySelectorAll('.cu-input, .cu-select, .cu-textarea').forEach(function (el) {
+    el.addEventListener('blur', function () { validateField(el); });
+    el.addEventListener('input', function () {
+      /* Re-validate only if already in error state */
+      if (el.classList.contains('cu-invalid')) validateField(el);
+    });
+  });
+
+  /* ── toast ── */
+  function showToast(msg, type) {
+    clearTimeout(toastTimer);
+    toastEl.querySelector('.cu-toast-icon').textContent = type === 'success' ? '✓' : '✕';
+    toastEl.querySelector('.cu-toast-text').textContent = msg;
+    toastEl.className = 'cu-toast cu-toast--' + type + ' cu-toast--show';
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove('cu-toast--show');
+    }, 4500);
+  }
+
+  /* ── form submit ── */
+  formEl.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    /* Validate all fields */
+    var fields  = formEl.querySelectorAll('.cu-input, .cu-select, .cu-textarea');
+    var allOk   = true;
+    var firstBad = null;
+
+    fields.forEach(function (el) {
+      var ok = validateField(el);
+      if (!ok && allOk) { allOk = false; firstBad = el; }
+    });
+
+    if (!allOk) {
+      if (firstBad) firstBad.focus();
+      return;
+    }
+
+    if (!WEBHOOK_URL) {
+      showToast('Webhook URL is not configured.', 'error');
+      return;
+    }
+
+    /* Build payload */
+    var payload = {};
+    var formData = new FormData(formEl);
+    formData.forEach(function (val, key) { payload[key] = val; });
+    payload['submitted_at'] = new Date().toISOString();
+    payload['page_url']     = window.location.href;
+
+    /* Loading state */
+    submitBtn.classList.add('cu-loading');
+    submitBtn.disabled = true;
+
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function (res) {
+      if (!res.ok) throw new Error('Server responded with ' + res.status);
+      formEl.reset();
+      formEl.querySelectorAll('.cu-input, .cu-select, .cu-textarea').forEach(function (el) {
+        el.classList.remove('cu-valid', 'cu-invalid');
+      });
+      showToast({{ section.settings.success_message | default: 'Message sent! We will get back to you soon.' | json }}, 'success');
+    })
+    .catch(function () {
+      showToast({{ section.settings.error_message | default: 'Something went wrong. Please try again.' | json }}, 'error');
+    })
+    .finally(function () {
+      submitBtn.classList.remove('cu-loading');
+      submitBtn.disabled = false;
+    });
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Contact Us",
+  "tag": "section",
+  "class": "contact-us-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_desktop",
+      "label": "Banner Image — Desktop",
+      "info": "Recommended: 1600×400px. Shown on screens wider than 768px."
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_mobile",
+      "label": "Banner Image — Mobile",
+      "info": "Recommended: 800×220px. Shown on screens 768px and below. Falls back to desktop image if blank."
+    },
+    {
+      "type": "range",
+      "id": "banner_height_desktop",
+      "label": "Banner Height — Desktop (px)",
+      "min": 160,
+      "max": 600,
+      "step": 10,
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "banner_height_mobile",
+      "label": "Banner Height — Mobile (px)",
+      "min": 120,
+      "max": 360,
+      "step": 10,
+      "default": 200
+    },
+    {
+      "type": "text",
+      "id": "banner_eyebrow",
+      "label": "Banner Eyebrow Text",
+      "default": "Get in Touch"
+    },
+    {
+      "type": "text",
+      "id": "banner_title",
+      "label": "Banner Title (wrap in <em> for italic)",
+      "default": "We'd love to <em>hear from you.</em>"
+    },
+    {
+      "type": "header",
+      "content": "Section Intro"
+    },
+    {
+      "type": "text",
+      "id": "intro_label",
+      "label": "Eyebrow Label",
+      "default": "Contact Us"
+    },
+    {
+      "type": "text",
+      "id": "intro_heading",
+      "label": "Heading",
+      "default": "Drop us a <em>message.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "Subtext",
+      "default": "Have a question about an order, a flavour, or just want to say hello? Fill in the form and we'll get back to you as soon as the oven's free."
+    },
+    {
+      "type": "header",
+      "content": "Webhook"
+    },
+    {
+      "type": "text",
+      "id": "webhook_url",
+      "label": "n8n Webhook URL (POST)",
+      "info": "Paste your n8n webhook URL here. The form will POST JSON to this endpoint on submission."
+    },
+    {
+      "type": "header",
+      "content": "Form — Name Field"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_name",
+      "label": "Show Name field",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "name_required",
+      "label": "Name is required",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "name_label",
+      "label": "Label",
+      "default": "Full Name"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "Placeholder",
+      "default": "Your name"
+    },
+    {
+      "type": "text",
+      "id": "name_error",
+      "label": "Validation Error Message",
+      "default": "Please enter your name"
+    },
+    {
+      "type": "header",
+      "content": "Form — Phone Field"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show Phone field",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "phone_required",
+      "label": "Phone is required",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Label",
+      "default": "Phone Number"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Placeholder",
+      "default": "+91 98765 43210"
+    },
+    {
+      "type": "text",
+      "id": "phone_error",
+      "label": "Validation Error Message",
+      "default": "Please enter a valid phone number"
+    },
+    {
+      "type": "header",
+      "content": "Form — Email Field"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_email",
+      "label": "Show Email field",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "email_required",
+      "label": "Email is required",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Label",
+      "default": "Email Address"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Placeholder",
+      "default": "you@example.com"
+    },
+    {
+      "type": "text",
+      "id": "email_error",
+      "label": "Validation Error Message",
+      "default": "Please enter a valid email address"
+    },
+    {
+      "type": "header",
+      "content": "Form — Reason Dropdown"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reason",
+      "label": "Show Reason dropdown",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "reason_required",
+      "label": "Reason is required",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "reason_label",
+      "label": "Label",
+      "default": "Reason for Contact"
+    },
+    {
+      "type": "text",
+      "id": "reason_placeholder",
+      "label": "Placeholder option",
+      "default": "Select a reason…"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_options",
+      "label": "Dropdown Options (comma-separated)",
+      "default": "Order Enquiry, Bulk / Catering Order, Feedback, Collaboration, Something Else"
+    },
+    {
+      "type": "text",
+      "id": "reason_error",
+      "label": "Validation Error Message",
+      "default": "Please select a reason"
+    },
+    {
+      "type": "header",
+      "content": "Form — Message Field"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_message",
+      "label": "Show Message field",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "message_required",
+      "label": "Message is required",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "message_label",
+      "label": "Label",
+      "default": "Message"
+    },
+    {
+      "type": "text",
+      "id": "message_placeholder",
+      "label": "Placeholder",
+      "default": "Tell us how we can help…"
+    },
+    {
+      "type": "text",
+      "id": "message_error",
+      "label": "Validation Error Message",
+      "default": "Please write a message"
+    },
+    {
+      "type": "range",
+      "id": "message_min_length",
+      "label": "Minimum message length (characters)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 10
+    },
+    {
+      "type": "text",
+      "id": "message_minlength_error",
+      "label": "Min-length Error Message",
+      "default": "Message must be at least 10 characters"
+    },
+    {
+      "type": "header",
+      "content": "Form — Submit & Feedback"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit Button Label",
+      "default": "Send Message"
+    },
+    {
+      "type": "textarea",
+      "id": "privacy_note",
+      "label": "Privacy Note (below submit)",
+      "default": "Your information is kept private and never shared with third parties."
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Toast Message",
+      "default": "Message sent! We will get back to you soon."
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error Toast Message",
+      "default": "Something went wrong. Please try again."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Us"
+    }
+  ]
+}
+{% endschema %}
