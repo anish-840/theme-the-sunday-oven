@@ -64,13 +64,47 @@
     }
   }
 
-/* Pull the entire details container to the left on Desktop to close the gap */
+  /* Pull the entire details container to the left on Desktop */
   @media screen and (min-width: 990px) {
     .product-details {
       margin-left: -80px !important; 
     }
   }
 
+  /* --- ACCORDION BORDER CUSTOMIZATION (#1A1A1A) --- */
+  .product-details .accordion,
+  .product-details .accordion__item,
+  .product-details .accordion-row,
+  .product-details details,
+  .product-details .group-block[data-type="accordion"],
+  .product-details ._divider {
+    border-top: 1px solid #1A1A1A !important;
+    border-bottom: 1px solid #1A1A1A !important;
+    border-color: #1A1A1A !important;
+  }
+
+  /* Prevent double borders between rows */
+  .product-details .accordion__item + .accordion__item,
+  .product-details details + details,
+  .product-details .accordion-row + .accordion-row {
+    border-top: none !important;
+  }
+
+  /* Ensure the accordion header matches the theme and aligns with the new borders */
+  .product-details .accordion summary,
+  .product-details details summary {
+    background: transparent !important;
+    padding-inline: 0 !important;
+    color: #1A1A1A !important;
+  }
+
+  /* Icon color adjustment */
+  .product-details .accordion summary svg,
+  .product-details details summary svg,
+  .product-details .accordion__icon {
+    color: #1A1A1A !important;
+    stroke: #1A1A1A !important;
+  }
 {% endstylesheet %}
 
 {% schema %}
