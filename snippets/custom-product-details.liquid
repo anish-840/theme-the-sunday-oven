@@ -1,0 +1,258 @@
+<div class="custom-product-details-block" {{ block.shopify_attributes }}>
+  
+  <h1 class="cpd-title">{{ product.title }}</h1>
+  
+  <div class="cpd-price-wrapper">
+    {% if product.compare_at_price > product.price %}
+      <span class="cpd-price-sale">{{ product.price | money }}</span>
+      <span class="cpd-price-compare"><s>{{ product.compare_at_price | money }}</s></span>
+    {% else %}
+      <span class="cpd-price">{{ product.price | money }}</span>
+    {% endif %}
+  </div>
+
+  <div class="cpd-reviews">
+    <div class="cpd-stars">☆☆☆☆☆</div>
+    <span class="cpd-review-text">No reviews</span>
+  </div>
+
+  <div class="cpd-description">
+    {{ product.description }}
+  </div>
+
+  {%- form 'product', product, id: 'product-form-custom', class: 'cpd-form' -%}
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    
+    {% unless product.has_only_default_variant %}
+      <div class="cpd-variant-picker">
+        <label for="Option-{{ section.id }}" class="cpd-label">Size</label>
+        <div class="cpd-select-wrapper">
+          <select id="Option-{{ section.id }}" class="cpd-select" name="id">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %} {% unless variant.available %}disabled="disabled"{% endunless %}>
+                {{ variant.title }} - {{ variant.price | money }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    {% endunless %}
+
+    <div class="cpd-inventory">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      {% if product.selected_or_first_available_variant.inventory_quantity > 0 %}
+        There are {{ product.selected_or_first_available_variant.inventory_quantity }} products left
+      {% else %}
+        Out of stock
+      {% endif %}
+    </div>
+
+    <div class="cpd-actions">
+      
+      <div class="cpd-quantity-selector">
+        <button type="button" class="cpd-qty-btn minus" onclick="this.parentNode.querySelector('input').stepDown()">−</button>
+        <input type="number" name="quantity" value="1" min="1" class="cpd-qty-input">
+        <button type="button" class="cpd-qty-btn plus" onclick="this.parentNode.querySelector('input').stepUp()">+</button>
+      </div>
+
+      <button type="submit" name="add" class="cpd-btn-add" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+        {% if product.selected_or_first_available_variant.available %}
+          Add to cart
+        {% else %}
+          Sold out
+        {% endif %}
+      </button>
+
+      {{ form | payment_button }}
+      
+    </div>
+  {%- endform -%}
+</div>
+
+<style>
+  .custom-product-details-block {
+    font-family: inherit;
+    color: #111;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .cpd-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .cpd-price-wrapper {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+  
+  .cpd-price-compare {
+    opacity: 0.5;
+    font-size: 1.2rem;
+    margin-left: 10px;
+  }
+
+  .cpd-reviews {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+  }
+
+  .cpd-stars {
+    letter-spacing: 2px;
+  }
+
+  .cpd-description {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+
+  /* Variant Dropdown */
+  .cpd-variant-picker {
+    margin-top: 20px;
+  }
+  
+  .cpd-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+  }
+
+  .cpd-select-wrapper {
+    position: relative;
+  }
+
+  .cpd-select {
+    width: 100%;
+    appearance: none;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 8px;
+    padding: 15px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .cpd-select-wrapper::after {
+    content: "▼";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 0.8rem;
+  }
+
+  /* Inventory */
+  .cpd-inventory {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    margin-top: 15px;
+    opacity: 0.8;
+  }
+
+  /* Actions Container */
+  .cpd-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    align-items: stretch;
+    flex-wrap: wrap; /* Allows wrapping on very small screens */
+  }
+
+  /* Quantity */
+  .cpd-quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 40px;
+    padding: 0 5px;
+    height: 55px; /* Match button height */
+  }
+
+  .cpd-qty-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    width: 40px;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .cpd-qty-input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: 500;
+    -moz-appearance: textfield; /* Firefox */
+  }
+  .cpd-qty-input::-webkit-outer-spin-button,
+  .cpd-qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Buttons */
+  .cpd-btn-add {
+    flex-grow: 1;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    height: 55px;
+    transition: opacity 0.3s;
+  }
+
+  .cpd-btn-add:hover {
+    opacity: 0.8;
+  }
+  
+  .cpd-btn-add:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Target Shopify's native Buy It Now button container */
+  .shopify-payment-button {
+    width: auto !important; /* Prevent it from taking 100% width on desktop */
+  }
+  
+  .shopify-payment-button__button {
+    height: 55px !important;
+    border-radius: 40px !important;
+    border: 1px solid rgba(0,0,0,0.2) !important;
+    background: transparent !important;
+    color: #000 !important;
+    font-size: 1.1rem !important;
+    font-weight: 500 !important;
+    padding: 0 30px !important;
+  }
+  
+  .shopify-payment-button__button:hover {
+    background: rgba(0,0,0,0.05) !important;
+  }
+
+  @media screen and (max-width: 768px) {
+    .cpd-actions {
+      flex-direction: column;
+    }
+    .shopify-payment-button {
+      width: 100% !important;
+    }
+  }
+</style>
