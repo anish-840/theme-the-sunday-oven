@@ -205,6 +205,7 @@
             "group_X39hBc": {
               "type": "group",
               "name": "Values",
+              "disabled": true,
               "settings": {
                 "content_direction": "column",
                 "vertical_on_mobile": true,
