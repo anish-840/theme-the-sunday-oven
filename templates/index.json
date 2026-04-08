@@ -752,6 +752,7 @@
     },
     "custom_collection_tabs_nNHGPC": {
       "type": "custom-collection-tabs",
+      "disabled": true,
       "name": "Collection Tabs Carousel",
       "settings": {
         "bg_color": "#1a1a1a",
