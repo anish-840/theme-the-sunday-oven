@@ -1,13 +1,14 @@
 
-{% render 'product-media-gallery-content',
-  media_presentation: block.settings.media_presentation,
-  block_settings: block.settings,
-  block_id: block.id,
-  block_shopify_attributes: block.shopify_attributes,
-  block: block,
-  section: section
-%}
-
+<div style="position: relative; left: -20px;">
+  {% render 'product-media-gallery-content',
+    media_presentation: block.settings.media_presentation,
+    block_settings: block.settings,
+    block_id: block.id,
+    block_shopify_attributes: block.shopify_attributes,
+    block: block,
+    section: section
+  %}
+</div>
 {% # theme-check-disable ValidVisibleIf %}
 {% schema %}
 {
