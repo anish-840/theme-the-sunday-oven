@@ -13,6 +13,15 @@
   #cu-section-{{ section.id }} {
     --cu-banner-height-desktop: {{ section.settings.banner_height_desktop }}px;
     --cu-banner-height-mobile:  {{ section.settings.banner_height_mobile }}px;
+
+    /* ── Color settings ── */
+    --cu-section-bg:          {{ section.settings.color_section_bg }};
+    --cu-banner-eyebrow-color:{{ section.settings.color_banner_eyebrow }};
+    --cu-banner-title-color:  {{ section.settings.color_banner_title }};
+    --cu-intro-label-color:   {{ section.settings.color_intro_label }};
+    --cu-intro-heading-color: {{ section.settings.color_intro_heading }};
+    --cu-intro-text-color:    {{ section.settings.color_intro_text }};
+    --cu-rule-color:          {{ section.settings.color_rule }};
   }
 </style>
 
@@ -40,7 +49,7 @@
   .cu-wrap {
     font-family: 'DM Sans', sans-serif;
     color: var(--cu-text);
-    background: #BE855D;
+    background: var(--cu-section-bg, #BE855D);
     overflow-x: hidden;
   }
 
@@ -52,7 +61,7 @@
     width: 100%;
     height: var(--cu-banner-height-desktop, 320px);
     overflow: hidden;
-    background: var(--cu-dark);
+    background: var(--cu-section-bg, #BE855D);
   }
 
   .cu-banner-img {
@@ -65,18 +74,7 @@
     display: block;
   }
 
-  /* Overlay so text is always legible */
-  .cu-banner::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(26,16,8,0.25) 0%,
-      rgba(26,16,8,0.55) 100%
-    );
-    pointer-events: none;
-  }
+  /* No overlay — banner uses the section background color */
 
   .cu-banner-content {
     position: absolute;
@@ -94,7 +92,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--cu-caramel-light);
+    color: var(--cu-banner-eyebrow-color, #000000);
     font-weight: 500;
     margin-bottom: 0.9rem;
     opacity: 0;
@@ -105,7 +103,7 @@
   .cu-banner-title {
     font-family: 'Playfair Display', serif;
     font-size: clamp(2rem, 5vw, 3.8rem);
-    color: var(--cu-white);
+    color: var(--cu-banner-title-color, #000000);
     line-height: 1.08;
     font-weight: 700;
     opacity: 0;
@@ -115,7 +113,7 @@
 
   .cu-banner-title em {
     font-style: italic;
-    color: var(--cu-caramel-light);
+    color: var(--cu-banner-title-color, #000000);
   }
 
   /* Desktop / Mobile banner image switching */
@@ -151,7 +149,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--cu-caramel);
+    color: var(--cu-intro-label-color, #000000);
     font-weight: 500;
     display: block;
     margin-bottom: 0.9rem;
@@ -160,29 +158,29 @@
   .cu-intro-heading {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.8rem, 4vw, 3rem);
-    color: var(--cu-dark);
+    color: var(--cu-intro-heading-color, #000000);
     line-height: 1.12;
     margin-bottom: 1rem;
   }
 
   .cu-intro-heading em {
     font-style: italic;
-    color: var(--cu-caramel);
+    color: var(--cu-intro-heading-color, #000000);
   }
 
   .cu-intro-text {
     font-size: 0.95rem;
     line-height: 1.75;
-    color: var(--cu-muted);
+    color: var(--cu-intro-text-color, #000000);
     max-width: 520px;
     margin: 0 auto;
   }
 
-  /* Thin caramel rule */
+  /* Thin rule */
   .cu-rule {
     width: 48px;
     height: 2px;
-    background: var(--cu-caramel);
+    background: var(--cu-rule-color, #000000);
     border: none;
     margin: 1.75rem auto 0;
     border-radius: 2px;
@@ -987,6 +985,55 @@
       "id": "intro_text",
       "label": "Subtext",
       "default": "Have a question about an order, a flavour, or just want to say hello? Fill in the form and we'll get back to you as soon as the oven's free."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_section_bg",
+      "label": "Section Background",
+      "default": "#BE855D",
+      "info": "Applies to the full section including the banner area."
+    },
+    {
+      "type": "color",
+      "id": "color_banner_eyebrow",
+      "label": "Banner Eyebrow Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "color_banner_title",
+      "label": "Banner Title Color",
+      "default": "#000000",
+      "info": "Also applies to the italic <em> part of the title."
+    },
+    {
+      "type": "color",
+      "id": "color_intro_label",
+      "label": "Intro Eyebrow Label Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "color_intro_heading",
+      "label": "Intro Heading Color",
+      "default": "#000000",
+      "info": "Also applies to the italic <em> part of the heading."
+    },
+    {
+      "type": "color",
+      "id": "color_intro_text",
+      "label": "Intro Paragraph Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "color_rule",
+      "label": "Divider Rule Color",
+      "default": "#000000"
     },
     {
       "type": "header",
