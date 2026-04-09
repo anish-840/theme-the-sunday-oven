@@ -53,22 +53,8 @@
 
 {%- capture menu -%}
   {% content_for 'block', type: '_header-menu', id: 'header-menu' %}
-{%- endcapture -%}
-
-{% liquid
-  capture drawer_menu
-    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
-  endcapture
-
-  capture navigation_bar
-    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
-  endcapture
-  # theme-check-enable UniqueStaticBlockId
-%}
-
-{%- capture actions -%}
   {%- if section.settings.show_delivery_widget -%}
-    <div class="custom-delivery-widget mobile:hidden">
+    <div class="custom-delivery-widget custom-delivery-widget--bottom mobile:hidden">
       <svg class="icon-truck-clock" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="6" width="14" height="11"></rect>
         <polygon points="16 10 20 10 23 13 23 17 16 17 16 10"></polygon>
@@ -86,6 +72,19 @@
       </div>
     </div>
   {%- endif -%}
+{%- endcapture -%}
+
+{% liquid
+  capture drawer_menu
+    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
+  endcapture
+
+  capture navigation_bar
+    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
+  endcapture
+%}
+
+{%- capture actions -%}
   {% render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section %}
 {%- endcapture -%}
 
