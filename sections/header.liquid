@@ -1143,6 +1143,21 @@
     color: inherit;
     margin-right: 20px; /* Adds space before your cart/search icons */
   }
+/* Forces the bottom row to stretch fully across the screen */
+  .header__row--bottom .header__column,
+  .header__row--bottom .header__column--left {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  /* Pushes the delivery widget to the absolute right side */
+  .custom-delivery-widget--bottom {
+    margin-left: auto !important; 
+    margin-right: 0 !important;
+  }
+
   .custom-delivery-widget svg {
     flex-shrink: 0;
   }
