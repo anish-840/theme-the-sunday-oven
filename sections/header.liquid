@@ -1236,21 +1236,28 @@
     font-size: 14px !important;
   }
 
-/* --- HEADER ROW BORDER --- */
+/* --- REFINED THIN MENU BORDERS --- */
   
   .header__row--bottom {
-    /* '1.5px' or '2px' makes it look "thick" like the screenshot */
-    border-top: 1.5px solid #1A1A1A !important;
+    /* 1px creates that sharp, high-end boutique look */
+    border-top: 1px solid #1A1A1A !important;
+    border-bottom: 1px solid #1A1A1A !important;
     
-    /* Ensuring the border spans the full width of the screen */
-    width: 100% !important;
+    /* Removes any default gap between rows */
     margin-top: 0 !important;
+    width: 100% !important;
+    background-color: transparent; /* Ensures background matches the header */
   }
 
-  /* Adjusting the spacing so the menu doesn't touch the new line */
+  /* Balancing the vertical space inside the borders */
   .header__row--bottom .header__columns {
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
+  /* Optional: Ensuring the main header row above doesn't have a conflicting border */
+  .header__row--top {
+    border-bottom: none !important;
   }
 
 {% endstylesheet %}
