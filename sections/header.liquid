@@ -1,5 +1,3 @@
-
-
 {% liquid
   assign order = 'logo,menu,localization,search,drawer_search,actions'
 
@@ -48,47 +46,35 @@
     endif
   endif
 
- if transparent
-    if transparent_color_scheme == 'inverse'
-      assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_transparent
-    else
-      assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_top
-    endif
-  endif
+  capture logo
+    content_for 'block', type: '_header-logo', id: 'header-logo'
+  endcapture
 %}
 
-{% capture logo %}
-  <div class="custom-delivery-widget mobile:hidden">
-    <svg class="icon-truck-clock" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="2" y="6" width="14" height="11"></rect>
-      <polygon points="16 10 20 10 23 13 23 17 16 17 16 10"></polygon>
-      <circle cx="6" cy="17" r="2"></circle>
-      <circle cx="19" cy="17" r="2"></circle>
-      <circle cx="8" cy="4" r="4" fill="currentColor" stroke="none"></circle>
-      <circle cx="8" cy="4" r="3" fill="#B47A53" stroke="none"></circle>
-      <path d="M8 2.5V4l1 1" stroke="currentColor" stroke-width="1"></path>
-      <path d="M2 11h4"></path>
-      <path d="M2 14h3"></path>
-    </svg>
-    <div class="delivery-text">
-      <span class="delivery-title">Need delivery?</span>
-      <a href="/pages/delivery" class="delivery-link">See estimates</a>
+{%- capture menu -%}
+  {%- if section.settings.show_delivery_widget -%}
+    <div class="custom-delivery-widget mobile:hidden">
+      <svg class="icon-truck-clock" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="14" height="11"></rect>
+        <polygon points="16 10 20 10 23 13 23 17 16 17 16 10"></polygon>
+        <circle cx="6" cy="17" r="2"></circle>
+        <circle cx="19" cy="17" r="2"></circle>
+        <circle cx="8" cy="4" r="4" fill="currentColor" stroke="none"></circle>
+        <circle cx="8" cy="4" r="3" fill="#B47A53" stroke="none"></circle>
+        <path d="M8 2.5V4l1 1" stroke="currentColor" stroke-width="1"></path>
+        <path d="M2 11h4"></path>
+        <path d="M2 14h3"></path>
+      </svg>
+      <div class="delivery-text">
+        <span class="delivery-title">{{ section.settings.delivery_title }}</span>
+        <a href="{{ section.settings.delivery_link }}" class="delivery-link">{{ section.settings.delivery_text }}</a>
+      </div>
     </div>
-  </div>
-  {% content_for 'block', type: '_header-logo', id: 'header-logo' %}
-{% endcapture %}
+  {%- endif -%}
+  {% content_for 'block', type: '_header-menu', id: 'header-menu' %}
+{%- endcapture -%}
 
 {% liquid
-  # theme-check-disable UniqueStaticBlockId
-  capture menu
-    content_for 'block', type: '_header-menu', id: 'header-menu'
-  endcapture
-
-  # theme-check-disable UniqueStaticBlockId
-  capture menu
-    content_for 'block', type: '_header-menu', id: 'header-menu'
-  endcapture
-
   capture drawer_menu
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
   endcapture
@@ -1146,61 +1132,58 @@
     font-size: var(--menu-localization-font-size);
   }
 
-/* --- CUSTOM HEADER LAYOUT & TYPOGRAPHY --- */
+  /* --- CUSTOM HEADER LAYOUT & TYPOGRAPHY --- */
+  
+  .header__column--left {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Space between the delivery widget and your menu */
+    flex-wrap: nowrap;
+  }
 
-  /* Delivery Widget Styling */
   .custom-delivery-widget {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-right: 20px;
     color: inherit;
   }
+  
   .custom-delivery-widget svg {
     flex-shrink: 0;
   }
+  
   .delivery-text {
     display: flex;
     flex-direction: column;
     text-align: left;
     line-height: 1.3;
   }
+  
   .delivery-title {
     font-size: 13px;
     opacity: 0.85;
   }
+  
   .delivery-link {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: inherit;
     text-decoration: none;
     transition: opacity 0.2s;
   }
+  
   .delivery-link:hover {
     text-decoration: underline;
     opacity: 0.8;
   }
 
-  /* Main Menu Typography (Uppercase & Spaced) */
+  /* Main Menu Typography */
   .header-menu .menu-list__link {
     text-transform: uppercase !important;
     font-weight: 600 !important;
     letter-spacing: 0.05em !important;
     font-size: 14px !important;
   }
-  
-  /* Adds breathing room between the links */
-  .header-menu .menu-list__item {
-    padding: 0 16px !important;
-  }
-
-  /* Ensures the left column flows nicely if you have both a logo AND the widget */
-  .header__column--left {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-
 {% endstylesheet %}
 
 {% unless request.design_mode %}
@@ -1241,6 +1224,33 @@
         }
       ],
       "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Delivery Widget"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_delivery_widget",
+      "label": "Show widget",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "delivery_title",
+      "label": "Small text",
+      "default": "Need delivery?"
+    },
+    {
+      "type": "text",
+      "id": "delivery_text",
+      "label": "Link text",
+      "default": "See estimates"
+    },
+    {
+      "type": "url",
+      "id": "delivery_link",
+      "label": "Link"
     },
     {
       "type": "header",
