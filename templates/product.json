@@ -1107,11 +1107,242 @@
         "padding-block-start": 60,
         "padding-block-end": 72
       }
+    },
+    "product_recommendations_6hwJfc": {
+      "type": "product-recommendations",
+      "blocks": {
+        "text_9pwUxH": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<h2>Related Products</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_JFQAyD": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_4YDpHc": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_fmqGtc": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_JFQAyD",
+            "product_title_4YDpHc",
+            "price_fmqGtc"
+          ]
+        }
+      },
+      "block_order": [
+        "text_9pwUxH"
+      ],
+      "name": "t:names.product_recommendations",
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "features_VjC8DP": {
+      "type": "features",
+      "blocks": {
+        "feature_MtiEEC": {
+          "type": "feature",
+          "settings": {
+            "label": "Hand Mixed",
+            "icon_emoji": "",
+            "default_icon": "hand"
+          }
+        },
+        "feature_BrKxgM": {
+          "type": "feature",
+          "settings": {
+            "label": "Natural Ingredients",
+            "icon_emoji": "",
+            "default_icon": "leaf"
+          }
+        },
+        "feature_FphrjQ": {
+          "type": "feature",
+          "settings": {
+            "label": "Small Batch Preparation",
+            "icon_emoji": "",
+            "default_icon": "box"
+          }
+        },
+        "feature_c9paYF": {
+          "type": "feature",
+          "settings": {
+            "label": "Freshness Guaranteed",
+            "icon_emoji": "",
+            "default_icon": "shield"
+          }
+        }
+      },
+      "block_order": [
+        "feature_MtiEEC",
+        "feature_BrKxgM",
+        "feature_FphrjQ",
+        "feature_c9paYF"
+      ],
+      "name": "Features Bar",
+      "settings": {
+        "heading": "Why The Sunday Oven",
+        "heading_font_family": "playfair",
+        "heading_font_size": 32,
+        "heading_font_weight": "700",
+        "heading_color": "#1A1008",
+        "subheading": "Every cookie made the way it should be.",
+        "subheading_font_family": "dm_sans",
+        "subheading_font_size": 15,
+        "subheading_font_weight": "400",
+        "subheading_color": "#3A2510",
+        "max_width": 1200,
+        "padding_vertical": 28,
+        "bg_color": "#C8824C",
+        "text_color": "#1A1008",
+        "icon_color": "#1A1008",
+        "divider_color": "#1A1008",
+        "text_font_family": "dm_sans",
+        "text_font_size": 14,
+        "text_font_weight": "500",
+        "icon_size": 28
+      }
+    },
+    "custom_rich_text_9YPzRA": {
+      "type": "custom-rich-text",
+      "name": "Custom Rich Text",
+      "settings": {
+        "bg_color": "#161616",
+        "text_color": "#c4906a",
+        "text_alignment": "center",
+        "subheading": "<p>We are <strong>Caffeine</strong></p>",
+        "heading": "At our core, we're coffee artisans, carefully roasting each batch to unlock the unique flavors within every bean, delivering a remarkable cup with every roast ;)",
+        "button_label": "Show more",
+        "button_link": "",
+        "max_width": 900,
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 32,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60
+      }
     }
   },
   "order": [
     "main",
     "section_NaqU9X",
-    "product_list_zR9Cym"
+    "product_list_zR9Cym",
+    "product_recommendations_6hwJfc",
+    "features_VjC8DP",
+    "custom_rich_text_9YPzRA"
   ]
 }
