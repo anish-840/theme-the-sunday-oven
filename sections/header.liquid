@@ -52,6 +52,21 @@
 %}
 
 {%- capture menu -%}
+  {% content_for 'block', type: '_header-menu', id: 'header-menu' %}
+{%- endcapture -%}
+
+{% liquid
+  capture drawer_menu
+    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
+  endcapture
+
+  capture navigation_bar
+    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
+  endcapture
+  # theme-check-enable UniqueStaticBlockId
+%}
+
+{%- capture actions -%}
   {%- if section.settings.show_delivery_widget -%}
     <div class="custom-delivery-widget mobile:hidden">
       <svg class="icon-truck-clock" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -71,23 +86,10 @@
       </div>
     </div>
   {%- endif -%}
-  {% content_for 'block', type: '_header-menu', id: 'header-menu' %}
+  {% render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section %}
 {%- endcapture -%}
 
 {% liquid
-  capture drawer_menu
-    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
-  endcapture
-
-  capture navigation_bar
-    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
-  endcapture
-  # theme-check-enable UniqueStaticBlockId
-
-  capture actions
-    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
-  endcapture
-
   if shop.customer_accounts_enabled
     assign search_class = 'search-action--hidden-on-drawer'
   endif
@@ -1134,20 +1136,14 @@
 
   /* --- CUSTOM HEADER LAYOUT & TYPOGRAPHY --- */
   
-  .header__column--left {
-    display: flex;
-    align-items: center;
-    gap: 30px; /* Space between the delivery widget and your menu */
-    flex-wrap: nowrap;
-  }
 
   .custom-delivery-widget {
     display: flex;
     align-items: center;
     gap: 12px;
     color: inherit;
+    margin-right: 20px; /* Adds space before your cart/search icons */
   }
-  
   .custom-delivery-widget svg {
     flex-shrink: 0;
   }
