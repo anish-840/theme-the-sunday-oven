@@ -1,8 +1,7 @@
 {% comment %}
   ╔══════════════════════════════════════════════════════════════╗
-  ║  THE SUNDAY OVEN — Our Story Page Section                    ║
+  ║  THE SUNDAY OVEN — Story, Guide & Reviews                    ║
   ║  File: sections/our-story.liquid                             ║
-  ║  Usage: Add to a page template via the Shopify theme editor  ║
   ╚══════════════════════════════════════════════════════════════╝
 {% endcomment %}
 
@@ -23,924 +22,222 @@
   }
 
   .so-wrap *, .so-wrap *::before, .so-wrap *::after { box-sizing: border-box; }
-  .so-wrap { overflow-x: hidden; font-family: 'DM Sans', sans-serif; color: var(--so-text); }
-
-  /* ── HERO ── */
-  .so-hero {
-    min-height: 100vh;
-    background: var(--so-dark);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
+  .so-wrap { 
+    overflow-x: hidden; 
+    font-family: 'DM Sans', sans-serif; 
+    color: var(--so-text); 
+    background: var(--so-cream);
   }
-  .so-hero-left {
+
+  /* ── SHARED TYPOGRAPHY ── */
+  .so-section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; text-align: center; }
+  .so-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--so-dark);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+  .so-heading em { font-style: italic; color: var(--so-caramel); }
+  
+  /* ── OUR STORY ── */
+  .so-story-text {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--so-muted);
+  }
+  .so-story-text p { margin-bottom: 1.5rem; }
+
+  /* ── GUIDE TO BAKE ── */
+  .so-guide-section { background: var(--so-white); border-radius: 40px; padding: 6rem 2rem; margin: 2rem auto; max-width: 1200px;}
+  .so-guide-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+  .so-guide-step {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 8rem 4rem 6rem;
+    align-items: center;
     position: relative;
-    z-index: 2;
   }
-  .so-hero-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--so-caramel-light);
-    font-weight: 500;
-    margin-bottom: 2rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: soFadeUp 0.6s 0.2s forwards;
-  }
-  .so-hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3.5rem, 7vw, 7rem);
-    color: var(--so-white);
-    line-height: 1.0;
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: soFadeUp 0.8s 0.35s forwards;
-  }
-  .so-hero-title em {
-    font-style: italic;
-    color: var(--so-caramel-light);
-    display: block;
-  }
-  .so-hero-sub {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #9E7A58;
-    max-width: 380px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: soFadeUp 0.7s 0.55s forwards;
-  }
-  .so-hero-right {
-    position: relative;
-    overflow: hidden;
-  }
-  .so-hero-right::before {
-    content: '';
+  .so-guide-step:not(:last-child)::after {
+    content: '→';
     position: absolute;
-    inset: 0;
-    background: var(--so-caramel-bg);
-    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
+    top: 25%;
+    right: -2rem;
+    font-size: 2rem;
+    color: var(--so-caramel-light);
+    opacity: 0.5;
+  }
+  .so-step-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    background: var(--so-cream);
+    border-radius: 50%;
+    border: 1px solid rgba(192,125,74,0.2);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
+  }
+  .so-guide-step:hover .so-step-icon {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(192,125,74,0.15);
+  }
+  .so-step-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--so-dark);
+    font-style: italic;
+  }
+  .so-guide-closing {
+    margin-top: 4rem;
+    font-size: 1.1rem;
+    color: var(--so-caramel);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── REVIEWS ── */
+  .so-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+  .so-review-card {
+    background: var(--so-white);
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(192,125,74,0.15);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .so-review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(192,125,74,0.1);
+  }
+  .so-review-card::before {
+    content: '“';
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: rgba(192,125,74,0.15);
+    line-height: 1;
+  }
+  .so-review-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--so-dark);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    position: relative;
     z-index: 1;
   }
-  /* Hero image fills the right panel */
-  .so-hero-img {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
-    opacity: 0;
-    transform: scale(1.04);
-    animation: soHeroImgIn 1s 0.4s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
-  }
-  /* Subtle dark gradient overlay so text on left stays legible */
-  .so-hero-right::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
-    background: linear-gradient(to right, rgba(26,16,8,0.35) 0%, transparent 40%);
-    pointer-events: none;
-  }
-  /* Badge pinned bottom-left over the image */
-  .so-hero-badge {
-    position: absolute;
-    bottom: 2.5rem;
-    left: calc(8% + 1.5rem);
-    z-index: 4;
-    background: var(--so-dark);
-    color: var(--so-cream);
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 0.95rem;
-    padding: 0.6rem 1.5rem;
-    border-radius: 100px;
-    opacity: 0;
-    animation: soFadeUp 0.6s 1.1s forwards;
-    letter-spacing: 0.05em;
-    cursor: default;
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-  }
-  .so-hero-badge:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-  }
-  @keyframes soHeroImgIn {
-    to { opacity: 1; transform: scale(1); }
-  }
-  /* Mobile: stack vertically, show mobile image */
-  .so-hero-img-desktop { display: block; }
-  .so-hero-img-mobile  { display: none; }
-  @media (max-width: 900px) {
-    .so-hero-img-desktop { display: none; }
-    .so-hero-img-mobile  { display: block; }
-    .so-hero-badge {
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .so-hero-badge:hover { transform: translateX(-50%) translateY(-3px); }
-  }
-
-  @keyframes soFadeUp { to { opacity: 1; transform: translateY(0); } }
-  @keyframes soPopIn  { to { opacity: 1; transform: scale(1) rotate(0deg); } }
-
-  /* ── ICON IMAGE SUPPORT ── */
-  .so-icon-img-wrap { display: inline-flex; align-items: center; justify-content: center; }
-  .so-icon-img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    display: block;
-  }
-
-  /* ── MARQUEE ── */
-  .so-marquee {
-    background: var(--so-caramel);
-    overflow: hidden;
-    padding: 0.9rem 0;
-    white-space: nowrap;
-    cursor: default;
-  }
-  .so-marquee:hover .so-marquee-track { animation-play-state: paused; }
-  .so-marquee-track {
-    display: inline-flex;
-    align-items: center;
-    animation: soMarquee 22s linear infinite;
-  }
-  /* Each text item and each divider are separate equal-width flex children */
-  .so-marquee-text {
-    font-family: var(--so-marquee-font-family, 'Playfair Display', serif);
-    font-style: var(--so-marquee-font-style, italic);
-    font-weight: var(--so-marquee-font-weight, 400);
-    font-size: 1rem;
-    color: var(--so-dark);
-    letter-spacing: 0.04em;
-    padding: 0 2.5rem;
-    white-space: nowrap;
-  }
-  .so-marquee-divider {
-    color: var(--so-dark);
-    font-size: 0.65rem;
-    opacity: 0.7;
-    flex-shrink: 0;
-    padding: 0 2.5rem;
-    line-height: 1;
-  }
-  @keyframes soMarquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  /* ── ORIGIN ── */
-  .so-origin {
-    padding: 9rem 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 8rem;
-    align-items: start;
-    background: var(--so-origin-bg, transparent);
-  }
-  .so-sticky-label { position: sticky; top: 8rem; }
-  .so-section-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 8rem;
-    font-weight: 900;
-    color: var(--so-origin-num-color, rgba(192,125,74,0.12));
-    line-height: 1;
-    margin-bottom: -1rem;
-    transition: color 0.4s;
-  }
-  .so-origin:hover .so-section-num { opacity: 0.85; }
-  .so-section-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
+  .so-review-author {
+    font-size: 0.85rem;
     text-transform: uppercase;
-    color: var(--so-origin-eyebrow-color, var(--so-caramel));
-    font-weight: 500;
-    margin-bottom: 1.2rem;
-  }
-  .so-section-heading {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    color: var(--so-origin-heading-color, var(--so-dark));
-    line-height: 1.1;
-  }
-  .so-section-heading em {
-    font-style: italic;
-    color: var(--so-origin-heading-em-color, var(--so-caramel));
-  }
-  .so-origin-body { padding-top: 2rem; }
-  .so-dropcap {
-    font-size: 1.05rem;
-    line-height: 1.85;
-    color: var(--so-origin-body-color, var(--so-muted));
-    margin-bottom: 1.8rem;
-  }
-  .so-dropcap::first-letter {
-    font-family: 'Playfair Display', serif;
-    font-size: 4.5rem;
-    font-weight: 700;
-    float: left;
-    line-height: 0.8;
-    margin-right: 0.12em;
-    margin-top: 0.1em;
-    color: var(--so-origin-dropcap-color, var(--so-caramel));
-  }
-  .so-origin-para {
-    font-size: 1.02rem;
-    line-height: 1.85;
-    color: var(--so-origin-body-color, var(--so-muted));
-    margin-bottom: 1.8rem;
-  }
-  .so-pull-quote {
-    border-left: 3px solid var(--so-origin-quote-accent, var(--so-caramel));
-    padding: 1.5rem 2rem;
-    margin: 2.5rem 0;
-    background: var(--so-origin-quote-bg, rgba(192,125,74,0.06));
-    border-radius: 0 12px 12px 0;
-    transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s;
-  }
-  .so-pull-quote:hover {
-    border-color: var(--so-caramel-light);
-    box-shadow: 0 6px 30px rgba(192,125,74,0.12);
-    transform: translateX(4px);
-  }
-  .so-pull-quote p {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.35rem;
-    font-style: italic;
-    color: var(--so-dark);
-    line-height: 1.5;
-  }
-  .so-pull-quote cite {
-    display: block;
-    margin-top: 0.75rem;
-    font-size: 0.8rem;
-    font-style: normal;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--so-caramel);
     font-weight: 500;
   }
 
-  /* ── TIMELINE ── */
-  .so-timeline-section {
-    background: var(--so-dark);
-    padding: 9rem 3rem;
-  }
-  .so-timeline-inner { max-width: 1100px; margin: 0 auto; }
-  .so-timeline-header { text-align: center; margin-bottom: 6rem; }
-  .so-tl-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--so-caramel-light);
-    font-weight: 500;
-    display: block;
-    margin-bottom: 1rem;
-  }
-  .so-tl-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: var(--so-cream);
-    line-height: 1.1;
-  }
-  .so-tl-title em { font-style: italic; color: var(--so-caramel-light); }
-  .so-timeline {
-    position: relative;
-    padding-left: 3rem;
-  }
-  .so-timeline::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, var(--so-caramel) 10%, var(--so-caramel) 90%, transparent);
-  }
-  .so-tl-item {
-    position: relative;
-    padding: 0 0 5rem 3.5rem;
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 3rem;
-    align-items: start;
-    transition: opacity 0.3s;
-  }
-  .so-tl-item:last-child { padding-bottom: 0; }
-  .so-tl-item > div:last-child { transition: transform 0.35s ease; }
-  .so-tl-item:hover > div:last-child { transform: translateX(6px); }
-  .so-tl-dot {
-    position: absolute;
-    left: -8px; top: 6px;
-    width: 17px; height: 17px;
-    border-radius: 50%;
-    background: var(--so-caramel);
-    border: 3px solid var(--so-dark);
-    box-shadow: 0 0 0 4px rgba(192,125,74,0.2);
-    transition: box-shadow 0.35s, transform 0.35s;
-  }
-  .so-tl-item:hover .so-tl-dot {
-    transform: scale(1.4);
-    box-shadow: 0 0 0 7px rgba(192,125,74,0.18), 0 0 0 13px rgba(192,125,74,0.07);
-  }
-  .so-tl-year {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    font-style: italic;
-    color: var(--so-caramel-light);
-    padding-top: 0.2rem;
-    white-space: nowrap;
-  }
-  .so-tl-emoji {
-    display: inline-block;
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
-    transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .so-tl-item:hover .so-tl-emoji { transform: scale(1.25) rotate(-8deg); }
-  .so-tl-content-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: var(--so-cream);
-    margin-bottom: 0.75rem;
-    line-height: 1.2;
-    transition: color 0.3s;
-  }
-  .so-tl-item:hover .so-tl-content-title { color: var(--so-caramel-light); }
-  .so-tl-content-text { font-size: 0.92rem; line-height: 1.75; color: #9E7A58; }
-
-  /* ── VALUES ── */
-  .so-values {
-    background: var(--so-cream-dark);
-    padding: 9rem 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .so-values::after {
-    content: '♡';
-    position: absolute;
-    right: -2rem; bottom: -3rem;
-    font-size: 18rem;
-    color: rgba(192,125,74,0.07);
-    pointer-events: none;
-    line-height: 1;
-  }
-  .so-values-inner { max-width: 1200px; margin: 0 auto; }
-  .so-values-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    margin-bottom: 5rem;
-    align-items: end;
-  }
-  .so-values-header p { font-size: 1rem; line-height: 1.8; color: var(--so-muted); padding-bottom: 0.5rem; }
-  .so-values-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-  .so-value-card {
-    background: var(--so-cream);
-    border-radius: 20px;
-    padding: 2.5rem 2rem;
-    border: 1px solid rgba(192,125,74,0.15);
-    transition: transform 0.35s ease, border-color 0.35s, box-shadow 0.35s;
-    position: relative;
-    overflow: hidden;
-    cursor: default;
-  }
-  .so-value-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--so-caramel);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s;
-  }
-  .so-value-card:hover {
-    border-color: rgba(192,125,74,0.35);
-    box-shadow: 0 16px 40px rgba(192,125,74,0.12);
-  }
-  .so-value-card:hover::before { transform: scaleX(1); }
-  .so-value-icon {
-    font-size: 2.5rem;
-    display: inline-block;
-    margin-bottom: 1.2rem;
-    transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .so-value-card:hover .so-value-icon { transform: translateY(-7px) scale(1.15) rotate(-5deg); }
-  .so-value-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--so-dark);
-    margin-bottom: 0.75rem;
-    font-style: italic;
-    position: relative;
-    display: inline-block;
-  }
-  .so-value-title::after {
-    content: '';
-    position: absolute;
-    bottom: -2px; left: 0;
-    width: 100%; height: 1px;
-    background: var(--so-caramel);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.35s ease;
-  }
-  .so-value-card:hover .so-value-title::after { transform: scaleX(1); }
-  .so-value-text { font-size: 0.88rem; line-height: 1.75; color: var(--so-muted); }
-
-  /* ── FOUNDER ── */
-  .so-founder {
-    background: var(--so-caramel-bg);
-    padding: 9rem 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .so-founder::before {
-    content: '\201C';
-    position: absolute;
-    left: 3rem; top: 3rem;
-    font-family: 'Playfair Display', serif;
-    font-size: 18rem;
-    color: rgba(26,16,8,0.08);
-    line-height: 1;
-    pointer-events: none;
-  }
-  .so-founder-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-  }
-  .so-founder-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--so-dark);
-    font-weight: 500;
-    opacity: 0.6;
-    margin-bottom: 3rem;
-    display: block;
-  }
-  .so-founder-avatar {
-    width: 100px; height: 100px;
-    border-radius: 50%;
-    background: var(--so-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    margin: 0 auto 2.5rem;
-    border: 4px solid rgba(255,255,255,0.3);
-    cursor: default;
-    transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
-  }
-  .so-founder-avatar:hover {
-    transform: scale(1.08) rotate(6deg);
-    box-shadow: 0 0 0 8px rgba(192,125,74,0.2), 0 16px 40px rgba(0,0,0,0.25);
-  }
-  .so-founder-quote {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-    font-style: italic;
-    color: var(--so-dark);
-    line-height: 1.45;
-    margin-bottom: 3rem;
-    transition: text-shadow 0.4s;
-  }
-  .so-founder-inner:hover .so-founder-quote { text-shadow: 0 2px 30px rgba(192,125,74,0.15); }
-  .so-founder-name {
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--so-dark);
-    opacity: 0.7;
-    margin-bottom: 0.25rem;
-  }
-  .so-founder-role {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 0.9rem;
-    color: var(--so-dark);
-    opacity: 0.55;
-  }
-
-  /* ── PROMISE ── */
-  .so-promise { background: var(--so-dark); padding: 9rem 3rem; }
-  .so-promise-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: center;
-  }
-  .so-promise-heading {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    color: var(--so-cream);
-    line-height: 1.1;
-    margin-bottom: 2rem;
-  }
-  .so-promise-heading em { font-style: italic; color: var(--so-caramel-light); display: block; }
-  .so-promise-text { font-size: 0.98rem; line-height: 1.85; color: #9E7A58; margin-bottom: 2rem; }
-  .so-btn {
-    background: var(--so-caramel);
-    color: var(--so-dark);
-    border: none;
-    padding: 1rem 2.5rem;
-    border-radius: 100px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
-  }
-  .so-btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.18);
-    transform: translateX(-101%);
-    transition: transform 0.4s ease;
-    border-radius: inherit;
-  }
-  .so-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(192,125,74,0.4); }
-  .so-btn:hover::after { transform: translateX(0); }
-  .so-promise-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-  .so-stat-box {
-    background: var(--so-dark-mid);
-    border-radius: 20px;
-    padding: 2.5rem 2rem;
-    border: 1px solid rgba(192,125,74,0.12);
-    transition: transform 0.35s ease, border-color 0.35s, box-shadow 0.35s;
-    cursor: default;
-  }
-  .so-stat-box:hover {
-    border-color: rgba(192,125,74,0.35);
-    box-shadow: 0 12px 35px rgba(192,125,74,0.12);
-  }
-  .so-stat-emoji {
-    font-size: 2rem;
-    display: inline-block;
-    margin-bottom: 1rem;
-    transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .so-stat-box:hover .so-stat-emoji { transform: translateY(-5px) scale(1.2); }
-  .so-stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--so-caramel-light);
-    line-height: 1;
-    margin-bottom: 0.4rem;
-    display: block;
-    transition: color 0.3s;
-  }
-  .so-stat-box:hover .so-stat-num { color: var(--so-cream); }
-  .so-stat-label { font-size: 0.82rem; letter-spacing: 0.08em; color: #6B4A30; text-transform: uppercase; }
-
-  /* ── SHARED TYPOGRAPHY ── */
-  .so-eyebrow-tag {
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    display: block;
-  }
-
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    .so-hero { grid-template-columns: 1fr; min-height: auto; }
-    .so-hero-left { padding: 8rem 2rem 4rem; }
-    .so-hero-right { height: 50vw; min-height: 280px; }
-    .so-hero-right::before { clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%); }
-
-    .so-origin { grid-template-columns: 1fr; gap: 2rem; padding: 5rem 1.5rem; }
-    .so-sticky-label { position: static; }
-
-    .so-timeline-section { padding: 5rem 1.5rem; }
-    .so-timeline { padding-left: 2rem; }
-    .so-tl-item { grid-template-columns: 80px 1fr; gap: 1.5rem; padding-left: 2.5rem; }
-
-    .so-values { padding: 5rem 1.5rem; }
-    .so-values-header { grid-template-columns: 1fr; gap: 1.5rem; }
-    .so-values-grid { grid-template-columns: 1fr; }
-
-    .so-founder { padding: 5rem 1.5rem; }
-    .so-founder::before { font-size: 10rem; }
-
-    .so-promise { padding: 5rem 1.5rem; }
-    .so-promise-inner { grid-template-columns: 1fr; gap: 3rem; }
-  }
-
-  @media (max-width: 600px) {
-    .so-promise-stats { grid-template-columns: 1fr 1fr; }
-    .so-values-grid { grid-template-columns: 1fr; }
-    .so-tl-item { grid-template-columns: 60px 1fr; gap: 1rem; }
-  }
-</style>
-
-<style>
-  /* Dynamic settings injected by Shopify section schema */
-  #so-section-{{ section.id }} {
-    /* Marquee typography */
-    --so-marquee-font-style:  {{ section.settings.marquee_font_style  | default: 'italic' }};
-    --so-marquee-font-weight: {{ section.settings.marquee_font_weight | default: '400' }};
-
-    /* Origin / "A Kitchen Craving" section colors */
-    --so-origin-bg:             {{ section.settings.origin_bg_color            | default: 'transparent' }};
-    --so-origin-eyebrow-color:  {{ section.settings.origin_eyebrow_color       | default: '#C07D4A' }};
-    --so-origin-heading-color:  {{ section.settings.origin_heading_color        | default: '#1A1008' }};
-    --so-origin-heading-em-color: {{ section.settings.origin_heading_em_color  | default: '#C07D4A' }};
-    --so-origin-body-color:     {{ section.settings.origin_body_color           | default: '#7A5235' }};
-    --so-origin-dropcap-color:  {{ section.settings.origin_dropcap_color        | default: '#C07D4A' }};
-    --so-origin-num-color:      {{ section.settings.origin_num_color            | default: 'rgba(192,125,74,0.12)' }};
-    --so-origin-quote-accent:   {{ section.settings.origin_quote_accent_color   | default: '#C07D4A' }};
-    --so-origin-quote-bg:       {{ section.settings.origin_quote_bg_color       | default: 'rgba(192,125,74,0.06)' }};
+    .so-guide-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .so-guide-step:not(:last-child)::after {
+      content: '↓';
+      top: auto;
+      bottom: -2rem;
+      right: 50%;
+      transform: translateX(50%);
+    }
+    .so-section { padding: 4rem 1.5rem; }
+    .so-guide-section { padding: 4rem 1.5rem; margin: 1rem; border-radius: 24px; }
   }
 </style>
 
 <div class="so-wrap" id="so-section-{{ section.id }}">
 
-  {%- comment -%} ══ HERO ══ {%- endcomment -%}
-  <section class="so-hero">
-    <div class="so-hero-left">
-      <p class="so-hero-eyebrow">{{ section.settings.hero_eyebrow }}</p>
-      <h1 class="so-hero-title">
-        {{ section.settings.hero_title_line1 }}
-        <em>{{ section.settings.hero_title_line2 }}</em>
-        {{ section.settings.hero_title_line3 }}
-      </h1>
-      <p class="so-hero-sub">{{ section.settings.hero_subtitle }}</p>
-    </div>
-    <div class="so-hero-right">
-      {%- if section.settings.hero_image_desktop != blank -%}
-        {{ section.settings.hero_image_desktop | image_url: width: 1200 | image_tag:
-            class: 'so-hero-img so-hero-img-desktop',
-            alt: section.settings.hero_image_desktop.alt | default: 'Hero image',
-            loading: 'eager',
-            fetchpriority: 'high'
-        }}
-      {%- else -%}
-        <div class="so-hero-img so-hero-img-desktop" style="background:var(--so-caramel-bg);clip-path:polygon(8% 0,100% 0,100% 100%,0% 100%);"></div>
-      {%- endif -%}
-
-      {%- if section.settings.hero_image_mobile != blank -%}
-        {{ section.settings.hero_image_mobile | image_url: width: 800 | image_tag:
-            class: 'so-hero-img so-hero-img-mobile',
-            alt: section.settings.hero_image_mobile.alt | default: 'Hero image mobile',
-            loading: 'eager',
-            fetchpriority: 'high'
-        }}
-      {%- else -%}
-        <div class="so-hero-img so-hero-img-mobile" style="background:var(--so-caramel-bg);clip-path:polygon(8% 0,100% 0,100% 100%,0% 100%);"></div>
-      {%- endif -%}
-
-      <span class="so-hero-badge">{{ section.settings.hero_badge }}</span>
+  {%- comment -%} ══ OUR STORY ══ {%- endcomment -%}
+  <section class="so-section">
+    <h2 class="so-heading">{{ section.settings.story_title }}</h2>
+    <div class="so-story-text">
+      {{ section.settings.story_text }}
     </div>
   </section>
 
-  {%- comment -%} ══ MARQUEE ══ {%- endcomment -%}
-  <div class="so-marquee">
-    <div class="so-marquee-track">
-      {%- comment -%} Rendered twice for seamless infinite loop {%- endcomment -%}
-      {%- for i in (1..2) -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'marquee_item' -%}
-            <span class="so-marquee-text">{{ block.settings.text }}</span>
-            <span class="so-marquee-divider" aria-hidden="true">✦</span>
-          {%- endif -%}
-        {%- endfor -%}
+  {%- comment -%} ══ GUIDE TO BAKE ══ {%- endcomment -%}
+  <section class="so-section so-guide-section">
+    <h2 class="so-heading">{{ section.settings.guide_title }}</h2>
+    
+    <div class="so-guide-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'guide_step' -%}
+          <div class="so-guide-step" {{ block.shopify_attributes }}>
+            <span class="so-step-icon">
+              {%- if block.settings.icon_image != blank -%}
+                {{ block.settings.icon_image | image_url: width: 80 | image_tag: loading: 'lazy', style: 'width: 45px; height: 45px; object-fit: contain;' }}
+              {%- else -%}
+                {{ block.settings.icon }}
+              {%- endif -%}
+            </span>
+            <p class="so-step-text">{{ block.settings.text }}</p>
+          </div>
+        {%- endif -%}
       {%- endfor -%}
     </div>
-  </div>
 
-  {%- comment -%} ══ ORIGIN ══ {%- endcomment -%}
-  <section class="so-origin">
-    <div class="so-sticky-label">
-      <div class="so-section-num">{{ section.settings.origin_section_num }}</div>
-      <p class="so-section-eyebrow">{{ section.settings.origin_eyebrow }}</p>
-      <h2 class="so-section-heading">{{ section.settings.origin_heading | newline_to_br }}<em>{{ section.settings.origin_heading_em }}</em></h2>
-    </div>
-    <div class="so-origin-body">
-      <p class="so-dropcap">{{ section.settings.origin_para1 }}</p>
-      <p class="so-origin-para">{{ section.settings.origin_para2 }}</p>
-      <blockquote class="so-pull-quote">
-        <p>{{ section.settings.origin_quote }}</p>
-        <cite>{{ section.settings.origin_quote_cite }}</cite>
-      </blockquote>
-      <p class="so-origin-para">{{ section.settings.origin_para3 }}</p>
+    {%- if section.settings.guide_closing != blank -%}
+      <p class="so-guide-closing">{{ section.settings.guide_closing }}</p>
+    {%- endif -%}
+  </section>
+
+  {%- comment -%} ══ REVIEWS ══ {%- endcomment -%}
+  <section class="so-section">
+    <h2 class="so-heading">{{ section.settings.reviews_title }}</h2>
+    <div class="so-reviews-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          <div class="so-review-card" {{ block.shopify_attributes }}>
+            <p class="so-review-quote">{{ block.settings.quote }}</p>
+            <p class="so-review-author">— {{ block.settings.author }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
   </section>
 
-  {%- comment -%} ══ TIMELINE ══ {%- endcomment -%}
-  <section class="so-timeline-section">
-    <div class="so-timeline-inner">
-      <div class="so-timeline-header">
-        <span class="so-tl-eyebrow">{{ section.settings.timeline_eyebrow }}</span>
-        <h2 class="so-tl-title">{{ section.settings.timeline_title }} <em>{{ section.settings.timeline_title_em }}</em></h2>
-      </div>
-      <div class="so-timeline">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'timeline_item' -%}
-            <div class="so-tl-item" {{ block.shopify_attributes }}>
-              <div class="so-tl-dot"></div>
-              <div class="so-tl-year">{{ block.settings.year }}</div>
-              <div>
-                {%- if block.settings.icon_image != blank -%}
-                  <span class="so-tl-emoji so-icon-img-wrap">
-                    {{- block.settings.icon_image | image_url: width: 80 | image_tag:
-                        class: 'so-icon-img',
-                        alt: block.settings.icon_image.alt | default: block.settings.title,
-                        loading: 'lazy',
-                        width: 40,
-                        height: 40
-                    -}}
-                  </span>
-                {%- else -%}
-                  <span class="so-tl-emoji">{{ block.settings.emoji }}</span>
-                {%- endif -%}
-                <h3 class="so-tl-content-title">{{ block.settings.title }}</h3>
-                <p class="so-tl-content-text">{{ block.settings.text }}</p>
-              </div>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    </div>
-  </section>
-
-  {%- comment -%} ══ VALUES ══ {%- endcomment -%}
-  <section class="so-values">
-    <div class="so-values-inner">
-      <div class="so-values-header">
-        <div>
-          <p class="so-section-eyebrow">{{ section.settings.values_eyebrow }}</p>
-          <h2 class="so-section-heading">{{ section.settings.values_heading | newline_to_br }}<em>{{ section.settings.values_heading_em }}</em></h2>
-        </div>
-        <p>{{ section.settings.values_subtext }}</p>
-      </div>
-      <div class="so-values-grid">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'value_card' -%}
-            <div class="so-value-card" {{ block.shopify_attributes }}>
-              {%- if block.settings.icon_image != blank -%}
-                <span class="so-value-icon so-icon-img-wrap">
-                  {{- block.settings.icon_image | image_url: width: 80 | image_tag:
-                      class: 'so-icon-img',
-                      alt: block.settings.icon_image.alt | default: block.settings.title,
-                      loading: 'lazy',
-                      width: 40,
-                      height: 40
-                  -}}
-                </span>
-              {%- else -%}
-                <span class="so-value-icon">{{ block.settings.icon }}</span>
-              {%- endif -%}
-              <h3 class="so-value-title">{{ block.settings.title }}</h3>
-              <p class="so-value-text">{{ block.settings.text }}</p>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    </div>
-  </section>
-
-  {%- comment -%} ══ FOUNDER ══ {%- endcomment -%}
-  <section class="so-founder">
-    <div class="so-founder-inner">
-      <span class="so-founder-eyebrow">{{ section.settings.founder_eyebrow }}</span>
-      <div class="so-founder-avatar">{{ section.settings.founder_emoji }}</div>
-      <p class="so-founder-quote">{{ section.settings.founder_quote }}</p>
-      <p class="so-founder-name">{{ section.settings.founder_name }}</p>
-      <p class="so-founder-role">{{ section.settings.founder_role }}</p>
-    </div>
-  </section>
-
-  {%- comment -%} ══ PROMISE ══ {%- endcomment -%}
-  <section class="so-promise">
-    <div class="so-promise-inner">
-      <div>
-        <span class="so-eyebrow-tag" style="color:var(--so-caramel-light);">{{ section.settings.promise_eyebrow }}</span>
-        <h2 class="so-promise-heading">
-          {{ section.settings.promise_title }}
-          <em>{{ section.settings.promise_title_em }}</em>
-        </h2>
-        <p class="so-promise-text">{{ section.settings.promise_para1 }}</p>
-        <p class="so-promise-text">{{ section.settings.promise_para2 }}</p>
-        <a href="{{ section.settings.promise_btn_url }}" class="so-btn">{{ section.settings.promise_btn_label }}</a>
-      </div>
-      <div class="so-promise-stats">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'stat' -%}
-            <div class="so-stat-box" {{ block.shopify_attributes }}>
-              {%- if block.settings.icon_image != blank -%}
-                <span class="so-stat-emoji so-icon-img-wrap">
-                  {{- block.settings.icon_image | image_url: width: 80 | image_tag:
-                      class: 'so-icon-img',
-                      alt: block.settings.icon_image.alt | default: block.settings.label,
-                      loading: 'lazy',
-                      width: 40,
-                      height: 40
-                  -}}
-                </span>
-              {%- else -%}
-                <span class="so-stat-emoji">{{ block.settings.emoji }}</span>
-              {%- endif -%}
-              <span class="so-stat-num">{{ block.settings.number }}</span>
-              <p class="so-stat-label">{{ block.settings.label }}</p>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    </div>
-  </section>
-
-</div>{%- comment -%} #so-section-{{ section.id }} .so-wrap {%- endcomment -%}
+</div>
 
 <script>
 (function() {
-  // ── 3D tilt on value cards ──
-  document.querySelectorAll('.so-value-card').forEach(function(card) {
-    card.addEventListener('mousemove', function(e) {
-      var r = card.getBoundingClientRect();
-      var x = e.clientX - r.left - r.width  / 2;
-      var y = e.clientY - r.top  - r.height / 2;
-      card.style.transform = 'translateY(-6px) perspective(600px) rotateX(' + ((y / (r.height/2)) * -5) + 'deg) rotateY(' + ((x / (r.width/2)) * 5) + 'deg)';
-    });
-    card.addEventListener('mouseleave', function() { card.style.transform = ''; });
-  });
-
-  // ── 3D tilt on stat boxes ──
-  document.querySelectorAll('.so-stat-box').forEach(function(box) {
-    box.addEventListener('mousemove', function(e) {
-      var r = box.getBoundingClientRect();
-      var x = e.clientX - r.left - r.width  / 2;
-      var y = e.clientY - r.top  - r.height / 2;
-      box.style.transform = 'translateY(-4px) perspective(500px) rotateX(' + ((y / (r.height/2)) * -4) + 'deg) rotateY(' + ((x / (r.width/2)) * 4) + 'deg)';
-    });
-    box.addEventListener('mouseleave', function() { box.style.transform = ''; });
-  });
-
-  // ── Timeline: dim siblings on hover ──
-  var tlItems = document.querySelectorAll('.so-tl-item');
-  tlItems.forEach(function(item) {
-    item.addEventListener('mouseenter', function() {
-      tlItems.forEach(function(other) { if (other !== item) other.style.opacity = '0.4'; });
-    });
-    item.addEventListener('mouseleave', function() {
-      tlItems.forEach(function(other) { other.style.opacity = ''; });
-    });
-  });
-
-  // ── Scroll reveal ──
-  var revealEls = document.querySelectorAll('.so-tl-item, .so-value-card, .so-stat-box, .so-pull-quote, .so-founder-avatar');
+  // Simple Scroll Reveal
+  var revealEls = document.querySelectorAll('.so-guide-step, .so-review-card');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
-          entry.target.style.transition = (entry.target.style.transition || '') + ', opacity 0.6s ease, transform 0.6s ease';
+          entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
           entry.target.style.opacity   = '1';
-          entry.target.style.transform = '';
+          entry.target.style.transform = 'translateY(0)';
           io.unobserve(entry.target);
         }
       });
     }, { threshold: 0.15 });
+    
     revealEls.forEach(function(el) {
       el.style.opacity   = '0';
-      el.style.transform = 'translateY(24px)';
+      el.style.transform = 'translateY(20px)';
       io.observe(el);
     });
   }
@@ -949,470 +246,125 @@
 
 {% schema %}
 {
-  "name": "Our Story",
+  "name": "Story & Guide",
   "tag": "section",
-  "class": "our-story-section",
+  "class": "story-guide-section",
   "settings": [
     {
       "type": "header",
-      "content": "Hero"
+      "content": "Our Story"
     },
     {
       "type": "text",
-      "id": "hero_eyebrow",
-      "label": "Eyebrow Label",
-      "default": "Our Story"
+      "id": "story_title",
+      "label": "Story Title",
+      "default": "Where It All Began"
     },
     {
-      "type": "text",
-      "id": "hero_title_line1",
-      "label": "Title — Line 1",
-      "default": "Made on"
-    },
-    {
-      "type": "text",
-      "id": "hero_title_line2",
-      "label": "Title — Line 2 (italic accent)",
-      "default": "Sundays."
-    },
-    {
-      "type": "text",
-      "id": "hero_title_line3",
-      "label": "Title — Line 3",
-      "default": "Made with love."
-    },
-    {
-      "type": "textarea",
-      "id": "hero_subtitle",
-      "label": "Subtitle",
-      "default": "Every cookie has a story. Ours started in a small kitchen, with a bowl of butter, a block of the finest chocolate, and an overwhelming need to bake something beautiful."
-    },
-    {
-      "type": "image_picker",
-      "id": "hero_image_desktop",
-      "label": "Hero Image — Desktop",
-      "info": "Recommended: 900×1080px or taller. Displays on screens wider than 900px."
-    },
-    {
-      "type": "image_picker",
-      "id": "hero_image_mobile",
-      "label": "Hero Image — Mobile",
-      "info": "Recommended: 800×500px landscape. Displays on screens 900px and below."
-    },
-    {
-      "type": "text",
-      "id": "hero_badge",
-      "label": "Badge Text",
-      "default": "Est. 2021 · Bangalore"
+      "type": "richtext",
+      "id": "story_text",
+      "label": "Story Text",
+      "default": "<p>The Sunday Oven was inspired by the simple joy of baking at home — slow moments, warm kitchens, and the smell of something sweet in the oven.</p><p>We wanted to make that feeling accessible anytime, without the effort of starting from scratch. So you can bake when you want, as often as you want — and still feel like you made it yourself.</p>"
     },
     {
       "type": "header",
-      "content": "Marquee Typography"
+      "content": "Guide to Bake"
     },
     {
-      "type": "select",
-      "id": "marquee_font_style",
-      "label": "Font Style",
-      "options": [
-        { "value": "normal", "label": "Normal" },
-        { "value": "italic", "label": "Italic" }
-      ],
-      "default": "italic"
+      "type": "text",
+      "id": "guide_title",
+      "label": "Guide Title",
+      "default": "How It Works"
     },
     {
-      "type": "select",
-      "id": "marquee_font_weight",
-      "label": "Font Weight",
-      "options": [
-        { "value": "300", "label": "Light (300)" },
-        { "value": "400", "label": "Regular (400)" },
-        { "value": "500", "label": "Medium (500)" },
-        { "value": "700", "label": "Bold (700)" },
-        { "value": "900", "label": "Black (900)" }
-      ],
-      "default": "400"
+      "type": "text",
+      "id": "guide_closing",
+      "label": "Guide Closing Line",
+      "default": "Freshly baked, straight from your oven — whenever you want."
     },
     {
       "type": "header",
-      "content": "Origin Section — Colors"
-    },
-    {
-      "type": "color",
-      "id": "origin_bg_color",
-      "label": "Section Background",
-      "default": "#F5EDD9"
-    },
-    {
-      "type": "color",
-      "id": "origin_eyebrow_color",
-      "label": "Eyebrow Label Color",
-      "default": "#C07D4A"
-    },
-    {
-      "type": "color",
-      "id": "origin_heading_color",
-      "label": "Heading Color",
-      "default": "#1A1008"
-    },
-    {
-      "type": "color",
-      "id": "origin_heading_em_color",
-      "label": "Heading Italic Accent Color",
-      "default": "#C07D4A"
-    },
-    {
-      "type": "color",
-      "id": "origin_body_color",
-      "label": "Body Text Color",
-      "default": "#7A5235"
-    },
-    {
-      "type": "color",
-      "id": "origin_dropcap_color",
-      "label": "Drop Cap Letter Color",
-      "default": "#C07D4A"
-    },
-    {
-      "type": "color",
-      "id": "origin_num_color",
-      "label": "Section Number Color",
-      "default": "#C07D4A",
-      "info": "The large faint '01' behind the heading"
-    },
-    {
-      "type": "color",
-      "id": "origin_quote_accent_color",
-      "label": "Pull Quote Border & Cite Color",
-      "default": "#C07D4A"
-    },
-    {
-      "type": "color",
-      "id": "origin_quote_bg_color",
-      "label": "Pull Quote Background",
-      "default": "#EDD9B8"
-    },
-    {
-      "type": "header",
-      "content": "Origin Section"
+      "content": "Reviews"
     },
     {
       "type": "text",
-      "id": "origin_section_num",
-      "label": "Section Number",
-      "default": "01"
-    },
-    {
-      "type": "text",
-      "id": "origin_eyebrow",
-      "label": "Eyebrow Label",
-      "default": "Where it began"
-    },
-    {
-      "type": "text",
-      "id": "origin_heading",
-      "label": "Heading",
-      "default": "A kitchen. A craving."
-    },
-    {
-      "type": "text",
-      "id": "origin_heading_em",
-      "label": "Heading Italic Accent",
-      "default": "A calling."
-    },
-    {
-      "type": "textarea",
-      "id": "origin_para1",
-      "label": "Paragraph 1 (drop cap)",
-      "default": "It started on a rainy Sunday afternoon in Bangalore, with nothing but time, a craving, and a bag of good chocolate. We weren't bakers by trade — we were just people who believed that a freshly baked cookie, warm from the oven, could make any day feel a little more special."
-    },
-    {
-      "type": "textarea",
-      "id": "origin_para2",
-      "label": "Paragraph 2",
-      "default": "That first batch of Plain Choco cookies disappeared in minutes. The second batch was shared with neighbours. By the third batch, people were asking if they could order more. That's when we knew — this wasn't just baking. This was something worth building."
-    },
-    {
-      "type": "textarea",
-      "id": "origin_quote",
-      "label": "Pull Quote",
-      "default": "\"We didn't set out to start a bakery. We just wanted to make the perfect cookie. Turns out, one leads to the other.\""
-    },
-    {
-      "type": "text",
-      "id": "origin_quote_cite",
-      "label": "Pull Quote Attribution",
-      "default": "— The Sunday Oven, 2021"
-    },
-    {
-      "type": "textarea",
-      "id": "origin_para3",
-      "label": "Paragraph 3",
-      "default": "We named it The Sunday Oven because that's when the magic started — slow mornings, warm kitchens, the smell of butter and chocolate filling the house. That feeling is baked into every single cookie we make."
-    },
-    {
-      "type": "header",
-      "content": "Timeline"
-    },
-    {
-      "type": "text",
-      "id": "timeline_eyebrow",
-      "label": "Eyebrow Label",
-      "default": "How we grew"
-    },
-    {
-      "type": "text",
-      "id": "timeline_title",
-      "label": "Title",
-      "default": "The"
-    },
-    {
-      "type": "text",
-      "id": "timeline_title_em",
-      "label": "Title Italic Accent",
-      "default": "Sunday timeline"
-    },
-    {
-      "type": "header",
-      "content": "Values Section"
-    },
-    {
-      "type": "text",
-      "id": "values_eyebrow",
-      "label": "Eyebrow Label",
-      "default": "What we believe"
-    },
-    {
-      "type": "text",
-      "id": "values_heading",
-      "label": "Heading",
-      "default": "The things we will never"
-    },
-    {
-      "type": "text",
-      "id": "values_heading_em",
-      "label": "Heading Italic Accent",
-      "default": "compromise on."
-    },
-    {
-      "type": "textarea",
-      "id": "values_subtext",
-      "label": "Subtext",
-      "default": "These aren't marketing words. They're the rules we've baked by since day one — the reasons why a Sunday Oven cookie tastes different from everything else."
-    },
-    {
-      "type": "header",
-      "content": "Founder Note"
-    },
-    {
-      "type": "text",
-      "id": "founder_eyebrow",
-      "label": "Eyebrow Label",
-      "default": "A note from the founder"
-    },
-    {
-      "type": "text",
-      "id": "founder_emoji",
-      "label": "Founder Avatar Emoji",
-      "default": "👩‍🍳"
-    },
-    {
-      "type": "textarea",
-      "id": "founder_quote",
-      "label": "Founder Quote",
-      "default": "\"I never wanted to build a big brand. I wanted to build something real — something that made people feel the way a good cookie makes you feel. Warm. Happy. Like you're exactly where you're supposed to be.\""
-    },
-    {
-      "type": "text",
-      "id": "founder_name",
-      "label": "Founder Name",
-      "default": "Riya Sharma"
-    },
-    {
-      "type": "text",
-      "id": "founder_role",
-      "label": "Founder Role",
-      "default": "Founder & Head Baker, The Sunday Oven"
-    },
-    {
-      "type": "header",
-      "content": "Promise Section"
-    },
-    {
-      "type": "text",
-      "id": "promise_eyebrow",
-      "label": "Eyebrow Label",
-      "default": "Our commitment"
-    },
-    {
-      "type": "text",
-      "id": "promise_title",
-      "label": "Title",
-      "default": "The Sunday"
-    },
-    {
-      "type": "text",
-      "id": "promise_title_em",
-      "label": "Title Italic Accent",
-      "default": "Promise."
-    },
-    {
-      "type": "textarea",
-      "id": "promise_para1",
-      "label": "Paragraph 1",
-      "default": "Every time you order from The Sunday Oven, you have our word: the cookie you receive was baked that morning, packed with care, and made the same way we've always made them — with real ingredients, real attention, and a real love for what a good cookie can do."
-    },
-    {
-      "type": "textarea",
-      "id": "promise_para2",
-      "label": "Paragraph 2",
-      "default": "We're a small bakery. We intend to stay that way. Because small means careful. Small means intentional. Small means every single cookie still matters."
-    },
-    {
-      "type": "text",
-      "id": "promise_btn_label",
-      "label": "Button Label",
-      "default": "Order Now"
-    },
-    {
-      "type": "url",
-      "id": "promise_btn_url",
-      "label": "Button URL"
+      "id": "reviews_title",
+      "label": "Reviews Title",
+      "default": "Baked & Loved"
     }
   ],
   "blocks": [
     {
-      "type": "marquee_item",
-      "name": "Marquee Item",
+      "type": "guide_step",
+      "name": "Bake Step",
+      "limit": 3,
       "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Text",
-          "default": "Baked with love"
-        }
-      ]
-    },
-    {
-      "type": "timeline_item",
-      "name": "Timeline Item",
-      "settings": [
-        {
-          "type": "text",
-          "id": "year",
-          "label": "Year",
-          "default": "2021"
-        },
-        {
-          "type": "image_picker",
-          "id": "icon_image",
-          "label": "Icon Image",
-          "info": "Upload a custom icon (PNG/SVG, ~80×80px). If blank, the emoji below is used."
-        },
-        {
-          "type": "text",
-          "id": "emoji",
-          "label": "Icon Emoji (fallback)",
-          "default": "🏠"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "The First Batch"
-        },
-        {
-          "type": "textarea",
-          "id": "text",
-          "label": "Description",
-          "default": "It starts in a home kitchen in Bangalore. A rainy Sunday, a bar of dark chocolate, and a recipe scribbled on the back of an envelope."
-        }
-      ]
-    },
-    {
-      "type": "value_card",
-      "name": "Value Card",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "icon_image",
-          "label": "Icon Image",
-          "info": "Upload a custom icon (PNG/SVG, ~80×80px). If blank, the emoji below is used."
-        },
         {
           "type": "text",
           "id": "icon",
-          "label": "Icon Emoji (fallback)",
-          "default": "🧈"
+          "label": "Icon Emoji",
+          "default": "🔥"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Custom Icon Image (Overrides Emoji)"
         },
         {
           "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Real Butter. Always."
-        },
-        {
-          "type": "textarea",
           "id": "text",
-          "label": "Description",
-          "default": "We use real, unsalted butter in every batch. Not margarine. Not oil. Not shortcuts."
+          "label": "Step Text",
+          "default": "Pre heat"
         }
       ]
     },
     {
-      "type": "stat",
-      "name": "Stat Box",
+      "type": "review",
+      "name": "Review",
       "settings": [
         {
-          "type": "image_picker",
-          "id": "icon_image",
-          "label": "Icon Image",
-          "info": "Upload a custom icon (PNG/SVG, ~80×80px). If blank, the emoji below is used."
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review Quote",
+          "default": "It’s not just cookies — it’s the whole baking experience at home."
         },
         {
           "type": "text",
-          "id": "emoji",
-          "label": "Icon Emoji (fallback)",
-          "default": "🍪"
-        },
-        {
-          "type": "text",
-          "id": "number",
-          "label": "Number / Value",
-          "default": "3"
-        },
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Signature flavours"
+          "id": "author",
+          "label": "Reviewer Name",
+          "default": "Happy Baker"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Our Story",
+      "name": "Story & Guide",
       "blocks": [
-        { "type": "marquee_item", "settings": { "text": "Baked with love" } },
-        { "type": "marquee_item", "settings": { "text": "Small batches" } },
-        { "type": "marquee_item", "settings": { "text": "Real ingredients" } },
-        { "type": "marquee_item", "settings": { "text": "No shortcuts" } },
-        { "type": "marquee_item", "settings": { "text": "Every Sunday" } },
-        { "type": "timeline_item", "settings": { "year": "2021", "emoji": "🏠", "title": "The First Batch", "text": "It starts in a home kitchen in Bangalore. A rainy Sunday, a bar of dark chocolate, and a recipe scribbled on the back of an envelope. Twenty cookies. All gone by evening." } },
-        { "type": "timeline_item", "settings": { "year": "2022", "emoji": "📱", "title": "Word Spreads", "text": "Friends share photos. Messages pour in. We start taking orders through Instagram, packing boxes by hand at midnight, and delivering across the city by morning." } },
-        { "type": "timeline_item", "settings": { "year": "2023", "emoji": "🧈", "title": "The Butter Cookie", "text": "After months of testing, we finally perfect the Butter Choco Chip. It becomes our most talked-about cookie within two weeks of launch." } },
-        { "type": "timeline_item", "settings": { "year": "2024", "emoji": "📦", "title": "Shipped Across India", "text": "We begin shipping beyond Bangalore — first to Mumbai, Delhi, Chennai, and Hyderabad, then across India." } },
-        { "type": "timeline_item", "settings": { "year": "2025 →", "emoji": "🌟", "title": "Still Baking. Still Sunday.", "text": "More flavours in the works. More cities soon. But our promise never changes — every cookie is made in small batches, by hand." } },
-        { "type": "value_card", "settings": { "icon": "🧈", "title": "Real Butter. Always.", "text": "We use real, unsalted butter in every batch. Not margarine. Not oil. Not shortcuts." } },
-        { "type": "value_card", "settings": { "icon": "🍫", "title": "Premium Chocolate.", "text": "Our chocolate is sourced from quality suppliers who take cocoa seriously." } },
-        { "type": "value_card", "settings": { "icon": "🤲", "title": "Hand-mixed, Every Time.", "text": "No industrial mixers. Every batch of dough is mixed by hand." } },
-        { "type": "value_card", "settings": { "icon": "📦", "title": "Small Batches Only.", "text": "We bake in small batches so every cookie gets the attention it deserves." } },
-        { "type": "value_card", "settings": { "icon": "🚫", "title": "Zero Preservatives.", "text": "No artificial preservatives, no stabilizers. Just real ingredients." } },
-        { "type": "value_card", "settings": { "icon": "☀️", "title": "Baked Fresh, Daily.", "text": "We bake every morning. Every order is baked the same day it ships." } },
-        { "type": "stat", "settings": { "emoji": "🍪", "number": "3", "label": "Signature flavours" } },
-        { "type": "stat", "settings": { "emoji": "📦", "number": "5K+", "label": "Cookies delivered" } },
-        { "type": "stat", "settings": { "emoji": "☀️", "number": "4", "label": "Years baking" } },
-        { "type": "stat", "settings": { "emoji": "❤️", "number": "100%", "label": "Made with love" } }
+        {
+          "type": "guide_step",
+          "settings": { "icon": "🔥", "text": "Pre heat" }
+        },
+        {
+          "type": "guide_step",
+          "settings": { "icon": "🍪", "text": "Place on a tray" }
+        },
+        {
+          "type": "guide_step",
+          "settings": { "icon": "✨", "text": "Bake & enjoy the aroma" }
+        },
+        {
+          "type": "review",
+          "settings": { "quote": "It’s not just cookies — it’s the whole baking experience at home.", "author": "Sneha R." }
+        },
+        {
+          "type": "review",
+          "settings": { "quote": "My kitchen smells amazing every time I bake these!", "author": "Rahul M." }
+        },
+        {
+          "type": "review",
+          "settings": { "quote": "So easy, yet feels like I baked from scratch.", "author": "Priya K." }
+        }
       ]
     }
   ]
