@@ -5,40 +5,57 @@
   ╚══════════════════════════════════════════════════════════════╝
 {% endcomment %}
 
-{{ 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap' | stylesheet_tag }}
+{%- assign heading_font = section.settings.heading_font -%}
+{%- assign body_font = section.settings.body_font -%}
+
+{%- assign accent_color = section.settings.color_accent -%}
+{%- assign accent_r = accent_color | color_extract: 'red' -%}
+{%- assign accent_g = accent_color | color_extract: 'green' -%}
+{%- assign accent_b = accent_color | color_extract: 'blue' -%}
 
 <style>
-  :root {
-    --so-caramel:       #C07D4A;
-    --so-caramel-light: #D4935E;
-    --so-caramel-bg:    #C8824C;
-    --so-cream:         #F5EDD9;
-    --so-cream-dark:    #EDD9B8;
-    --so-dark:          #1A1008;
-    --so-dark-mid:      #2D1E0F;
-    --so-text:          #3A2510;
-    --so-muted:         #7A5235;
-    --so-white:         #FDFAF4;
+  /* Load fonts selected in Theme Editor */
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ heading_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_modify: 'weight', '500' | font_face: font_display: 'swap' }}
+
+  #so-section-{{ section.id }} {
+    /* Fonts */
+    --so-font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --so-font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+    
+    /* Colors */
+    --so-bg: {{ section.settings.color_bg }};
+    --so-heading: {{ section.settings.color_heading }};
+    --so-accent: {{ section.settings.color_accent }};
+    --so-accent-rgb: {{ accent_r }}, {{ accent_g }}, {{ accent_b }};
+    --so-text: {{ section.settings.color_text }};
+    
+    --so-guide-bg: {{ section.settings.color_guide_bg }};
+    --so-review-bg: {{ section.settings.color_review_bg }};
+    --so-review-border: {{ section.settings.color_review_border }};
   }
 
   .so-wrap *, .so-wrap *::before, .so-wrap *::after { box-sizing: border-box; }
   .so-wrap { 
     overflow-x: hidden; 
-    font-family: 'DM Sans', sans-serif; 
+    font-family: var(--so-font-body); 
     color: var(--so-text); 
-    background: var(--so-cream);
+    background: var(--so-bg);
   }
 
   /* ── SHARED TYPOGRAPHY ── */
   .so-section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; text-align: center; }
   .so-heading {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--so-font-heading);
+    font-weight: {{ heading_font.weight }};
     font-size: clamp(2.5rem, 5vw, 4rem);
-    color: var(--so-dark);
+    color: var(--so-heading);
     line-height: 1.1;
     margin-bottom: 2rem;
   }
-  .so-heading em { font-style: italic; color: var(--so-caramel); }
+  .so-heading em { font-style: italic; color: var(--so-accent); }
   
   /* ── OUR STORY ── */
   .so-story-text {
@@ -46,12 +63,12 @@
     margin: 0 auto;
     font-size: 1.1rem;
     line-height: 1.85;
-    color: var(--so-muted);
+    color: var(--so-text);
   }
   .so-story-text p { margin-bottom: 1.5rem; }
 
   /* ── GUIDE TO BAKE ── */
-  .so-guide-section { background: var(--so-white); border-radius: 40px; padding: 6rem 2rem; margin: 2rem auto; max-width: 1200px;}
+  .so-guide-section { background: var(--so-guide-bg); border-radius: 40px; padding: 6rem 2rem; margin: 2rem auto; max-width: 1200px;}
   .so-guide-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -70,7 +87,7 @@
     top: 35%;
     right: -2rem;
     font-size: 2rem;
-    color: var(--so-caramel-light);
+    color: var(--so-accent);
     opacity: 0.5;
   }
   
@@ -83,9 +100,9 @@
     justify-content: center;
     width: 100px;
     height: 100px;
-    background: var(--so-cream);
+    background: var(--so-bg);
     border-radius: 50%;
-    border: 1px solid rgba(192,125,74,0.2);
+    border: 1px solid rgba(var(--so-accent-rgb), 0.2);
     transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
   }
   
@@ -96,9 +113,9 @@
     margin-bottom: 1.5rem;
     border-radius: 50%;
     overflow: hidden;
-    background: var(--so-cream);
-    border: 4px solid var(--so-white);
-    box-shadow: 0 8px 24px rgba(192,125,74,0.12);
+    background: var(--so-bg);
+    border: 4px solid var(--so-guide-bg);
+    box-shadow: 0 8px 24px rgba(var(--so-accent-rgb), 0.12);
     transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
   }
   .so-step-photo img {
@@ -110,19 +127,19 @@
   .so-guide-step:hover .so-step-icon,
   .so-guide-step:hover .so-step-photo {
     transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 15px 30px rgba(192,125,74,0.15);
+    box-shadow: 0 15px 30px rgba(var(--so-accent-rgb), 0.15);
   }
   
   .so-step-text {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--so-font-heading);
     font-size: 1.3rem;
-    color: var(--so-dark);
+    color: var(--so-heading);
     font-style: italic;
   }
   .so-guide-closing {
     margin-top: 4rem;
     font-size: 1.1rem;
-    color: var(--so-caramel);
+    color: var(--so-accent);
     font-weight: 500;
     letter-spacing: 0.05em;
   }
@@ -135,32 +152,32 @@
     margin-top: 4rem;
   }
   .so-review-card {
-    background: var(--so-white);
+    background: var(--so-review-bg);
     padding: 3rem 2rem;
     border-radius: 20px;
-    border: 1px solid rgba(192,125,74,0.15);
+    border: 1px solid var(--so-review-border);
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   .so-review-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(192,125,74,0.1);
+    box-shadow: 0 12px 35px rgba(var(--so-accent-rgb), 0.15);
   }
   .so-review-card::before {
     content: '“';
     position: absolute;
     top: 1rem;
     left: 1.5rem;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--so-font-heading);
     font-size: 5rem;
-    color: rgba(192,125,74,0.15);
+    color: rgba(var(--so-accent-rgb), 0.15);
     line-height: 1;
   }
   .so-review-quote {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--so-font-heading);
     font-size: 1.25rem;
     font-style: italic;
-    color: var(--so-dark);
+    color: var(--so-heading);
     line-height: 1.6;
     margin-bottom: 1.5rem;
     position: relative;
@@ -170,7 +187,7 @@
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--so-caramel);
+    color: var(--so-accent);
     font-weight: 500;
   }
 
@@ -280,6 +297,76 @@
   "tag": "section",
   "class": "story-guide-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading Font",
+      "default": "playfair_display_n4"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body Font",
+      "default": "dm_sans_n4"
+    },
+    {
+      "type": "header",
+      "content": "Global Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Main Background Color",
+      "default": "#F5EDD9"
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Heading Color",
+      "default": "#1A1008"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent Color (Italics, Icons, Highlights)",
+      "default": "#C07D4A"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Body Text Color",
+      "default": "#7A5235"
+    },
+    {
+      "type": "header",
+      "content": "Guide Section Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_guide_bg",
+      "label": "Guide Box Background",
+      "default": "#FDFAF4"
+    },
+    {
+      "type": "header",
+      "content": "Review Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_review_bg",
+      "label": "Review Card Background",
+      "default": "#FDFAF4"
+    },
+    {
+      "type": "color",
+      "id": "color_review_border",
+      "label": "Review Card Border",
+      "default": "#E8D8C8"
+    },
     {
       "type": "header",
       "content": "Our Story"
