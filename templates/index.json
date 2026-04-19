@@ -983,6 +983,7 @@
         "feature_XLFitJ",
         "feature_mCiiJa"
       ],
+      "disabled": true,
       "name": "Feature Icons",
       "settings": {
         "bg_color": "#c48b64",
@@ -1074,6 +1075,7 @@
       "block_order": [
         "text_UL7pMi"
       ],
+      "disabled": true,
       "name": "t:names.marquee_section",
       "settings": {
         "movement_direction": "normal",
