@@ -64,6 +64,7 @@
           "type": "guide_step",
           "settings": {
             "icon": "🔥",
+            "icon_image": "shopify://shop_images/stone-oven.svg",
             "text": "Pre heat"
           }
         },
@@ -71,14 +72,16 @@
           "type": "guide_step",
           "settings": {
             "icon": "🔥",
-            "text": "Pre heat"
+            "icon_image": "shopify://shop_images/cookies.svg",
+            "text": "Place on a Tray"
           }
         },
         "guide_step_zfDRmX": {
           "type": "guide_step",
           "settings": {
             "icon": "🔥",
-            "text": "Pre heat"
+            "icon_image": "shopify://shop_images/cookie.svg",
+            "text": "Bake & enjoy the aroma"
           }
         },
         "review_PkaWRP": {
@@ -105,6 +108,15 @@
       ],
       "name": "Our Story",
       "settings": {
+        "heading_font": "playfair_display_n4",
+        "body_font": "dm_sans_n4",
+        "color_bg": "#f5edd9",
+        "color_heading": "#1a1008",
+        "color_accent": "#c07d4a",
+        "color_text": "#7a5235",
+        "color_guide_bg": "#fdfaf4",
+        "color_review_bg": "#fdfaf4",
+        "color_review_border": "#e8d8c8",
         "story_title": "Where It All Began",
         "story_text": "<p>The Sunday Oven was inspired by the simple joy of baking at home — slow moments, warm kitchens, and the smell of something sweet in the oven.</p><p>We wanted to make that feeling accessible anytime, without the effort of starting from scratch. So you can bake when you want, as often as you want — and still feel like you made it yourself.</p>",
         "guide_title": "How It Works",
