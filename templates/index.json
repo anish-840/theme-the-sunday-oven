@@ -791,12 +791,12 @@
         "bg_color": "#be855d",
         "text_color": "#1a1a1a",
         "text_alignment": "center",
-        "subheading": "<p><strong>Our Values</strong></p>",
-        "heading": "At our core, we're bakers, carefully baking each batch to unlock the unique flavors within every baked product, delivering a remarkable taste with every bite ;)",
+        "subheading": "<p><strong>What We Believe In</strong></p>",
+        "heading": "At The Sunday Oven, we believe baking is more than a task, it’s a feeling. It’s the smell that fills your home, the warmth of the oven, and the comfort of creating something from scratch. We simply make that feeling easier to experience, anytime you want.",
         "button_label": "",
         "button_link": "",
         "max_width": 900,
-        "heading_size_desktop": 48,
+        "heading_size_desktop": 46,
         "heading_size_mobile": 32,
         "padding_top": 80,
         "padding_bottom": 80,
@@ -810,28 +810,35 @@
         "marquee_image_gdwH6j": {
           "type": "marquee_image",
           "settings": {
-            "caption": "Artisanal Sourdough",
+            "caption": "Comfort in Every Batch",
             "link": ""
           }
         },
         "marquee_image_TeLKti": {
           "type": "marquee_image",
           "settings": {
-            "caption": "Small-Batch Baking",
+            "caption": "Made Without Preservatives",
             "link": ""
           }
         },
         "marquee_image_3UkfWm": {
           "type": "marquee_image",
           "settings": {
-            "caption": "Locally Sourced Ingredients",
+            "caption": "Bake at Your Own Time",
             "link": ""
           }
         },
         "marquee_image_mPPb7X": {
           "type": "marquee_image",
           "settings": {
-            "caption": "Fresh Every Morning",
+            "caption": "Crafted for Real Moments",
+            "link": ""
+          }
+        },
+        "marquee_image_fhLNC8": {
+          "type": "marquee_image",
+          "settings": {
+            "caption": "Simple & Thoughtful",
             "link": ""
           }
         }
@@ -840,7 +847,8 @@
         "marquee_image_gdwH6j",
         "marquee_image_TeLKti",
         "marquee_image_3UkfWm",
-        "marquee_image_mPPb7X"
+        "marquee_image_mPPb7X",
+        "marquee_image_fhLNC8"
       ],
       "name": "Scrolling Image Marquee",
       "settings": {
