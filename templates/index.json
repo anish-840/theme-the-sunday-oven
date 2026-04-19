@@ -607,6 +607,81 @@
         "text_3XkDbB": {
           "type": "text",
           "settings": {
+            "text": "<p>Bake Fresh Anytime</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "2.5rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_nYUAGa": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We bake things that brings smiles.</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "2.5rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_RX43TK": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We bake things that brings smiles.</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "2.5rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_eM9E4U": {
+          "type": "text",
+          "settings": {
             "text": "<p>We bake things that brings smiles.</p>",
             "width": "fit-content",
             "max_width": "normal",
@@ -631,7 +706,10 @@
         }
       },
       "block_order": [
-        "text_3XkDbB"
+        "text_3XkDbB",
+        "text_nYUAGa",
+        "text_RX43TK",
+        "text_eM9E4U"
       ],
       "name": "t:names.marquee_section",
       "settings": {
@@ -766,7 +844,7 @@
       ],
       "name": "Scrolling Image Marquee",
       "settings": {
-        "bg_color": "#5e3e2b",
+        "bg_color": "#be855d",
         "text_color": "#f4e9dd",
         "marquee_speed": 30,
         "pause_on_hover": true,
