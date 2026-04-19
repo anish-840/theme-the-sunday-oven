@@ -1,5 +1,3 @@
-
-
 <script
   src="{{ 'marquee.js' | asset_url }}"
   type="module"
@@ -15,6 +13,15 @@
     {%- render 'spacing-style', settings: section.settings %};
     {% render 'gap-style', value: gap_between_elements, name: 'marquee-gap' %}
     --marquee-direction: {{ section.settings.movement_direction }};
+    {%- if section.settings.divider_icon != 'none' -%}
+      --marquee-divider: '{{ section.settings.divider_icon }}';
+      --marquee-divider-display: inline-block;
+      --marquee-divider-margin: var(--marquee-gap);
+    {%- else -%}
+      --marquee-divider: none;
+      --marquee-divider-display: none;
+      --marquee-divider-margin: 0;
+    {%- endif -%}
   "
   data-speed-factor="25"
   data-movement-direction="{{ section.settings.movement_direction }}"
@@ -77,6 +84,13 @@
     align-content: center;
   }
 
+  /* Automatically appends the divider to every item so it loops seamlessly */
+  .marquee__repeated-items > *::after {
+    content: var(--marquee-divider);
+    display: var(--marquee-divider-display);
+    margin-left: var(--marquee-divider-margin);
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     marquee-component:not([data-disabled]) .marquee__wrapper {
       animation: marquee-motion var(--marquee-speed) linear infinite var(--marquee-direction);
@@ -126,6 +140,26 @@
         }
       ],
       "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "divider_icon",
+      "label": "Divider Icon",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "🍪",
+          "label": "Cookie 🍪"
+        },
+        {
+          "value": "🔥",
+          "label": "Fire 🔥"
+        }
+      ],
+      "default": "🍪"
     },
     {
       "type": "color_scheme",
