@@ -651,9 +651,9 @@
         "bg_color": "#6b4226",
         "text_color": "#f4e9dd",
         "image": "shopify://shop_images/mae-mu-kID9sxbJ3BQ-unsplash.jpg",
-        "subheading": "1 / 2",
-        "heading": "Crafting Warm Breads,\nOne Loaf at a Time.",
-        "text": "<p>Every morning starts before dawn. We combine simple ingredients with decades of traditional techniques to bring you baked goods that taste like home.</p>",
+        "subheading": "",
+        "heading": "From Dough to Warm Cookies",
+        "text": "<p>Scoop, bake, and watch your space fill with the comforting aroma of cookies fresh out of the oven.</p>",
         "button_label": "",
         "button_link": ""
       }
@@ -667,9 +667,41 @@
         "bg_color": "#6b4226",
         "text_color": "#f4e9dd",
         "image": "shopify://shop_images/mae-mu-m9pzwmxm2rk-unsplash.jpg",
-        "subheading": "1 / 2",
-        "heading": "Crafting Warm Breads,\nOne Loaf at a Time.",
-        "text": "<p>Every morning starts before dawn. We combine simple ingredients with decades of traditional techniques to bring you baked goods that taste like home.</p>",
+        "subheading": "",
+        "heading": "Simple, Honest Ingredients",
+        "text": "<p>No preservatives, no unnecessary extras, just ingredients you’d use at home.</p>",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "custom_image_with_text_RdwmWA": {
+      "type": "custom-image-with-text",
+      "name": "50/50 Image with Text",
+      "settings": {
+        "desktop_layout": "image_right",
+        "mobile_layout": "image_top",
+        "bg_color": "#6b4226",
+        "text_color": "#f4e9dd",
+        "image": "shopify://shop_images/mae-mu-kID9sxbJ3BQ-unsplash.jpg",
+        "subheading": "",
+        "heading": "Always Ready When You Are",
+        "text": "<p>Keep it stored for up to 3–4 months and bake only when the craving (or mood) strikes.</p>",
+        "button_label": "",
+        "button_link": ""
+      }
+    },
+    "custom_image_with_text_7J9EmK": {
+      "type": "custom-image-with-text",
+      "name": "50/50 Image with Text",
+      "settings": {
+        "desktop_layout": "image_left",
+        "mobile_layout": "image_top",
+        "bg_color": "#6b4226",
+        "text_color": "#f4e9dd",
+        "image": "shopify://shop_images/mae-mu-m9pzwmxm2rk-unsplash.jpg",
+        "subheading": "",
+        "heading": "More Than Just Cookies",
+        "text": "<p>It’s the warmth, the smell, the quiet joy of baking, all in a few easy steps.</p>",
         "button_label": "",
         "button_link": ""
       }
@@ -975,6 +1007,8 @@
     "marquee_hgeq3G",
     "custom_image_with_text_jbFBzn",
     "custom_image_with_text_WixRwG",
+    "custom_image_with_text_RdwmWA",
+    "custom_image_with_text_7J9EmK",
     "custom_rich_text_y6nFbN",
     "custom_image_marquee_PLCYtb",
     "custom_collection_tabs_nNHGPC",
