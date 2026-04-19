@@ -598,7 +598,7 @@
         "product_limit": 6,
         "show_vendor": true,
         "button_label": "Buy Now",
-        "pickup_text": "Available for pickup in-store"
+        "pickup_text": ""
       }
     },
     "marquee_hgeq3G": {
