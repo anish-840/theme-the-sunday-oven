@@ -303,17 +303,29 @@
                 align-items: {% if block.settings.text_position == 'left' %}flex-start{% elsif block.settings.text_position == 'right' %}flex-end{% else %}center{% endif %};
               ">
               
-              {% if block.settings.subheading != blank %}
-                <span class="slide-subheading" style="color: {{ block.settings.subheading_color }}; font-size: {{ block.settings.subheading_size }}px;">
-                  {{ block.settings.subheading }}
-                </span>
-              {% endif %}
+              {%- capture subheading_html -%}
+                {% if block.settings.subheading != blank %}
+                  <span class="slide-subheading" style="color: {{ block.settings.subheading_color }}; font-size: {{ block.settings.subheading_size }}px;">
+                    {{ block.settings.subheading }}
+                  </span>
+                {% endif %}
+              {%- endcapture -%}
               
-              {% if block.settings.title != blank %}
-                <h2 class="slide-heading" style="color: {{ block.settings.heading_color }}; font-size: {{ block.settings.heading_size }}px;">
-                  {{ block.settings.title | newline_to_br }}
-                </h2>
-              {% endif %}
+              {%- capture heading_html -%}
+                {% if block.settings.title != blank %}
+                  <h2 class="slide-heading" style="color: {{ block.settings.heading_color }}; font-size: {{ block.settings.heading_size }}px;">
+                    {{ block.settings.title | newline_to_br }}
+                  </h2>
+                {% endif %}
+              {%- endcapture -%}
+
+              {%- if block.settings.text_order == 'heading_first' -%}
+                {{ heading_html }}
+                {{ subheading_html }}
+              {%- else -%}
+                {{ subheading_html }}
+                {{ heading_html }}
+              {%- endif -%}
               
               {% if block.settings.button_label != blank %}
                 <a href="{{ block.settings.button_link }}" class="slide-button" 
@@ -637,6 +649,16 @@
         {
           "type": "header",
           "content": "Text Content"
+        },
+        {
+          "type": "select",
+          "id": "text_order",
+          "label": "Text Order",
+          "options": [
+            { "value": "subheading_first", "label": "Subheading First" },
+            { "value": "heading_first", "label": "Heading First" }
+          ],
+          "default": "subheading_first"
         },
         {
           "type": "text",
