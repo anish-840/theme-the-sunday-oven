@@ -231,6 +231,7 @@
             "overlay_opacity": 0,
             "text_position": "left",
             "text_position_mobile": "top",
+            "text_order": "heading_first",
             "subheading": "Ready-to-bake cookies that fills your home with warmth, comfort, and the irresistible smell of freshly baked cookies.",
             "subheading_color": "#1a1a1a",
             "subheading_size": 16,
