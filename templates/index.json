@@ -648,8 +648,8 @@
       "settings": {
         "desktop_layout": "image_right",
         "mobile_layout": "image_top",
-        "bg_color": "#6b4226",
-        "text_color": "#f4e9dd",
+        "bg_color": "#be855d",
+        "text_color": "#1a1a1a",
         "image": "shopify://shop_images/mae-mu-kID9sxbJ3BQ-unsplash.jpg",
         "subheading": "",
         "heading": "From Dough to Warm Cookies",
@@ -664,8 +664,8 @@
       "settings": {
         "desktop_layout": "image_left",
         "mobile_layout": "image_top",
-        "bg_color": "#6b4226",
-        "text_color": "#f4e9dd",
+        "bg_color": "#c4906a",
+        "text_color": "#1a1a1a",
         "image": "shopify://shop_images/mae-mu-m9pzwmxm2rk-unsplash.jpg",
         "subheading": "",
         "heading": "Simple, Honest Ingredients",
@@ -680,8 +680,8 @@
       "settings": {
         "desktop_layout": "image_right",
         "mobile_layout": "image_top",
-        "bg_color": "#6b4226",
-        "text_color": "#f4e9dd",
+        "bg_color": "#c4906a",
+        "text_color": "#1a1a1a",
         "image": "shopify://shop_images/mae-mu-kID9sxbJ3BQ-unsplash.jpg",
         "subheading": "",
         "heading": "Always Ready When You Are",
@@ -696,8 +696,8 @@
       "settings": {
         "desktop_layout": "image_left",
         "mobile_layout": "image_top",
-        "bg_color": "#6b4226",
-        "text_color": "#f4e9dd",
+        "bg_color": "#c4906a",
+        "text_color": "#1a1a1a",
         "image": "shopify://shop_images/mae-mu-m9pzwmxm2rk-unsplash.jpg",
         "subheading": "",
         "heading": "More Than Just Cookies",
@@ -710,7 +710,7 @@
       "type": "custom-rich-text",
       "name": "Custom Rich Text",
       "settings": {
-        "bg_color": "#6b4f3b",
+        "bg_color": "#be855d",
         "text_color": "#1a1a1a",
         "text_alignment": "center",
         "subheading": "<p><strong>Our Values</strong></p>",
